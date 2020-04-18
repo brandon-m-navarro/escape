@@ -12,8 +12,12 @@
 
 package escape.board.coordinate;
 
+import static escape.board.coordinate.SquareCoordinate.makeCoordinate;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.*;
 
 /**
  * Tests for various coordinates
@@ -22,6 +26,18 @@ import org.junit.jupiter.api.Test;
 class CoordinateTest
 {
     
-   
+	@ParameterizedTest
+	@MethodSource("squareDistanceProvider")
+	void squareDistanceTests(int expected, int x1, int y1, int x2, int y2) 
+	{
+		assertEquals(expected, makeCoordinate(new SquareCoordinate(x1, y1)).distanceTo(makeCoordinate(new SquareCoordinate(x2, y2))));
+	}
+	
+	static Stream<Arguments> squareDistanceProvider()
+	{
+		return Stream.of(
+				Arguments.of(2, 3, 4, 3, 6)
+				);
+	}	
     
 }

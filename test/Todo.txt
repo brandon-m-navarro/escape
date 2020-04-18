@@ -1,0 +1,27 @@
+Coordinate
+~~~~~~~~~~
+
+	SquareCoordinate
+	================
+	(3, 4) -> (3, 6) | 2	- Simple horizontal check
+	(3, 6) -> (3, 4) | 2
+	
+	(5, 5) -> (8, 5) | 3	- Simple vertical check
+	(8, 5) -> (5, 5) | 3
+	
+	(4, 2) -> (8, 6) | 4	- Simple diagonal check (UP: L -> R)
+	(8, 6) -> (4, 2) | 4
+	
+	(3, 7) -> (2, 6) | 1	- Simple diagonal check (DOWN: R -> L)
+	(2, 6) -> (3, 7) | 1
+	
+	(4, 4) -> (8, 5) | 4	- Diagonals are allowed, so (UP: L -> R) once
+							  then UP 3 more times	  
+	(8, 5) -> (4, 4) | 4
+	
+	(4, 6) -> (6, 2) | 4   	- Slightly more complex case where we need to
+							  traverse diagonally twice
+	(6, 2) -> (4, 6) | 4
+	
+	HexCoordinate
+	=============

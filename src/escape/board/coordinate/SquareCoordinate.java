@@ -14,19 +14,19 @@ package escape.board.coordinate;
 import java.util.Objects;
 
 /**
- * This is an example of how a SquareCoordinate might be organized.
+ * The SquareCoordinate class extends from the TwoDimensionalCoordinate
+ * class ( @see escape.board.coordinate ) and only holds the logic to
+ * calculate the distance from itself to another square coordinate, 
+ * as well as statically create one of itself
  * 
  * @version Mar 27, 2020
  */
-public class SquareCoordinate implements Coordinate
+public class SquareCoordinate extends TwoDimensionalCoordinate
 {
-    private final int x;
-    private final int y;
-    
-    private SquareCoordinate(int x, int y)
+
+    protected SquareCoordinate(int x, int y)
     {
-    	this.x = x;
-    	this.y = y;
+    	super(x, y);
     }
     
     public static SquareCoordinate makeCoordinate(int x, int y)
@@ -40,57 +40,6 @@ public class SquareCoordinate implements Coordinate
 	@Override
 	public int distanceTo(Coordinate c)
 	{
-		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	/**
-	 * @return the x
-	 */
-	public int getX()
-	{
-		return x;
-	}
-
-	/**
-	 * @return the y
-	 */
-	public int getY()
-	{
-		return y;
-	}
-
-	/*
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode()
-	{
-		return Objects.hash(x, y);
-	}
-
-	/*
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof SquareCoordinate)) {
-			return false;
-		}
-		SquareCoordinate other = (SquareCoordinate) obj;
-		return x == other.x && y == other.y;
-	}
-
-	/*
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString()
-	{
-		return "(" + x + ", " + y + ")";
 	}
 }
