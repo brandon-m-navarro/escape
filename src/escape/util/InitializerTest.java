@@ -21,7 +21,7 @@ import static escape.piece.PieceName.*;
 import static escape.board.LocationType.*;
 
 /**
- * Description
+ * An example of how to use the JAXB classes for binding XML files to Java classes.
  * @version Mar 30, 2020
  */
 public class InitializerTest

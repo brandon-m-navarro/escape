@@ -1,0 +1,64 @@
+General Requirements
+====================
+	In order to successfully implement the various Boards needed for the release, 
+	you will need the following:
+	
+		1. Modify the BoardBuilder class so that it can create the desired type 
+		   of board (with the correct type of coordinates) when given a file name
+		   that is a path to a valid configuration file. 
+		   
+		   More specifically, the BoardBuilder object takes as input a board 
+		   specification (XML) file to return an initialized board. Testing of 
+		   this release will focus only on the board and coordinates.
+		   		* (See the BoardTest.java for example)
+		   		
+		   		
+		2. Implement different coordinate types for the three types of coordinates 
+		   identified in CoordinateID.
+		   
+		   		* The coordinate type classes must be named:
+		   		------------------------------------------------------------------------------		
+		   				SquareCoordinate
+		   					
+		   					For this game, the square board has squares that are 
+		   					represented by coordinates of the form (row, square). The 
+		   					coordinate (1, 1) represents the square in the lower left
+		   					location from a canonical viewpoint.
+		   									~~~~~~~~~
+		   					
+		   					If there are two players seated at opposite sides of the board,
+		   					one player would have square (1, 1) at their lower left and 
+		   					the other would have (1, 1) at their upper right location on
+		   					the board.
+		   					
+		   					Square boards are always finite
+		   					
+		   				----------------------------------------------------------------
+		   				HexCoordinate
+		   				
+			   				Regardless of whether a board is finite or infinite, there is 
+			   				one origin hex that is denoted as (0, 0). All other hexes are
+			   				represented by coordinates with x & y components that are
+			   				relational to this origin (0, 0).
+			   				
+			   				On canvas, he says that we don't need to worry about finite hex
+			   				boards, 
+		   				
+		   				----------------------------------------------------------------
+		   				OrthoSquareCoordinate
+			   				
+			   				Can only move to locations by traveling either up, down, left,
+			   				or right
+		   				
+		   		------------------------------------------------------------------------------		
+		   		  and each must implement a static makeCoordinate() method. I do not need to
+		   		  worry about calculating distanceTo() between coordinates of different types
+		   		  
+		   		  
+		   		* I should be calculating the distance to another coordinate of the same type
+		   			-- He suggests looking up algorithms for the HexCoordinate
+
+Additional Notes from Canvas/Office Hours		   			
+ The LocationInitializer is used to initialize non-clear locations or locations that will
+  
+ have a piece on them, or both.
