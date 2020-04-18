@@ -27,8 +27,8 @@ public abstract class TwoDimensionalCoordinate implements Coordinate
  
 	public TwoDimensionalCoordinate(int x, int y) 
 	{
-    	this.x = x;
-    	this.y = y;
+		this.x = x;
+		this.y = y;
 	}
 	
 	/**
@@ -62,15 +62,15 @@ public abstract class TwoDimensionalCoordinate implements Coordinate
 	@Override
 	public boolean equals(Object obj)
 	{
-//		if (this == obj) {
-//			return true;
-//		}
-//		if (!(obj instanceof SquareCoordinate)) {
-//			return false;
-//		}
-//		SquareCoordinate other = (SquareCoordinate) obj;
-//		return x == other.x && y == other.y;
-		return true;
+		if (this == obj) {
+			return true;
+		}
+		
+		if (!(obj instanceof TwoDimensionalCoordinate)) {
+			return false;
+		}
+		TwoDimensionalCoordinate other = (TwoDimensionalCoordinate) obj;
+		return x == other.x && y == other.y;
 	}
 	
 	/*
@@ -81,11 +81,4 @@ public abstract class TwoDimensionalCoordinate implements Coordinate
 	{
 		return "(" + x + ", " + y + ")";
 	}
-
-	// I like where this is going, but we need to put this into 
-	// some sort of factory class
-//	public static Coordinate makeCoordinate(SquareCoordinate sc)
-//	{
-//		return (Coordinate)new SquareCoordinate(sc.getX(), sc.getY());
-//	}
 }

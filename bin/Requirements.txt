@@ -81,7 +81,7 @@ Additional Notes from Canvas/Office Hours
      	Example Design and Flow of ToDo's
      	================================
      		- Have 3 seperate coordinate classes, abtracted all the common functionality into one class
-     		  to the point where the only differences 
+     		  to the point where the only differences where makeCoordinate() & distanceTo() 
      		- Coordinate should be the first thing we implement before board
      		- After that, we need to build out some board config files to see if our boards can be created
      		- After we create the boards, we want to ask questions like can we get a piece at and can we put

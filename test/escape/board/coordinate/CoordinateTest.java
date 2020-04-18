@@ -12,7 +12,6 @@
 
 package escape.board.coordinate;
 
-import static escape.board.coordinate.SquareCoordinate.makeCoordinate;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
@@ -30,14 +29,56 @@ class CoordinateTest
 	@MethodSource("squareDistanceProvider")
 	void squareDistanceTests(int expected, int x1, int y1, int x2, int y2) 
 	{
-		assertEquals(expected, makeCoordinate(new SquareCoordinate(x1, y1)).distanceTo(makeCoordinate(new SquareCoordinate(x2, y2))));
+		Coordinate c1 = SquareCoordinate.makeCoordinate(x1, y1);
+		Coordinate c2 = SquareCoordinate.makeCoordinate(x2, y2);
+		assertEquals(expected, c1.distanceTo(c2));
 	}
 	
 	static Stream<Arguments> squareDistanceProvider()
 	{
 		return Stream.of(
-				Arguments.of(2, 3, 4, 3, 6)
+				Arguments.of(2, 3, 4, 3, 6),
+				Arguments.of(1, 3, 6, 3, 5),
+				Arguments.of(3, 5, 5, 8, 5),
+				Arguments.of(4, 8, 5, 4, 5),
+				Arguments.of(4, 4, 2, 8, 6),
+				Arguments.of(3, 7, 5, 4, 2),
+				Arguments.of(1, 3, 7, 2, 6),
+				Arguments.of(2, 2, 6, 4, 8),
+				Arguments.of(4, 4, 4, 8, 5),
+				Arguments.of(3, 4, 4, 1, 5),
+				Arguments.of(4, 4, 6, 6, 2),
+				Arguments.of(4, 6, 2, 4, 6),
+				Arguments.of(4, 5, 6, 2, 2),
+				Arguments.of(4, 5, 6, 1, 4),
+				Arguments.of(2, 2, 5, 4, 4));
+	}
+	
+	 
+	@ParameterizedTest
+	@MethodSource("orthogonalDistanceProvider")
+	void orthogonalDistanceTests(int expected, int x1, int y1, int x2, int y2) 
+	{
+		Coordinate c1 = OrthogonalCoordinate.makeCoordinate(x1, y1);
+		Coordinate c2 = OrthogonalCoordinate.makeCoordinate(x2, y2);
+		assertEquals(expected, c1.distanceTo(c2));
+	}
+	
+	static Stream<Arguments> orthogonalDistanceProvider()
+	{
+		return Stream.of(
+				Arguments.of(2, 3, 4, 3, 6),
+				Arguments.of(1, 3, 6, 3, 5),
+				Arguments.of(3, 5, 5, 8, 5),
+				Arguments.of(4, 8, 5, 4, 5),
+				Arguments.of(8, 4, 2, 8, 6),
+				Arguments.of(2, 7, 5, 6, 4),
+				Arguments.of(2, 3, 7, 2, 6),
+				Arguments.of(4, 2, 6, 4, 8),
+				Arguments.of(5, 4, 4, 8, 5),
+				Arguments.of(4, 4, 4, 1, 5),
+				Arguments.of(6, 4, 6, 6, 2),
+				Arguments.of(6, 6, 2, 4, 6)
 				);
-	}	
-    
+	}
 }

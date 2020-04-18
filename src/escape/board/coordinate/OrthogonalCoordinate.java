@@ -3,36 +3,38 @@
  * The course was taken at Worcester Polytechnic Institute.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v2.0
+ * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
- * https://www.eclipse.org/legal/epl-2.0/
+ * http://www.eclipse.org/legal/epl-v10.html
  * 
- * Copyright ©2016-2020 Gary F. Pollice
+ * Copyright ©2020 Brandon Navarro
  *******************************************************************************/
+
 package escape.board.coordinate;
 
 /**
- * The SquareCoordinate class extends from the TwoDimensionalCoordinate
- * class ( @see escape.board.coordinate ) and only holds the logic to
- * calculate the distance from itself to another square coordinate, 
- * as well as statically create one of itself
- * 
- * @version Mar 27, 2020
+ * Description
+ * @version Apr 18, 2020
  */
-public class SquareCoordinate extends TwoDimensionalCoordinate
+public class OrthogonalCoordinate extends TwoDimensionalCoordinate
 {
-    
-    private SquareCoordinate(int x, int y)
-    {
-    	super(x, y);
-    }
-    
-    public static Coordinate makeCoordinate(int x, int y)
-    {
-    	return new SquareCoordinate(x, y);
-    }
-    
-    /*
+
+	/**
+	 * Description
+	 * @param x
+	 * @param y
+	 */
+	public OrthogonalCoordinate(int x, int y)
+	{
+		super(x, y);
+	}
+	
+	public static Coordinate makeCoordinate(int x, int y)
+	{
+		return new OrthogonalCoordinate(x, y);
+	}
+
+	/*
 	 * @see escape.board.coordinate.Coordinate#distanceTo(escape.board.coordinate.Coordinate)
 	 */
 	@Override
@@ -40,13 +42,11 @@ public class SquareCoordinate extends TwoDimensionalCoordinate
 	{
 		// We can cast here because we can make the assumption that this coordinate
 		// is in face a square because we are always given a valid config of a board
-		SquareCoordinate to = (SquareCoordinate) c;
-
+		OrthogonalCoordinate to = (OrthogonalCoordinate) c;
+		
 		if (this.getX() == to.getX())
 			return calcSimpleDistance(to.getY(), this.getY());
 		else if (this.getY() == to.getY())
-			return calcSimpleDistance(to.getX(), this.getX());
-		else if (isPerfectlyDiagonal(to))
 			return calcSimpleDistance(to.getX(), this.getX());
 		else
 			return calcShortestDistance(to);
@@ -62,27 +62,14 @@ public class SquareCoordinate extends TwoDimensionalCoordinate
 	{
 		return Math.abs(Math.abs(to) - Math.abs(from));
 	}
-	
+
 	/**
-	 * This method determines if the two coordinates are perfectly diagonal from
-	 * one another. In other words, there is no orthogonal movement allowed to get
-	 * from one square to the other
-	 * @param to the coordinate that is being checked against
-	 * @return true if the coordinates are perfectly diagonal
-	 */
-	private boolean isPerfectlyDiagonal(SquareCoordinate to)
-	{
-		return calcSimpleDistance(this.getX(), to.getX()) == 
-				calcSimpleDistance(this.getY(), to.getY());
-	}
-	
-	/**
-	 * This method contains the algorithm to find the shortest route between two
-	 * coordinates. It works by first traversing diagonally 
+	 * This method calculates the shortest distance between two points using only
+	 * orthogonal movements
 	 * @param to the coordinate that is being travelled to
 	 * @return the shortest distance between two points
 	 */
-	private int calcShortestDistance(SquareCoordinate to)
+	private int calcShortestDistance(OrthogonalCoordinate to)
 	{
 		int travellerX = this.getX();
 		int travellerY = this.getY();
@@ -92,9 +79,9 @@ public class SquareCoordinate extends TwoDimensionalCoordinate
 		{
 			if (travellerX > to.getX())
 				travellerX--;
-			else
+			else if (travellerX < to.getX())
 				travellerX++;
-			if (travellerY > to.getY())
+			else if (travellerY > to.getY())
 				travellerY--;
 			else
 				travellerY++;
