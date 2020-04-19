@@ -81,4 +81,33 @@ class CoordinateTest
 				Arguments.of(6, 6, 2, 4, 6)
 				);
 	}
+	
+	@ParameterizedTest
+	@MethodSource("hexDistanceProvider")
+	void hexDistanceTests(int expected, int x1, int y1, int x2, int y2) 
+	{
+		Coordinate c1 = HexCoordinate.makeCoordinate(x1, y1);
+		Coordinate c2 = HexCoordinate.makeCoordinate(x2, y2);
+		assertEquals(expected, c1.distanceTo(c2));
+	}
+	
+	static Stream<Arguments> hexDistanceProvider()
+	{
+		return Stream.of(
+				Arguments.of(1, 0, 0, -1, 1),
+				Arguments.of(1, -1, 1, 0, 0),
+				Arguments.of(1, 0, 0, -1, 0),
+				Arguments.of(1, -1, 0, 0, 0),
+				Arguments.of(1, 0, 0, 0, -1),
+				Arguments.of(1, 0, -1, 0, 0),
+				Arguments.of(1, 0, 0, 1, -1),
+				Arguments.of(1, 1, -1, 0, 0),
+				Arguments.of(1, 0, 0, 1, 0),
+				Arguments.of(1, 0, 0, 0, 1),
+				Arguments.of(1, 0, 1, 0, 0),
+				Arguments.of(4, -3, 0, 1, -1),
+				Arguments.of(1, 0, 2, -1, 2)
+//				Arguments.of(4, 0, -3, 1, 0)
+				);
+	}
 }

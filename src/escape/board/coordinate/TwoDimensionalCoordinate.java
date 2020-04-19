@@ -69,6 +69,7 @@ public abstract class TwoDimensionalCoordinate implements Coordinate
 		if (!(obj instanceof TwoDimensionalCoordinate)) {
 			return false;
 		}
+		
 		TwoDimensionalCoordinate other = (TwoDimensionalCoordinate) obj;
 		return x == other.x && y == other.y;
 	}

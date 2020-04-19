@@ -23,6 +23,11 @@ public class HexCoordinate extends TwoDimensionalCoordinate
 	{
 		super(x, y);
 	}
+	
+	public static Coordinate makeCoordinate(int x, int y)
+	{
+		return new HexCoordinate(x, y);
+	}
 
 	/*
 	 * @see escape.board.coordinate.Coordinate#distanceTo(escape.board.coordinate.Coordinate)
@@ -30,8 +35,52 @@ public class HexCoordinate extends TwoDimensionalCoordinate
 	@Override
 	public int distanceTo(Coordinate c)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return calcHexDistance(c);
 	}
-
+	
+	/**
+	 * This algorithm calculates the distance from one coordinate to another. This
+	 * algorithm was adapted from user jonathankoren on StackExchange
+	 * https://stackoverflow.com/questions/14491444/calculating-distance-on-a-hexagon-grid
+	 * @param c the coordinate that is being travelled to
+	 * @return the distance from one hex coordinate to another
+	 */
+	private int calcHexDistance(Coordinate c)
+	{
+		HexCoordinate to = (HexCoordinate) c;
+		if (this.getX() == to.getX())
+		{
+			return calcSimpleHexDistance(to.getY(), this.getY());
+		} 
+		else if (this.getY() == to.getY())
+		{
+			return calcSimpleHexDistance(to.getX(), this.getX());
+		}
+		else
+		{
+			int dx = Math.abs(to.getX() - this.getX());
+			int dy = Math.abs(to.getY() - this.getY());
+			if (this.getY() < to.getY())
+			{
+				System.out.println("(fromX, fromY) - " + this.getX() + this.getY());
+				System.out.println("(toX, toY) - " + to.getX() + to.getY());
+				System.out.println("dx - " + dx);
+				System.out.println("dy - " + dy);
+				return dx + dy - (int) (Math.ceil(dx / 2.0));
+			}
+			else if (this.getX() < to.getX())
+			{
+				return dx;
+			}
+			else
+			{
+				return dx + dy - (int) (Math.floor(dx / 2.0));
+			}
+		}
+	}
+	
+	private int calcSimpleHexDistance(int from, int to)
+	{
+		return Math.abs(to - from);
+	}
 }
