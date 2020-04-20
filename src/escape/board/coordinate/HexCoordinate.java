@@ -12,7 +12,6 @@
 
 package escape.board.coordinate;
 
-import java.util.ArrayList;
 
 /**
  * Description

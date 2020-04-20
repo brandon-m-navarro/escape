@@ -15,9 +15,7 @@ import static escape.piece.PieceName.*;
 import java.io.StringReader;
 import javax.xml.bind.*;
 import escape.board.coordinate.CoordinateID;
-import static escape.board.coordinate.CoordinateID.*;
 import static escape.piece.Player.*;
-import static escape.piece.PieceName.*;
 import static escape.board.LocationType.*;
 
 /**
