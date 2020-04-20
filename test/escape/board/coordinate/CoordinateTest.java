@@ -96,7 +96,6 @@ class CoordinateTest
 	{
 		return Stream.of(
 				Arguments.of(1, 0, 0, -1, 1),
-				Arguments.of(1, -1, 1, 0, 0),
 				Arguments.of(1, 0, 0, -1, 0),
 				Arguments.of(1, -1, 0, 0, 0),
 				Arguments.of(1, 0, 0, 0, -1),
@@ -104,11 +103,21 @@ class CoordinateTest
 				Arguments.of(1, 0, 0, 1, -1),
 				Arguments.of(1, 1, -1, 0, 0),
 				Arguments.of(1, 0, 0, 1, 0),
+				Arguments.of(1, 1, 0, 0, 0),
 				Arguments.of(1, 0, 0, 0, 1),
 				Arguments.of(1, 0, 1, 0, 0),
-				Arguments.of(4, -3, 0, 1, -1),
-				Arguments.of(1, 0, 2, -1, 2)
-//				Arguments.of(4, 0, -3, 1, 0)
+				Arguments.of(2, 2, -1, 1, -2),
+				Arguments.of(4, -1, -1, 2, 0),
+				Arguments.of(2, 2, -1, 1, -2),
+				Arguments.of(2, 1, -2, 2, -1),
+				Arguments.of(3, 0, 3, 0, 0),
+				Arguments.of(3, 0, 0, 0, 3),
+				Arguments.of(3, 3, 0, 0, 0),
+				Arguments.of(3, 0, 0, 3, 0),
+				Arguments.of(3, 0, -3, 0, 0),
+				Arguments.of(3, 0, 0, 0, -3),
+				Arguments.of(4, -2, -2, 0, 0),
+				Arguments.of(5, -1, -1, 0, 3)
 				);
 	}
 }

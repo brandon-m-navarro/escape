@@ -13,6 +13,7 @@
 package escape.board;
 
 import escape.board.coordinate.TwoDimensionalCoordinate;
+import escape.exception.EscapeException;
 import escape.piece.EscapePiece;
 
 /**
@@ -47,6 +48,10 @@ public class HexBoard extends TwoDimensionalBoard
 	@Override
 	public void putPieceAt(EscapePiece p, TwoDimensionalCoordinate coord)
 	{
-		pieces.put(coord, p);
-	}
+		if(isExit(coord))
+			return;	 	// Do nothing, don't place piece
+		else if (!isBlocked(coord))
+			pieces.put(coord, p);
+		else
+			throw new EscapeException("ERROR: invalid coordinate!");	}
 }

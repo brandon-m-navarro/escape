@@ -12,6 +12,8 @@
 
 package escape.board.coordinate;
 
+import java.util.ArrayList;
+
 /**
  * Description
  * @version Apr 18, 2020
@@ -35,52 +37,27 @@ public class HexCoordinate extends TwoDimensionalCoordinate
 	@Override
 	public int distanceTo(Coordinate c)
 	{
-		return calcHexDistance(c);
+//		return calcHexDistance(c);
+		HexCoordinate to =(HexCoordinate) c;
+		return calcHexDistance(this.getX(), this.getY(), to.getX(), to.getY());
 	}
 	
+
 	/**
 	 * This algorithm calculates the distance from one coordinate to another. This
-	 * algorithm was adapted from user jonathankoren on StackExchange
-	 * https://stackoverflow.com/questions/14491444/calculating-distance-on-a-hexagon-grid
+	 * algorithm was adapted from user mikera on StackExchange
+	 * https://stackoverflow.com/questions/9697589/need-help-understanding-a-posted-algorithm-calculating-step-distance-between-he/9698940
 	 * @param c the coordinate that is being travelled to
 	 * @return the distance from one hex coordinate to another
 	 */
-	private int calcHexDistance(Coordinate c)
-	{
-		HexCoordinate to = (HexCoordinate) c;
-		if (this.getX() == to.getX())
-		{
-			return calcSimpleHexDistance(to.getY(), this.getY());
-		} 
-		else if (this.getY() == to.getY())
-		{
-			return calcSimpleHexDistance(to.getX(), this.getX());
-		}
-		else
-		{
-			int dx = Math.abs(to.getX() - this.getX());
-			int dy = Math.abs(to.getY() - this.getY());
-			if (this.getY() < to.getY())
-			{
-				System.out.println("(fromX, fromY) - " + this.getX() + this.getY());
-				System.out.println("(toX, toY) - " + to.getX() + to.getY());
-				System.out.println("dx - " + dx);
-				System.out.println("dy - " + dy);
-				return dx + dy - (int) (Math.ceil(dx / 2.0));
-			}
-			else if (this.getX() < to.getX())
-			{
-				return dx;
-			}
-			else
-			{
-				return dx + dy - (int) (Math.floor(dx / 2.0));
-			}
-		}
-	}
-	
-	private int calcSimpleHexDistance(int from, int to)
-	{
-		return Math.abs(to - from);
+	public static int calcHexDistance(int x1, int y1, int x2, int y2) {
+	    int dx=x2-x1;
+	    int dy=y2-y1;
+
+	    if (dx*dy>0) {
+	        return Math.abs(dx)+Math.abs(dy);
+	    } else {
+	        return Math.max(Math.abs(dx),Math.abs(dy));
+	    }
 	}
 }

@@ -68,7 +68,17 @@ Coordinate
 	37. (0, 0) -> (0, 1) | 1	- Up
 	38. (0, 1) -> (0, 0) | 1
 	
-	~~~~~~~~~~~ (-3, 0) -> (1, -1) | 4 ~~~~~~~~~~~~~~~~~~ NEEDS TO BE RE-VISITED
+	59. (2, -1) -> (1, -2) | 2
+	60. (-1, -1) -> (2, 0) | 4
+	61. (2, -1) -> (1, -2) | 2
+	61. (1, -2) -> (2, -1) | 2 
+	62. (0, 3) -> (0, 0) | 3
+	63. (0, 0) -> (0, 3) | 3
+	64. (3, 0) -> (0, 0) | 3
+	65. (0, 0) -> (3, 0) | 3
+	66. (0, -3) -> (0, 0) | 3
+	67. (0, 0) -> (0, -3) | 3
+	68. (-2, -2) -> (0, 0) | 4
 	
 	
 	
@@ -116,32 +126,32 @@ XML Config
 	40. Board1 = b :: b.putPieceAt(ep.HORSE, SquareCoordinate.makeCoordinate(10, 10)) -> throws EscapeException
 		- Can't place piece off the board
 		
-	42. Board1 = b :: b.putPieceAt(ep.HORSE, SquareCoordinate.makeCoordinate(4, 2)) > then >
+	41. Board1 = b :: b.putPieceAt(ep.HORSE, SquareCoordinate.makeCoordinate(4, 2)) > then >
 					  b.getPieceAt(SquareCoordinate.makeCoordinate(4, 2)) -> ep.HORSE			
 		- Place a piece and check that we can get that piece
 		
-	43. Board1 = b :: b.getPieceAt(SquareCoordinate.makeCoordinate(2, 2)) -> ep.HORSE	
+	42. Board1 = b :: b.getPieceAt(SquareCoordinate.makeCoordinate(2, 2)) -> ep.HORSE	
 		- Check we can get an initialized Piece
 		
-	44. Board1 = b :: b.getPieceAt(SquareCoordinate.makeCoordinate(1, 2)) -> null 
+	43. Board1 = b :: b.getPieceAt(SquareCoordinate.makeCoordinate(1, 2)) -> null 
 		- Check that getPieceAt() returns null for a spot with nothing on it
 		
-	45. Board1 = b :: b.getPieceAt(SquareCoordinate.makeCoordinate(3, 5)) -> null  
+	44. Board1 = b :: b.getPieceAt(SquareCoordinate.makeCoordinate(3, 5)) -> null  
 		- Check that getPieceAt still returns null if the space is initialized with any
-	  	  LocationType, but no Piece
+	 	  LocationType, but no Piece
 	  	  
-	46. Board1 = b :: b.putPieceAt(ep.HORSE, SquareCoordinate.makeCoordinate(3, 5)) -> throws EscapeException
+	45. Board1 = b :: b.putPieceAt(ep.HORSE, SquareCoordinate.makeCoordinate(3, 5)) -> throws EscapeException
 		- We shouldn't be allowed to put a piece on an initialized BLOCKED location
 			
-	47. Board1 = b :: b.putPieceAt(Player2.HORSE, SquareCoordinate.makeCoordinate(2, 2)) > then >
+	46. Board1 = b :: b.putPieceAt(Player2.HORSE, SquareCoordinate.makeCoordinate(2, 2)) > then >
 				  	  b.getPieceAt(SquareCoordinate.makeCoordinate(2, 2)) -> Player2.HORSE
 		- Specified that we should replace the piece at the coordinates if one already exists
 	
-	48. Board1 = b :: b.putPieceAt(null, SquareCoordinate.makeCoordinate(2, 2)) > then >
+	47. Board1 = b :: b.putPieceAt(null, SquareCoordinate.makeCoordinate(2, 2)) > then >
 				 	  b.getPieceAt(SquareCoordinate.makeCoordinate(2, 2)) -> null
 		- Specified that if null is passed, then the piece should be removed
 	
-	49. Board4 = b :: b.putPieceAt(Player1.HORSE, SquareCoordinate.makeCoordinate(4, 5)) > then >
+	48. Board4 = b :: b.putPieceAt(Player1.HORSE, SquareCoordinate.makeCoordinate(4, 5)) > then >
 				  b.getPieceAt(SquareCoordinate.makeCoordinate(4, 5)) -> null
 		- Specified that an exception SHOULD NOT be thrown, instead, a query of the board would
 		  return null
@@ -151,15 +161,48 @@ XML Config
 	
 	OrthoSquareBoard
 	================
-	will have the same tests as a square board, nothing unique
+	Running the same test suite that was ran for Square as the only difference between SquareBoard &
+	OrthoSquareBoard is how their individual coordinates
 	
-	The only difference is how distance is calculated
+	49. Board1 	   :: bb.makeBoard().getClass() == SquareBoard.class
+		
+	50. Board1 = b :: b.putPieceAt(ep.HORSE, SquareCoordinate.makeCoordinate(10, 10)) -> throws EscapeException
+		- Can't place piece off the board
+		
+	51. Board1 = b :: b.putPieceAt(ep.HORSE, SquareCoordinate.makeCoordinate(4, 2)) > then >
+					  b.getPieceAt(SquareCoordinate.makeCoordinate(4, 2)) -> ep.HORSE			
+		- Place a piece and check that we can get that piece
+		
+	52. Board1 = b :: b.getPieceAt(SquareCoordinate.makeCoordinate(2, 2)) -> ep.HORSE	
+		- Check we can get an initialized Piece
+		
+	53. Board1 = b :: b.getPieceAt(SquareCoordinate.makeCoordinate(1, 2)) -> null 
+		- Check that getPieceAt() returns null for a spot with nothing on it
+		
+	54. Board1 = b :: b.getPieceAt(SquareCoordinate.makeCoordinate(3, 5)) -> null  
+		- Check that getPieceAt still returns null if the space is initialized with any
+	  	  LocationType, but no Piece
+	  	  
+	55. Board1 = b :: b.putPieceAt(ep.HORSE, SquareCoordinate.makeCoordinate(3, 5)) -> throws EscapeException
+		- We shouldn't be allowed to put a piece on an initialized BLOCKED location
+			
+	56. Board1 = b :: b.putPieceAt(Player2.HORSE, SquareCoordinate.makeCoordinate(2, 2)) > then >
+				  	  b.getPieceAt(SquareCoordinate.makeCoordinate(2, 2)) -> Player2.HORSE
+		- Specified that we should replace the piece at the coordinates if one already exists
 	
-	The only required methods are putPiece and getPiece, so we just need
-	to validate whether we can get a piece from that location, or put a piece at that location
+	57. Board1 = b :: b.putPieceAt(null, SquareCoordinate.makeCoordinate(2, 2)) > then >
+				 	  b.getPieceAt(SquareCoordinate.makeCoordinate(2, 2)) -> null
+		- Specified that if null is passed, then the piece should be removed
 	
+	58. Board4 = b :: b.putPieceAt(Player1.HORSE, SquareCoordinate.makeCoordinate(4, 5)) > then >
+				  b.getPieceAt(SquareCoordinate.makeCoordinate(4, 5)) -> null
+		- Specified that an exception SHOULD NOT be thrown, instead, a query of the board would
+		  return null
+		  
 	HexBoard
 	========
+	
+	
 	Need to have it set a default of xMax & yMax of 
 	Can have a piece and place a piece on a negative coordinate
 	

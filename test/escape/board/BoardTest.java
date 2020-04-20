@@ -320,4 +320,107 @@ class BoardTest
 		assertNotNull(bb.makeBoard());
 		assertTrue(bb.makeBoard().getClass() == HexBoard.class);		
 	}
+	
+	@Test
+	void getInitializedPieceHexBoard() throws Exception
+	{
+		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		assertNotNull(bb.makeBoard());
+		
+		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
+		Board<HexCoordinate> b = bb.makeBoard();
+		assertNotNull(b.getPieceAt(sc));
+		EscapePiece ep = b.getPieceAt(sc);
+		assertEquals(ep.getName(), PieceName.HORSE);
+	}
+	
+	@Test
+	void putPieceAtHexBoard() throws Exception
+	{
+		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		assertNotNull(bb.makeBoard());
+		
+		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
+		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
+		Board<HexCoordinate> b = bb.makeBoard();
+		b.putPieceAt(ep, sc);
+		assertEquals(ep, b.getPieceAt(sc));
+	}
+	
+	@Test
+	void getPieceAtOnLocationTypeHexBoard() throws Exception
+	{
+		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		assertNotNull(bb.makeBoard());
+		
+		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(3, 5);
+		Board<HexCoordinate> b = bb.makeBoard();
+		assertNull(b.getPieceAt(sc));
+	}
+	
+	@Test
+	void putPieceAtBlockedLocationHexBoard() throws Exception
+	{
+		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		assertNotNull(bb.makeBoard());
+		
+		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
+		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(3, 5);
+		Board<HexCoordinate> b = bb.makeBoard();
+		
+	    EscapeException thrown = assertThrows(
+    		EscapeException.class,
+		    () -> b.putPieceAt(ep, sc));
+
+	    // assertions on the thrown exception
+		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
+		// assertions on the state of a domain object after the exception has been thrown
+		assertNull(b.getPieceAt(sc));
+	}
+	
+	@Test
+	void putPieceOnAnotherPieceHexBoard() throws Exception
+	{
+		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		assertNotNull(bb.makeBoard());
+		
+		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
+		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
+		Board<HexCoordinate> b = bb.makeBoard();
+		b.putPieceAt(ep, sc);
+		assertEquals(ep.getPlayer(), b.getPieceAt(sc).getPlayer());
+	}
+	
+	@Test
+	void removePieceWithPutPieceAtHexBoard() throws Exception
+	{
+		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		assertNotNull(bb.makeBoard());
+		
+		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
+		Board<HexCoordinate> b = bb.makeBoard();
+		b.putPieceAt(null, sc);
+		assertNull(b.getPieceAt(sc));
+	}
+	
+	@Test
+	void putPieceAtExitLocationHexBoard() throws Exception
+	{
+		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		assertNotNull(bb.makeBoard());
+		
+		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
+		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(3, 6);
+		Board<HexCoordinate> b = bb.makeBoard();
+		b.putPieceAt(ep, sc);
+		assertNull(b.getPieceAt(sc));
+	}
+	
+	
+	@Test
+	void initializeHexBoardWithNoSpecifiedMaxXAndMaxY() throws Exception
+	{
+		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig5.xml"));
+		assertNotNull(bb.makeBoard());
+	}
 }

@@ -13,11 +13,4 @@
         <y>5</y>
         <locationType>BLOCK</locationType>
     </locationInitializers>
-    <locationInitializers>
-        <x>3</x>
-        <y>6</y>
-        <locationType>EXIT</locationType>
-    </locationInitializers>
-    <xMax>0</xMax>
-    <yMax>0</yMax>
 </boardInitializer>
