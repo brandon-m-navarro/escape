@@ -15,7 +15,6 @@ import static escape.board.LocationType.CLEAR;
 import java.io.*;
 import javax.xml.bind.*;
 import escape.board.coordinate.*;
-import escape.board.coordinate1.*;
 import escape.piece.EscapePiece;
 import escape.util.*;
 

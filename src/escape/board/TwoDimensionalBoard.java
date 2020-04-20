@@ -14,7 +14,6 @@ package escape.board;
 
 import java.util.*;
 import escape.board.coordinate.TwoDimensionalCoordinate;
-import escape.board.coordinate1.*;
 import escape.piece.EscapePiece;
 
 /**
@@ -45,4 +44,19 @@ public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordin
 		spots.put(c, lt);
 	}
 	
+	/**
+	 * This method checks whether the given coordinate was initialized
+	 * with a LocationType of BLOCKED
+	 * @param coord the Coordinate that is being checked
+	 * @return true if the LocationType of the Coordinate is BLOCKED
+	 */
+	protected boolean isBlocked(TwoDimensionalCoordinate coord)
+	{
+		return spots.get(coord) == LocationType.BLOCK;
+	}
+	
+	protected boolean isExit(TwoDimensionalCoordinate coord)
+	{
+		return spots.get(coord) == LocationType.EXIT;
+	}
 }

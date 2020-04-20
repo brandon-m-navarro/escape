@@ -91,30 +91,75 @@ XML Config
 						 	LocationInitializer 
 						 		[x=3, y=5, locationType=BLOCK, player=null, pieceName=null]]]
 						 		
-	Board 1 :: 
-		BoardInitializer [xMax=8, yMax=8, coordinateId=HEX, 
+	Board 3 :: 
+		BoardInitializer [xMax=0, yMax=0, coordinateId=HEX, 
 						 locationInitializers=
 						 	[LocationInitializer 
 						 		[x=2, y=2, locationType=CLEAR, player=PLAYER1, pieceName=HORSE],
 						 	LocationInitializer 
 						 		[x=3, y=5, locationType=BLOCK, player=null, pieceName=null]]]
+	Board 4 :: 
+		BoardInitializer [xMax=10, yMax=10, coordinateId=SQUARE, 
+						 locationInitializers= [
+						 	LocationInitializer 
+						 		[x=2, y=2, locationType=CLEAR, player=PLAYER1, pieceName=HORSE],
+						 	LocationInitializer 
+						 		[x=3, y=5, locationType=BLOCK, player=null, pieceName=null],
+						 		LocationInitializer 
+						 		[x=4, y=5, locationType=EXIT, player=null, pieceName=null]]]
 
 	SquareBoard
 	===========
-	Check that the board can only place pieces within the appropriate boundries of xMax & yMax
-	
-	assertNotNull on the spots that are expected to have a piece on them
-	
-	Check whether we are able to put a new piece on the map
-	
-	Check that getPieceAt still returns null if the space is initialized with any
-	location type (CLEAR, BLOCK, EXIT)
+	39. Board1 	   :: bb.makeBoard().getClass() == SquareBoard.class
+		- Affirm that a SquareBoard can be initialized through XML
 		
+	40. Board1 = b :: b.putPieceAt(ep.HORSE, SquareCoordinate.makeCoordinate(10, 10)) -> throws EscapeException
+		- Can't place piece off the board
+		
+	42. Board1 = b :: b.putPieceAt(ep.HORSE, SquareCoordinate.makeCoordinate(4, 2)) > then >
+					  b.getPieceAt(SquareCoordinate.makeCoordinate(4, 2)) -> ep.HORSE			
+		- Place a piece and check that we can get that piece
+		
+	43. Board1 = b :: b.getPieceAt(SquareCoordinate.makeCoordinate(2, 2)) -> ep.HORSE	
+		- Check we can get an initialized Piece
+		
+	44. Board1 = b :: b.getPieceAt(SquareCoordinate.makeCoordinate(1, 2)) -> null 
+		- Check that getPieceAt() returns null for a spot with nothing on it
+		
+	45. Board1 = b :: b.getPieceAt(SquareCoordinate.makeCoordinate(3, 5)) -> null  
+		- Check that getPieceAt still returns null if the space is initialized with any
+	  	  LocationType, but no Piece
+	  	  
+	46. Board1 = b :: b.putPieceAt(ep.HORSE, SquareCoordinate.makeCoordinate(3, 5)) -> throws EscapeException
+		- We shouldn't be allowed to put a piece on an initialized BLOCKED location
+			
+	47. Board1 = b :: b.putPieceAt(Player2.HORSE, SquareCoordinate.makeCoordinate(2, 2)) > then >
+				  	  b.getPieceAt(SquareCoordinate.makeCoordinate(2, 2)) -> Player2.HORSE
+		- Specified that we should replace the piece at the coordinates if one already exists
+	
+	48. Board1 = b :: b.putPieceAt(null, SquareCoordinate.makeCoordinate(2, 2)) > then >
+				 	  b.getPieceAt(SquareCoordinate.makeCoordinate(2, 2)) -> null
+		- Specified that if null is passed, then the piece should be removed
+	
+	49. Board4 = b :: b.putPieceAt(Player1.HORSE, SquareCoordinate.makeCoordinate(4, 5)) > then >
+				  b.getPieceAt(SquareCoordinate.makeCoordinate(4, 5)) -> null
+		- Specified that an exception SHOULD NOT be thrown, instead, a query of the board would
+		  return null
+	
+		May want a getValidAdjacentSpots for each board -> ArrayList<Coordinates> getValidAdjacentSpots(Coordinate c)
+		within each board class so we can access this.spots
 	
 	OrthoSquareBoard
 	================
+	will have the same tests as a square board, nothing unique
+	
+	The only difference is how distance is calculated
+	
+	The only required methods are putPiece and getPiece, so we just need
+	to validate whether we can get a piece from that location, or put a piece at that location
 	
 	HexBoard
 	========
-	
+	Need to have it set a default of xMax & yMax of 
+	Can have a piece and place a piece on a negative coordinate
 	

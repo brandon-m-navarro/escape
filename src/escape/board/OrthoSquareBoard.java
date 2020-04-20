@@ -12,7 +12,8 @@
 
 package escape.board;
 
-import escape.board.coordinate.TwoDimensionalCoordinate;
+import escape.board.coordinate.*;
+import escape.exception.EscapeException;
 import escape.piece.EscapePiece;
 
 /**
@@ -22,15 +23,9 @@ import escape.piece.EscapePiece;
 public class OrthoSquareBoard extends TwoDimensionalBoard
 {
 
-	/**
-	 * Description
-	 * @param xMax
-	 * @param yMax
-	 */
 	public OrthoSquareBoard(int xMax, int yMax)
 	{
 		super(xMax, yMax);
-		// TODO Auto-generated constructor stub
 	}
 
 	/*
@@ -48,6 +43,23 @@ public class OrthoSquareBoard extends TwoDimensionalBoard
 	@Override
 	public void putPieceAt(EscapePiece p, TwoDimensionalCoordinate coord)
 	{
-		pieces.put(coord, p);
+		if(isExit(coord))
+			return;	 	// Do nothing, don't place piece
+		else if (isWithinBoundries(coord) && !isBlocked(coord))
+			pieces.put(coord, p);
+		else
+			throw new EscapeException("ERROR: invalid coordinate!");
+	}
+	
+	/**
+	 * This method checks whether the given coordinate is within the
+	 * specified boundries
+	 * @param coord the coordinate that is being checked
+	 * @return true if it is within the boards xMax & yMax
+	 */
+	private boolean isWithinBoundries(TwoDimensionalCoordinate coord)
+	{
+		OrthoSquareCoordinate c = (OrthoSquareCoordinate) coord;
+		return (c.getX() <= xMax && c.getY() <= yMax);
 	}
 }
