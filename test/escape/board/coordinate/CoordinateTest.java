@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
+import escape.board.coordinate.*;
 
 /**
  * Tests for various coordinates
@@ -59,8 +60,8 @@ class CoordinateTest
 	@MethodSource("orthogonalDistanceProvider")
 	void orthogonalDistanceTests(int expected, int x1, int y1, int x2, int y2) 
 	{
-		Coordinate c1 = OrthogonalCoordinate.makeCoordinate(x1, y1);
-		Coordinate c2 = OrthogonalCoordinate.makeCoordinate(x2, y2);
+		Coordinate c1 = OrthoSquareCoordinate.makeCoordinate(x1, y1);
+		Coordinate c2 = OrthoSquareCoordinate.makeCoordinate(x2, y2);
 		assertEquals(expected, c1.distanceTo(c2));
 	}
 	

@@ -16,7 +16,7 @@ package escape.board.coordinate;
  * Description
  * @version Apr 18, 2020
  */
-public class OrthogonalCoordinate extends TwoDimensionalCoordinate
+public class OrthoSquareCoordinate extends TwoDimensionalCoordinate
 {
 
 	/**
@@ -24,14 +24,14 @@ public class OrthogonalCoordinate extends TwoDimensionalCoordinate
 	 * @param x
 	 * @param y
 	 */
-	public OrthogonalCoordinate(int x, int y)
+	public OrthoSquareCoordinate(int x, int y)
 	{
 		super(x, y);
 	}
 	
 	public static Coordinate makeCoordinate(int x, int y)
 	{
-		return new OrthogonalCoordinate(x, y);
+		return new OrthoSquareCoordinate(x, y);
 	}
 
 	/*
@@ -42,7 +42,7 @@ public class OrthogonalCoordinate extends TwoDimensionalCoordinate
 	{
 		// We can cast here because we can make the assumption that this coordinate
 		// is in face a square because we are always given a valid config of a board
-		OrthogonalCoordinate to = (OrthogonalCoordinate) c;
+		OrthoSquareCoordinate to = (OrthoSquareCoordinate) c;
 		
 		if (this.getX() == to.getX())
 			return calcSimpleDistance(to.getY(), this.getY());
@@ -69,7 +69,7 @@ public class OrthogonalCoordinate extends TwoDimensionalCoordinate
 	 * @param to the coordinate that is being travelled to
 	 * @return the shortest distance between two points
 	 */
-	private int calcShortestDistance(OrthogonalCoordinate to)
+	private int calcShortestDistance(OrthoSquareCoordinate to)
 	{
 		int travellerX = this.getX();
 		int travellerY = this.getY();

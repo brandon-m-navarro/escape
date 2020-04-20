@@ -26,7 +26,7 @@ Coordinate
 	13. (5, 6) -> (2, 2) | 4
 	14. (5, 6) -> (1, 4) | 4
 	
-	OrthogonalCoordinate
+	OrthoSquareCoordinate
 	====================
 	15. (3, 4) -> (3, 6) | 2	- Simple horizontal check
 	16. (3, 6) -> (3, 5) | 1
@@ -74,3 +74,47 @@ Coordinate
 	
 BoardBuilder
 ~~~~~~~~~~~~
+XML Config
+	Board 1 :: 
+		BoardInitializer [xMax=8, yMax=8, coordinateId=SQUARE, 
+						 locationInitializers=
+						 	[LocationInitializer 
+						 		[x=2, y=2, locationType=CLEAR, player=PLAYER1, pieceName=HORSE],
+						 	LocationInitializer 
+						 		[x=3, y=5, locationType=BLOCK, player=null, pieceName=null]]]
+						 		
+	Board 2 :: 
+		BoardInitializer [xMax=8, yMax=8, coordinateId=ORTHOSQUARE, 
+						 locationInitializers=
+						 	[LocationInitializer 
+						 		[x=2, y=2, locationType=CLEAR, player=PLAYER1, pieceName=HORSE],
+						 	LocationInitializer 
+						 		[x=3, y=5, locationType=BLOCK, player=null, pieceName=null]]]
+						 		
+	Board 1 :: 
+		BoardInitializer [xMax=8, yMax=8, coordinateId=HEX, 
+						 locationInitializers=
+						 	[LocationInitializer 
+						 		[x=2, y=2, locationType=CLEAR, player=PLAYER1, pieceName=HORSE],
+						 	LocationInitializer 
+						 		[x=3, y=5, locationType=BLOCK, player=null, pieceName=null]]]
+
+	SquareBoard
+	===========
+	Check that the board can only place pieces within the appropriate boundries of xMax & yMax
+	
+	assertNotNull on the spots that are expected to have a piece on them
+	
+	Check whether we are able to put a new piece on the map
+	
+	Check that getPieceAt still returns null if the space is initialized with any
+	location type (CLEAR, BLOCK, EXIT)
+		
+	
+	OrthoSquareBoard
+	================
+	
+	HexBoard
+	========
+	
+	

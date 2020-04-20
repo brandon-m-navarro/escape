@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<boardInitializer>
+    <coordinateId>ORTHOSQUARE</coordinateId>
+    <locationInitializers>
+        <x>2</x>
+        <y>2</y>
+        <locationType>CLEAR</locationType>
+        <player>PLAYER1</player>
+        <pieceName>HORSE</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>3</x>
+        <y>5</y>
+        <locationType>BLOCK</locationType>
+    </locationInitializers>
+    <xMax>8</xMax>
+    <yMax>8</yMax>
+</boardInitializer>
