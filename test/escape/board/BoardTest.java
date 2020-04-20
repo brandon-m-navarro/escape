@@ -28,6 +28,19 @@ class BoardTest
 {
 	
 	@Test
+	void equalsTwoDimensionalBoard() throws Exception
+	{
+		BoardBuilder bb1 = new BoardBuilder(new File("config/board/BoardConfig1.xml"));
+		BoardBuilder bb2 = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
+		Board<SquareCoordinate> b1 = bb1.makeBoard();
+		Board<OrthoSquareCoordinate> b2 = bb2.makeBoard();
+
+		assertFalse(b1.equals("Should Fail"));
+		assertFalse(b1.equals(b2));
+		assertTrue(b1.equals(b1));
+	}
+	
+	@Test
 	void initializeSquareBoard() throws Exception
 	{
 		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig1.xml"));

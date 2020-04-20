@@ -55,6 +55,12 @@ public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordin
 		return spots.get(coord) == LocationType.BLOCK;
 	}
 	
+	/**
+	 * This method checks whether the given coordinate was initialized
+	 * with a LocationType of EXIT
+	 * @param coord the Coordinate that is being checked
+	 * @return true if the LocationType of the Coordinate is EXIT
+	 */
 	protected boolean isExit(TwoDimensionalCoordinate coord)
 	{
 		return spots.get(coord) == LocationType.EXIT;

@@ -81,16 +81,9 @@ public class OrthoSquareCoordinate extends TwoDimensionalCoordinate
 				travellerX--;
 			else if (travellerX < to.getX())
 				travellerX++;
-			else if (travellerY > to.getY())
-				travellerY--;
-			else
-				travellerY++;
 			distance++;
 		}
 		
-		if (travellerX == to.getX())
-			return distance += calcSimpleDistance(travellerY, to.getY());
-		else
-			return distance += calcSimpleDistance(travellerX, to.getX());
+		return distance += calcSimpleDistance(travellerY, to.getY());
 	}
 }

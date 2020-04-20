@@ -16,10 +16,9 @@ import escape.exception.EscapeException;
 import escape.piece.EscapePiece;
 
 /**
- * An example of how a Board might be implemented. This board has
- * square coordinates and finite bounds, represented by xMax and yMax.
- * All methods required by the Board interface have been implemented. Students
- * would naturally add methods based upon their design.
+ * This board has square coordinates and finite bounds, represented by xMax and yMax
+ * that are extended from an abstract class, TwoDimensionalBoard. Because a SquareBoard
+ * has boundries, we need to account for this when placing a piece on the board.
  * @version Apr 2, 2020
  */
 public class SquareBoard extends TwoDimensionalBoard
@@ -46,7 +45,7 @@ public class SquareBoard extends TwoDimensionalBoard
 	public void putPieceAt(EscapePiece p, TwoDimensionalCoordinate coord)
 	{
 		if(isExit(coord))
-			return;	 	// Do nothing, don't place piece
+			return;	 	// Do nothing, don't place piece!
 		else if (isWithinBoundries(coord) && !isBlocked(coord))
 			pieces.put(coord, p);
 		else

@@ -17,7 +17,9 @@ import escape.exception.EscapeException;
 import escape.piece.EscapePiece;
 
 /**
- * Description
+ * This board has ortho-square coordinates and finite bounds, represented by xMax and yMax
+ * that are extended from an abstract class, TwoDimensionalBoard. Because a OrthoSquareBoard
+ * has boundries, we need to account for this when placing a piece on the board.
  * @version Apr 19, 2020
  */
 public class OrthoSquareBoard extends TwoDimensionalBoard

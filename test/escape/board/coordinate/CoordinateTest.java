@@ -52,7 +52,8 @@ class CoordinateTest
 				Arguments.of(4, 6, 2, 4, 6),
 				Arguments.of(4, 5, 6, 2, 2),
 				Arguments.of(4, 5, 6, 1, 4),
-				Arguments.of(2, 2, 5, 4, 4));
+				Arguments.of(2, 2, 5, 4, 4),
+				Arguments.of(3, 4, 7, 2, 4));
 	}
 	
 	 
@@ -79,7 +80,8 @@ class CoordinateTest
 				Arguments.of(5, 4, 4, 8, 5),
 				Arguments.of(4, 4, 4, 1, 5),
 				Arguments.of(6, 4, 6, 6, 2),
-				Arguments.of(6, 6, 2, 4, 6)
+				Arguments.of(6, 6, 2, 4, 6),
+				Arguments.of(4, 5, 6, 4, 3)
 				);
 	}
 	

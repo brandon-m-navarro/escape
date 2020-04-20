@@ -42,6 +42,11 @@ public class BoardBuilder
         bi = (BoardInitializer)mub.unmarshal(new FileReader(fileName));
 	}
 	
+	/**
+	 * This method simply initializes the appropriate board from the unmarshalled XML
+	 * configuration file.
+	 * @return a Board with the type specified in the XML config file 
+	 */
 	public Board makeBoard()
 	{
 		TwoDimensionalBoard board;
@@ -49,21 +54,27 @@ public class BoardBuilder
 		{
 			case SQUARE:
 				board = new SquareBoard(bi.getxMax(), bi.getyMax());
-		        initializeSquareBoard((SquareBoard) board, bi.getLocationInitializers());
+		        initializeSquareBoard( board, bi.getLocationInitializers());
 				return board;
 			case ORTHOSQUARE:
 				board = new OrthoSquareBoard(bi.getxMax(), bi.getyMax());
-		        initializeOrthoSquareBoard((OrthoSquareBoard) board, bi.getLocationInitializers());
+		        initializeOrthoSquareBoard( board, bi.getLocationInitializers());
 		        return board;
 			case HEX:
 				board = new HexBoard(bi.getxMax(), bi.getyMax());
-				initializeHexBoard((HexBoard) board, bi.getLocationInitializers());
+				initializeHexBoard( board, bi.getLocationInitializers());
 				return board;
 		}
 		return null;
 	}
 	
-	private void initializeSquareBoard(SquareBoard b, LocationInitializer... initializers)
+	/**
+	 * Initialize each spot on a SquareBoard with either a piece or LocationType, depending what
+	 * was specified in the XML config file 
+	 * @param b the Board to be initialized
+	 * @param initializers 0 .. many general initializers for a board location
+	 */
+	private void initializeSquareBoard(TwoDimensionalBoard b, LocationInitializer... initializers)
 	{
 		for (LocationInitializer li : initializers) {
 			SquareCoordinate c = (SquareCoordinate) SquareCoordinate.makeCoordinate(li.x, li.y);
@@ -77,7 +88,13 @@ public class BoardBuilder
 		}
 	}
 	
-	private void initializeOrthoSquareBoard(OrthoSquareBoard b, LocationInitializer... initializers)
+	/**
+	 * Initialize each spot on a OrthoSquareBoard with either a piece or LocationType, depending what
+	 * was specified in the XML config file 
+	 * @param b the Board to be initialized
+	 * @param initializers 0 .. many general initializers for a board location
+	 */
+	private void initializeOrthoSquareBoard(TwoDimensionalBoard b, LocationInitializer... initializers)
 	{
 		for (LocationInitializer li : initializers) {
 			OrthoSquareCoordinate c = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(li.x, li.y);
@@ -91,7 +108,13 @@ public class BoardBuilder
 		}
 	}
 	
-	private void initializeHexBoard(HexBoard b, LocationInitializer... initializers)
+	/**
+	 * Initialize each spot on a HexBoard with either a piece or LocationType, depending what
+	 * was specified in the XML config file 
+	 * @param b the Board to be initialized
+	 * @param initializers 0 .. many general initializers for a board location
+	 */
+	private void initializeHexBoard(TwoDimensionalBoard b, LocationInitializer... initializers)
 	{
 		for (LocationInitializer li : initializers) {
 			HexCoordinate c = (HexCoordinate) HexCoordinate.makeCoordinate(li.x, li.y);

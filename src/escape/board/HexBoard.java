@@ -17,20 +17,16 @@ import escape.exception.EscapeException;
 import escape.piece.EscapePiece;
 
 /**
- * Description
+ * This board has hex coordinates and infinite bounds, and extends from an abstract class,
+ * TwoDimensionalBoard.
  * @version Apr 19, 2020
  */
 public class HexBoard extends TwoDimensionalBoard
 {
 
-	/**
-	 * Description
-	 * @param xMax
-	 * @param yMax
-	 */
 	public HexBoard(int xMax, int yMax)
 	{
-		super(xMax, xMax);
+		super(yMax, yMax);
 	}
 
 	/*
@@ -49,9 +45,10 @@ public class HexBoard extends TwoDimensionalBoard
 	public void putPieceAt(EscapePiece p, TwoDimensionalCoordinate coord)
 	{
 		if(isExit(coord))
-			return;	 	// Do nothing, don't place piece
+			return;	 	// Do nothing, don't place piece!
 		else if (!isBlocked(coord))
 			pieces.put(coord, p);
 		else
-			throw new EscapeException("ERROR: invalid coordinate!");	}
+			throw new EscapeException("ERROR: invalid coordinate!");
+	}
 }

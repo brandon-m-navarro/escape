@@ -74,12 +74,4 @@ public abstract class TwoDimensionalCoordinate implements Coordinate
 		return x == other.x && y == other.y;
 	}
 	
-	/*
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString()
-	{
-		return "(" + x + ", " + y + ")";
-	}
 }
