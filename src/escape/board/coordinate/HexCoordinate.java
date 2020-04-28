@@ -25,7 +25,7 @@ public class HexCoordinate extends TwoDimensionalCoordinate
 		super(x, y);
 	}
 	
-	public static Coordinate makeCoordinate(int x, int y)
+	public static HexCoordinate makeCoordinate(int x, int y)
 	{
 		return new HexCoordinate(x, y);
 	}
@@ -36,7 +36,6 @@ public class HexCoordinate extends TwoDimensionalCoordinate
 	@Override
 	public int distanceTo(Coordinate c)
 	{
-//		return calcHexDistance(c);
 		HexCoordinate to =(HexCoordinate) c;
 		return calcHexDistance(this.getX(), this.getY(), to.getX(), to.getY());
 	}
@@ -49,7 +48,7 @@ public class HexCoordinate extends TwoDimensionalCoordinate
 	 * @param c the coordinate that is being travelled to
 	 * @return the distance from one hex coordinate to another
 	 */
-	public static int calcHexDistance(int x1, int y1, int x2, int y2) {
+	private static int calcHexDistance(int x1, int y1, int x2, int y2) {
 	    int dx=x2-x1;
 	    int dy=y2-y1;
 

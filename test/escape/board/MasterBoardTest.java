@@ -40,7 +40,7 @@ class MasterBoardTest
 		board = bb.makeBoard();
 		assertNotNull(board);
 		// Now I will do some tests on this board and its contents.
-		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(5, 5);
+		SquareCoordinate sc = SquareCoordinate.makeCoordinate(5, 5);
 		EscapePiece ep = makePiece(PLAYER1, SNAIL);
 		assertNull(board.getPieceAt(sc));
 		board.putPieceAt(ep, sc);
@@ -58,7 +58,7 @@ class MasterBoardTest
         board = bb.makeBoard();
         assertNotNull(board);
         // Now I will do some tests on this board and its contents.
-        OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(5, 5);
+        OrthoSquareCoordinate sc = OrthoSquareCoordinate.makeCoordinate(5, 5);
         EscapePiece ep = makePiece(PLAYER1, SNAIL);
         assertNull(board.getPieceAt(sc));
         board.putPieceAt(ep, sc);
@@ -76,7 +76,7 @@ class MasterBoardTest
         board = bb.makeBoard();
         assertNotNull(board);
         // Now I will do some tests on this board and its contents.
-        HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(-55, 23);
+        HexCoordinate sc = HexCoordinate.makeCoordinate(-55, 23);
         EscapePiece ep = makePiece(PLAYER1, SNAIL);
         assertNull(board.getPieceAt(sc));
         board.putPieceAt(ep, sc);

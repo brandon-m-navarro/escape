@@ -27,7 +27,7 @@ public class SquareCoordinate extends TwoDimensionalCoordinate
     	super(x, y);
     }
     
-    public static Coordinate makeCoordinate(int x, int y)
+    public static SquareCoordinate makeCoordinate(int x, int y)
     {
     	return new SquareCoordinate(x, y);
     }

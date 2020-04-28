@@ -58,7 +58,7 @@ public class BoardBuilder
 				return board;
 			case ORTHOSQUARE:
 				board = new OrthoSquareBoard(bi.getxMax(), bi.getyMax());
-		        initializeOrthoSquareBoard( board, bi.getLocationInitializers());
+		        initializeOrthoSquareBoard(board, bi.getLocationInitializers());
 		        return board;
 			case HEX:
 				board = new HexBoard(bi.getxMax(), bi.getyMax());
@@ -77,7 +77,7 @@ public class BoardBuilder
 	private void initializeSquareBoard(TwoDimensionalBoard b, LocationInitializer... initializers)
 	{
 		for (LocationInitializer li : initializers) {
-			SquareCoordinate c = (SquareCoordinate) SquareCoordinate.makeCoordinate(li.x, li.y);
+			SquareCoordinate c = SquareCoordinate.makeCoordinate(li.x, li.y);
 			if (li.pieceName != null) {
 				b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
 			}
@@ -96,16 +96,24 @@ public class BoardBuilder
 	 */
 	private void initializeOrthoSquareBoard(TwoDimensionalBoard b, LocationInitializer... initializers)
 	{
-		for (LocationInitializer li : initializers) {
-			OrthoSquareCoordinate c = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(li.x, li.y);
-			if (li.pieceName != null) {
-				b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
-			}
-			
-			if (li.locationType != null && li.locationType != CLEAR) {
-				b.setLocationType(c, li.locationType);
-			}
+		if (initializers != null)
+		{
+			for (LocationInitializer li : initializers) {
+				OrthoSquareCoordinate c = OrthoSquareCoordinate.makeCoordinate(li.x, li.y);
+				if (li.pieceName != null) {
+					b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
+				}
+				
+				if (li.locationType != null && li.locationType != CLEAR) {
+					b.setLocationType(c, li.locationType);
+				}
+			}	
 		}
+		else
+		{
+			// Should initialize all spaces as clear 
+		}
+		
 	}
 	
 	/**
@@ -117,7 +125,7 @@ public class BoardBuilder
 	private void initializeHexBoard(TwoDimensionalBoard b, LocationInitializer... initializers)
 	{
 		for (LocationInitializer li : initializers) {
-			HexCoordinate c = (HexCoordinate) HexCoordinate.makeCoordinate(li.x, li.y);
+			HexCoordinate c = HexCoordinate.makeCoordinate(li.x, li.y);
 			if (li.pieceName != null) {
 				b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
 			}

@@ -29,7 +29,7 @@ public class OrthoSquareCoordinate extends TwoDimensionalCoordinate
 		super(x, y);
 	}
 	
-	public static Coordinate makeCoordinate(int x, int y)
+	public static OrthoSquareCoordinate makeCoordinate(int x, int y)
 	{
 		return new OrthoSquareCoordinate(x, y);
 	}
@@ -60,7 +60,7 @@ public class OrthoSquareCoordinate extends TwoDimensionalCoordinate
 	 */
 	private int calcSimpleDistance(int from, int to)
 	{
-		return Math.abs(Math.abs(to) - Math.abs(from));
+		return Math.abs(to - from);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class OrthoSquareCoordinate extends TwoDimensionalCoordinate
 		int travellerY = this.getY();
 		int distance = 0;
 		
-		while (travellerX != to.getX() && travellerY != to.getY())
+		while (travellerX != to.getX())
 		{
 			if (travellerX > to.getX())
 				travellerX--;
@@ -83,6 +83,8 @@ public class OrthoSquareCoordinate extends TwoDimensionalCoordinate
 				travellerX++;
 			distance++;
 		}
+		if (to.equals(OrthoSquareCoordinate.makeCoordinate(6,  -2)))
+			System.out.println(distance);
 		
 		return distance += calcSimpleDistance(travellerY, to.getY());
 	}
