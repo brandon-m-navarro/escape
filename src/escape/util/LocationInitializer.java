@@ -17,7 +17,7 @@ import escape.piece.*;
 /**
  * A general initializer for a board location. Since this is used
  * internally, we take a shortcut and make the instance variables
- * public rather than private
+ * public rather than 
  * @version Mar 30, 2020
  */
 public class LocationInitializer

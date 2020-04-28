@@ -12,6 +12,7 @@
 package escape;
 
 import escape.board.coordinate.Coordinate;
+import escape.exception.EscapeException;
 import escape.piece.EscapePiece;
 
 /**
@@ -47,4 +48,28 @@ public interface EscapeGameManager<C extends Coordinate>
 	 * @return the coordinate or null if the coordinate cannot be 
 	 */
 	C makeCoordinate(int x, int y);
+	
+	/**
+	 * Add an observer to this manager. Whever the move() method returns
+	 * false, the observer will be notified with a message indication the
+	 * problem.
+	 * @param observer
+	 * @return the observer
+	 */
+	default GameObserver addObserver(GameObserver observer)
+	{
+	    throw new EscapeException("Not implemented");
+	}
+	
+	/**
+	 * Remove an observer from this manager. The observer will no longer
+	 * receive notifications from this game manager.
+	 * @param observer
+	 * @return the observer that was removed or null if it had not previously
+	 *     been registered
+	 */
+	default GameObserver removeObserver(GameObserver observer)
+	{
+	    throw new EscapeException("Not implemented");
+	}
 }

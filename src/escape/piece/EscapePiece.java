@@ -37,7 +37,9 @@ public class EscapePiece
     }
 	
 	/**
-	 * Static factory member. 
+	 * Static factory method. This creates and returns the specified
+	 * Escape piece for the current game version.
+	 * 
 	 * DO NOT CHANGE THE SIGNATURE.
 	 * @param player the player the piece belongs to
 	 * @param name the piee name
