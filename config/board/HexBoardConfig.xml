@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<boardInitializer>
+    <coordinateId>HEX</coordinateId>
+    <locationInitializers>
+        <x>8</x>
+        <y>8</y>
+        <locationType>CLEAR</locationType>
+        <player>PLAYER2</player>
+        <pieceName>FROG</pieceName>
+    </locationInitializers>
+</boardInitializer>

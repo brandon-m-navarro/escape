@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<boardInitializer>
+    <coordinateId>SQUARE</coordinateId>
+    <xMax>8</xMax>
+    <yMax>8</yMax>
+    <locationInitializers>
+        <x>8</x>
+        <y>8</y>
+        <locationType>BLOCK</locationType>
+        <player>PLAYER1</player>
+        <pieceName>SNAIL</pieceName>
+    </locationInitializers>
+</boardInitializer>

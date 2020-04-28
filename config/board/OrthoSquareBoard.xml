@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<boardInitializer>
+    <coordinateId>ORTHOSQUARE</coordinateId>
+    <xMax>8</xMax>
+    <yMax>8</yMax>
+</boardInitializer>
