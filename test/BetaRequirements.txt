@@ -1,0 +1,91 @@
+General Requirements
+====================
+	For this release, the following must be completed:
+	
+	   1. Create a new class that implements the EscapeGameManager() interface. 
+		  You do not have to implement the addObserver() and removeObserver()
+		  methods. The defaults are sufficient for this release.
+		   
+	   2. Modify the EscapeGameBuilder so that a client can create a game by 
+	      creating an instance of the class, by providing a configuration 
+	      file and then calling the makeGameManager() method.
+	      
+	      -----------------------------------------------------------------------
+	      
+       3. Implement code that allows the the client to make moves, create 
+          coordinates, and query the board to determine the piece at a 
+          particular location. For making moves, if the move is illegal 
+          according to the piece’s movement pattern and attributes, or it
+          is blocked somehow, then the move() method will return false. 
+          If an the input is invalid and causes an exception, such as 
+          trying to move off of the board, then you should also return 
+          false or throw an exception (some form of EscapeException). The
+          tests for this version will check for a false result or the 
+          exception.
+          
+          	- Each piece will first be initialized with a MovementPatternID
+          	  which is the broadest description of how that piece can move.
+          	  Any piece with a MovementPatternID besides LINEAR can move on
+          	  a path that changes directions.
+          	  								|
+      	  	  ************************************************************************
+          	  ** It's important to note that patterns are only legal on				**
+          	  ** certain boards! Below are those such cases:						**
+          	  ** 	 																**
+          	  ** 	! ORTHOGONAL is only valid on Square and OrthoSquare boards, 	**
+          	  ** 	  and is the only valid option for OrthoSquare boards			**
+          	  **	 	  															**
+      	  	  **    ! DIAGONAL is only valid on square boards						**
+      	  	  **	    															**
+      	  	  **    ! LINEAR is only valid for square and hex boards				**
+      	  	  **    																**
+      	  	  **    ! OMNI is valid for all boards, but if specified on an 			**
+      	  	  **      OrthoSquare board, simple use the rules for ORTHOGONAL		**
+      	  	  ************************************************************************
+      	  	  
+          	- The next thing that is specified is the PieceName, which really doesn't matter I think
+          	Need to look on canvas to see if every piece with that Name share the same attributes
+          	
+          	- The next part of the XML will be the list of attributes associated with that piece.
+          	  Attributes are specified by PieceAttributeID, PieceAttributeType, value (either boolean
+          	  or int depending on the type). Each ID should only have one corresponding type, so we need
+          	  to validate that it's a valid config file by throwing an exception if appropriate.
+          	  											|
+          	  ****************************************************************************************
+          	  ** It's important to note that each piece at the very least specify either a DISTANCE	**
+          	  ** or FLY attribute!																	**
+          	  ****************************************************************************************	 	
+          	  	  
+  	      -----------------------------------------------------------------------
+          
+       4. While I expect all configuration files to be correct, if you 
+          encounter any issue with the configuration file or determine that 
+          there are conditions that are wrong or contradictory (e.g. both 
+          DISTANCE and FLY specified for the same piece type), then you should 
+          throw an EscapeException of some type with a meaningful error message.
+		   
+	   5. When a move is made and the ending location is not empty, and not a BLOCK 
+	      location, then do the following:
+	      
+	      	- If the location is an EXIT just remove the moving piece from the 
+	      	  board and return true for the move() method.
+	      	  
+      	    - If the location has an opposing player’s piece on the location, 
+      	      remove the opposing piece, place the moving piece at the location 
+      	      and return true.
+      	      
+      	    - If the location has a piece that belongs to the moving player, return 
+      	      false.
+
+
+Additional Notes from Canvas/Office Hours		
+=========================================
+
+	You must have at least one piece type in the game.
+	
+	If a piece has FLY, UNBLOCK redundant
+
+
+     	Example Design and Flow of ToDo's
+     	=================================
+     	
