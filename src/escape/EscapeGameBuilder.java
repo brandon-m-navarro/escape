@@ -12,12 +12,16 @@
 
 package escape;
 
+import static escape.board.LocationType.CLEAR;
 import java.io.*;
 import javax.xml.bind.*;
-import escape.util.EscapeGameInitializer;
+import escape.board.*;
+import escape.board.coordinate.*;
+import escape.piece.EscapePiece;
+import escape.util.*;
 
 /**
- * This class is what a client will use to creat an instance of a game, given
+ * This class is what a client will use to create an instance of a game, given
  * an Escape game configuration file. The configuration file contains the 
  * information needed to create an instance of the Escape game.
  * @version Apr 22, 2020
@@ -49,7 +53,102 @@ public class EscapeGameBuilder
      */
     public EscapeGameManager makeGameManager()
     {
-        // To be implemented
-        return null;
+    	// Need to create a board
+    	Board b = makeBoard();
+        return new ConcreteEscapeGameManager(b);
     }
+    
+    /**
+	 * This method simply initializes the appropriate board from the unmarshalled XML
+	 * configuration file.
+	 * @return a Board with the type specified in the XML config file 
+	 */
+	public Board makeBoard()
+	{
+		TwoDimensionalBoard board;
+		switch (gameInitializer.getCoordinateType())
+		{
+			case SQUARE:
+				board = new SquareBoard(gameInitializer.getxMax(), gameInitializer.getyMax());
+		        initializeSquareBoard(board, gameInitializer.getLocationInitializers());
+				return board;
+			case ORTHOSQUARE:
+				board = new OrthoSquareBoard(gameInitializer.getxMax(), gameInitializer.getyMax());
+		        initializeOrthoSquareBoard(board, gameInitializer.getLocationInitializers());
+		        return board;
+			case HEX:
+				board = new HexBoard(gameInitializer.getxMax(), gameInitializer.getyMax());
+				initializeHexBoard(board, gameInitializer.getLocationInitializers());
+				return board;
+		}
+		return null;
+	}
+	
+	/**
+	 * Initialize each spot on a SquareBoard with either a piece or LocationType, depending what
+	 * was specified in the XML config file 
+	 * @param b the Board to be initialized
+	 * @param initializers 0 .. many general initializers for a board location
+	 */
+	private void initializeSquareBoard(TwoDimensionalBoard b, LocationInitializer... initializers)
+	{
+		for (LocationInitializer li : initializers) {
+			SquareCoordinate c = SquareCoordinate.makeCoordinate(li.x, li.y);
+			if (li.pieceName != null) {
+				b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
+			}
+			
+			if (li.locationType != null && li.locationType != CLEAR) {
+				b.setLocationType(c, li.locationType);
+			}
+		}
+	}
+	
+	/**
+	 * Initialize each spot on a OrthoSquareBoard with either a piece or LocationType, depending what
+	 * was specified in the XML config file 
+	 * @param b the Board to be initialized
+	 * @param initializers 0 .. many general initializers for a board location
+	 */
+	private void initializeOrthoSquareBoard(TwoDimensionalBoard b, LocationInitializer... initializers)
+	{
+		if (initializers != null)
+		{
+			for (LocationInitializer li : initializers) {
+				OrthoSquareCoordinate c = OrthoSquareCoordinate.makeCoordinate(li.x, li.y);
+				if (li.pieceName != null) {
+					b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
+				}
+				
+				if (li.locationType != null && li.locationType != CLEAR) {
+					b.setLocationType(c, li.locationType);
+				}
+			}	
+		}
+		else
+		{
+			// Should initialize all spaces as clear 
+		}
+		
+	}
+	
+	/**
+	 * Initialize each spot on a HexBoard with either a piece or LocationType, depending what
+	 * was specified in the XML config file 
+	 * @param b the Board to be initialized
+	 * @param initializers 0 .. many general initializers for a board location
+	 */
+	private void initializeHexBoard(TwoDimensionalBoard b, LocationInitializer... initializers)
+	{
+		for (LocationInitializer li : initializers) {
+			HexCoordinate c = HexCoordinate.makeCoordinate(li.x, li.y);
+			if (li.pieceName != null) {
+				b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
+			}
+			
+			if (li.locationType != null && li.locationType != CLEAR) {
+				b.setLocationType(c, li.locationType);
+			}
+		}
+	}
 }

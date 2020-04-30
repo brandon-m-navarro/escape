@@ -30,15 +30,6 @@ public class SquareBoard extends TwoDimensionalBoard
 	}
 	
 	/*
-	 * @see escape.board.Board#getPieceAt(escape.board.coordinate.Coordinate)
-	 */
-	@Override
-	public EscapePiece getPieceAt(TwoDimensionalCoordinate coord)
-	{
-		return pieces.get(coord);
-	}
-	
-	/*
 	 * @see escape.board.Board#putPieceAt(escape.piece.EscapePiece, escape.board.coordinate.Coordinate)
 	 */
 	@Override

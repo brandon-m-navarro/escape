@@ -88,4 +88,6 @@ Additional Notes from Canvas/Office Hours
 
      	Example Design and Flow of ToDo's
      	=================================
+     	First, we need to implement a ConcreteEscapeGameManager and we should probably start with the makeCoordinate method
+     		This may involve creating a Factory for the Coordinates, so let's see where that gets us
      	

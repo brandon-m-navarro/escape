@@ -88,4 +88,22 @@ public class OrthoSquareCoordinate extends TwoDimensionalCoordinate
 		
 		return distance += calcSimpleDistance(travellerY, to.getY());
 	}
+	
+	/*
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) {
+			return true;
+		}
+		
+		if (!(obj instanceof OrthoSquareCoordinate)) {
+			return false;
+		}
+		
+		OrthoSquareCoordinate other = (OrthoSquareCoordinate) obj;
+		return x == other.x && y == other.y;
+	}
 }

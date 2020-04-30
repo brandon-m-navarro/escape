@@ -1,0 +1,23 @@
+ConcreteEscapeGameManager
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	makeCoordinate()
+	================
+		With SampleEscapeGame config file (EscapeGameManager emg = egb.makeGameManager()) :
+		-----------------------------------------------------------------------------------
+		- Confirm that a coordinate of the appropriate type created
+			1. emg.makeCoordinate(1, 1).equals(SquareCoordinate.makeCoordinate(1, 1) -> true
+		- Check that equals is behaving as expected
+			2. emg.makeCoordinate(3, 3).equals(OrthoSquareCoordinate.makeCoordinate(3, 3) -> false
+			
+		With SampleEscapeGameOrtho config file (EscapeGameManager emg = egb.makeGameManager()) :
+		----------------------------------------------------------------------------------------
+		- Confirm that a coordinate of the appropriate type created
+			3. emg.makeCoordinate(4, 1).equals(OrthoSquareCoordinate.makeCoordinate(4, 1) -> true
+			
+		With SampleEscapeGameHex config file (EscapeGameManager emg = egb.makeGameManager()) :
+		--------------------------------------------------------------------------------------
+		- Confirm that a coordinate of the appropriate type created
+			4. emg.makeCoordinate(10, -1).equals(HexSquareCoordinate.makeCoordinate(10, -1) -> true
+			
+	

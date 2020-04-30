@@ -44,6 +44,15 @@ public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordin
 		spots.put(c, lt);
 	}
 	
+	/*
+	 * @see escape.board.Board#getPieceAt(escape.board.coordinate.Coordinate)
+	 */
+	@Override
+	public EscapePiece getPieceAt(TwoDimensionalCoordinate coord)
+	{
+		return pieces.get(coord);
+	}
+	
 	/**
 	 * This method checks whether the given coordinate was initialized
 	 * with a LocationType of BLOCKED

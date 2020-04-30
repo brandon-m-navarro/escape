@@ -106,4 +106,22 @@ public class SquareCoordinate extends TwoDimensionalCoordinate
 		else
 			return distance += calcSimpleDistance(travellerX, to.getX());
 	}
+	
+	/*
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) {
+			return true;
+		}
+		
+		if (!(obj instanceof SquareCoordinate)) {
+			return false;
+		}
+		
+		SquareCoordinate other = (SquareCoordinate) obj;
+		return x == other.x && y == other.y;
+	}
 }

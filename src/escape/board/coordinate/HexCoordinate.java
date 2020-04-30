@@ -58,4 +58,22 @@ public class HexCoordinate extends TwoDimensionalCoordinate
 	        return Math.max(Math.abs(dx),Math.abs(dy));
 	    }
 	}
+	
+	/*
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) {
+			return true;
+		}
+		
+		if (!(obj instanceof HexCoordinate)) {
+			return false;
+		}
+		
+		HexCoordinate other = (HexCoordinate) obj;
+		return x == other.x && y == other.y;
+	}
 }

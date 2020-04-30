@@ -22,8 +22,8 @@ import java.util.Objects;
  */
 public abstract class TwoDimensionalCoordinate implements Coordinate
 {
-    private final int x;
-    private final int y;
+    protected final int x;
+    protected final int y;
  
 	public TwoDimensionalCoordinate(int x, int y) 
 	{
@@ -55,23 +55,4 @@ public abstract class TwoDimensionalCoordinate implements Coordinate
 	{
 		return Objects.hash(x, y);
 	}
-	
-	/*
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj) {
-			return true;
-		}
-		
-		if (!(obj instanceof TwoDimensionalCoordinate)) {
-			return false;
-		}
-		
-		TwoDimensionalCoordinate other = (TwoDimensionalCoordinate) obj;
-		return x == other.x && y == other.y;
-	}
-	
 }
