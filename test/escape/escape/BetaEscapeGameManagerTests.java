@@ -12,12 +12,19 @@
 
 package escape.escape;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.File;
 import org.junit.jupiter.api.*;
 import escape.*;
+import escape.board.*;
 import escape.board.coordinate.*;
+import escape.exception.EscapeException;
+import escape.piece.*;
 
 /**
  * Description
@@ -30,7 +37,7 @@ class BetaEscapeGameManagerTests
 	void makeValidCoordinateWithInitializedSquareBoard() throws Exception
 	{
 		EscapeGameBuilder egb 
-			= new EscapeGameBuilder(new File("config/SampleEscapeGame.xml"));
+			= new EscapeGameBuilder(new File("config/SampleEscapeGameSquare.xml"));
 		EscapeGameManager emg = egb.makeGameManager();
 		assertTrue(emg.makeCoordinate(1, 1).equals(SquareCoordinate.makeCoordinate(1, 1)));
 		assertFalse(emg.makeCoordinate(1, 1).equals(OrthoSquareCoordinate.makeCoordinate(1, 1)));
@@ -40,7 +47,7 @@ class BetaEscapeGameManagerTests
 	void makeInvalidCoordinateWithInitializedSquareBoard() throws Exception
 	{
 		EscapeGameBuilder egb 
-			= new EscapeGameBuilder(new File("config/SampleEscapeGame.xml"));
+			= new EscapeGameBuilder(new File("config/SampleEscapeGameSquare.xml"));
 		EscapeGameManager emg = egb.makeGameManager();
 		assertNull(emg.makeCoordinate(-1, 1));
 	}
@@ -75,6 +82,32 @@ class BetaEscapeGameManagerTests
 		assertTrue(emg.makeCoordinate(10, -1).equals(HexCoordinate.makeCoordinate(10, -1)));
 		assertFalse(emg.makeCoordinate(10, -1).equals(SquareCoordinate.makeCoordinate(10, -1)));
 		assertFalse(emg.makeCoordinate(1, 1).equals(OrthoSquareCoordinate.makeCoordinate(1, 1)));
+	}
+	
+	@Test
+	void getPieceAtWithInitializedSquareBoard() throws Exception
+	{
+		EscapeGameBuilder egb 
+			= new EscapeGameBuilder(new File("config/SampleEscapeGameSquare.xml"));
+		EscapeGameManager emg = egb.makeGameManager();
+		
+		EscapePiece p = emg.getPieceAt(emg.makeCoordinate(2, 2));
+		assertNotNull(p);
+		assertEquals(p.getName(), PieceName.HORSE);
+		
+	    EscapeException thrown = assertThrows(
+    		EscapeException.class,
+		    () -> emg.getPieceAt(emg.makeCoordinate(-1, -1)));
+
+	    // assertions on the thrown exception
+		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
+		
+	    EscapeException thrown2 = assertThrows(
+	    		EscapeException.class,
+			    () -> emg.getPieceAt(SquareCoordinate.makeCoordinate(-1, -1)));
+
+		    // assertions on the thrown exception
+			assertEquals("ERROR: invalid coordinate!", thrown2.getMessage());
 	}
 	
 }

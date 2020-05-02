@@ -17,6 +17,7 @@ import java.io.*;
 import javax.xml.bind.*;
 import escape.board.*;
 import escape.board.coordinate.*;
+import escape.exception.EscapeException;
 import escape.piece.EscapePiece;
 import escape.util.*;
 
@@ -55,7 +56,19 @@ public class EscapeGameBuilder
     {
     	// Need to create a board
     	Board b = makeBoard();
-        return new ConcreteEscapeGameManager(b);
+		TwoDimensionalBoard board = (TwoDimensionalBoard) b;
+    	
+		switch (gameInitializer.getCoordinateType())
+		{
+			case SQUARE:
+				return new SquareEscapeGameManager(board);
+			case ORTHOSQUARE:
+				return new OrthoSquareEscapeGameManager(board);
+			case HEX:
+				return new HexEscapeGameManager(board);
+			default:
+				throw new EscapeException("Board could not be created!");
+		}
     }
     
     /**

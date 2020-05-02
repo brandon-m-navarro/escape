@@ -14,6 +14,13 @@
         <y>6</y>
         <locationType>BLOCK</locationType>
     </locationInitializers>
+    <locationInitializers>
+        <x>2</x>
+        <y>2</y>
+        <locationType>CLEAR</locationType>
+        <player>PLAYER1</player>
+        <pieceName>HORSE</pieceName>
+    </locationInitializers>
     
     <!-- Piece items, an array of pieceTypes, 1 or more -->
     <pieceTypes>

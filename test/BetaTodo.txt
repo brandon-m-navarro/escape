@@ -16,6 +16,7 @@ ConcreteEscapeGameManager
 		----------------------------------------------------------------------------------------
 		- Confirm that a coordinate of the appropriate type created
 			3. emg.makeCoordinate(4, 1).equals(OrthoSquareCoordinate.makeCoordinate(4, 1) -> true
+		- Check that it returns null for a coordinate not on the board
 			6. emg.makeCoordinate(-1, 1) -> null 
 			
 		With SampleEscapeGameHex config file (EscapeGameManager emg = egb.makeGameManager()) :
@@ -28,6 +29,9 @@ ConcreteEscapeGameManager
 	With SampleEscapeGame config file (EscapeGameManager emg = egb.makeGameManager()) :
 	-----------------------------------------------------------------------------------
 		- Confirm that null is returned if an empty space is queried
-		emg.makeCoordinate(10, -1).equals(HexSquareCoordinate.makeCoordinate(10, -1) -> true
+			7. emg.getPieceAt(emg.makeCoordinate(2, 2)) -> EscapePiece.HORSE
+		- Confirm that an error is thrown for a piece that is not on the board
+		emg.getPieceAt(emg.makeCoordinate(-1,-1)) - > throw EscapeException()
+			
 			
 	
