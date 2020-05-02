@@ -9,15 +9,25 @@ ConcreteEscapeGameManager
 			1. emg.makeCoordinate(1, 1).equals(SquareCoordinate.makeCoordinate(1, 1) -> true
 		- Check that equals is behaving as expected
 			2. emg.makeCoordinate(3, 3).equals(OrthoSquareCoordinate.makeCoordinate(3, 3) -> false
+		- Check that it returns null for a coordinate not on the board
+			5. emg.makeCoordinate(-1, 1) -> null 
 			
 		With SampleEscapeGameOrtho config file (EscapeGameManager emg = egb.makeGameManager()) :
 		----------------------------------------------------------------------------------------
 		- Confirm that a coordinate of the appropriate type created
 			3. emg.makeCoordinate(4, 1).equals(OrthoSquareCoordinate.makeCoordinate(4, 1) -> true
+			6. emg.makeCoordinate(-1, 1) -> null 
 			
 		With SampleEscapeGameHex config file (EscapeGameManager emg = egb.makeGameManager()) :
 		--------------------------------------------------------------------------------------
 		- Confirm that a coordinate of the appropriate type created
 			4. emg.makeCoordinate(10, -1).equals(HexSquareCoordinate.makeCoordinate(10, -1) -> true
+			
+	getPieceAt()
+	============
+	With SampleEscapeGame config file (EscapeGameManager emg = egb.makeGameManager()) :
+	-----------------------------------------------------------------------------------
+		- Confirm that null is returned if an empty space is queried
+		emg.makeCoordinate(10, -1).equals(HexSquareCoordinate.makeCoordinate(10, -1) -> true
 			
 	

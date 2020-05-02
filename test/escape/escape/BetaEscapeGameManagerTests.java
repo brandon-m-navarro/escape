@@ -27,7 +27,7 @@ class BetaEscapeGameManagerTests
 {
 
 	@Test
-	void makeCoordinateWithInitializedSquareBoard() throws Exception
+	void makeValidCoordinateWithInitializedSquareBoard() throws Exception
 	{
 		EscapeGameBuilder egb 
 			= new EscapeGameBuilder(new File("config/SampleEscapeGame.xml"));
@@ -35,9 +35,18 @@ class BetaEscapeGameManagerTests
 		assertTrue(emg.makeCoordinate(1, 1).equals(SquareCoordinate.makeCoordinate(1, 1)));
 		assertFalse(emg.makeCoordinate(1, 1).equals(OrthoSquareCoordinate.makeCoordinate(1, 1)));
 	}
+	
+	@Test
+	void makeInvalidCoordinateWithInitializedSquareBoard() throws Exception
+	{
+		EscapeGameBuilder egb 
+			= new EscapeGameBuilder(new File("config/SampleEscapeGame.xml"));
+		EscapeGameManager emg = egb.makeGameManager();
+		assertNull(emg.makeCoordinate(-1, 1));
+	}
 
 	@Test
-	void makeCoordinateWithInitializedOrthoSquareBoard() throws Exception
+	void makeValidCoordinateWithInitializedOrthoSquareBoard() throws Exception
 	{
 		EscapeGameBuilder egb 
 			= new EscapeGameBuilder(new File("config/SampleEscapeGameOrtho.xml"));
@@ -48,7 +57,16 @@ class BetaEscapeGameManagerTests
 	}
 	
 	@Test
-	void makeCoordinateWithInitializedHexBoard() throws Exception
+	void makeInvalidCoordinateWithInitializedOrthoSquareBoard() throws Exception
+	{
+		EscapeGameBuilder egb 
+			= new EscapeGameBuilder(new File("config/SampleEscapeGameOrtho.xml"));
+		EscapeGameManager emg = egb.makeGameManager();
+		assertNull(emg.makeCoordinate(-1, 1));
+	}
+	
+	@Test
+	void makeValidCoordinateWithInitializedHexBoard() throws Exception
 	{
 		EscapeGameBuilder egb 
 			= new EscapeGameBuilder(new File("config/SampleEscapeGameHex.xml"));
@@ -56,5 +74,7 @@ class BetaEscapeGameManagerTests
 		
 		assertTrue(emg.makeCoordinate(10, -1).equals(HexCoordinate.makeCoordinate(10, -1)));
 		assertFalse(emg.makeCoordinate(10, -1).equals(SquareCoordinate.makeCoordinate(10, -1)));
+		assertFalse(emg.makeCoordinate(1, 1).equals(OrthoSquareCoordinate.makeCoordinate(1, 1)));
 	}
+	
 }

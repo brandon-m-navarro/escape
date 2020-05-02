@@ -13,7 +13,7 @@
 package escape.board;
 
 import java.util.*;
-import escape.board.coordinate.TwoDimensionalCoordinate;
+import escape.board.coordinate.*;
 import escape.piece.EscapePiece;
 
 /**
@@ -73,5 +73,15 @@ public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordin
 	protected boolean isExit(TwoDimensionalCoordinate coord)
 	{
 		return spots.get(coord) == LocationType.EXIT;
+	}
+	
+	/**
+	 * Get the Coordinate type for the board
+	 * @param coord the coordinate being checked
+	 * @return true if the coordinate lies on the board
+	 */
+	public boolean isValidCoordinate(TwoDimensionalCoordinate coord)
+	{
+		return ((coord.getX() <= xMax && coord.getY() <= yMax) && (coord.getX() > 0 && coord.getY() > 0));
 	}
 }

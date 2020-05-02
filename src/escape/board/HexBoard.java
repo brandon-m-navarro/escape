@@ -12,7 +12,7 @@
 
 package escape.board;
 
-import escape.board.coordinate.TwoDimensionalCoordinate;
+import escape.board.coordinate.*;
 import escape.exception.EscapeException;
 import escape.piece.EscapePiece;
 
@@ -41,5 +41,14 @@ public class HexBoard extends TwoDimensionalBoard
 			pieces.put(coord, p);
 		else
 			throw new EscapeException("ERROR: invalid coordinate!");
+	}
+	
+	/**
+	 * Hex coordinates are always valid, so override the parent
+	 */
+	@Override
+	public boolean isValidCoordinate(TwoDimensionalCoordinate coord)
+	{
+		return true;
 	}
 }

@@ -26,7 +26,7 @@ public class SquareBoard extends TwoDimensionalBoard
 	
 	public SquareBoard(int xMax, int yMax)
 	{
-		super(xMax, xMax);
+		super(xMax, yMax);
 	}
 	
 	/*
@@ -49,7 +49,7 @@ public class SquareBoard extends TwoDimensionalBoard
 	 * @param coord the coordinate that is being checked
 	 * @return true if it is within the boards xMax & yMax
 	 */
-	private boolean isWithinBoundries(TwoDimensionalCoordinate coord)
+	public boolean isWithinBoundries(TwoDimensionalCoordinate coord)
 	{
 		SquareCoordinate c = (SquareCoordinate) coord;
 		return (c.getX() <= xMax && c.getY() <= yMax);
