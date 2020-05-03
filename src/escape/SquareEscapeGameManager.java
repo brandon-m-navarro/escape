@@ -12,6 +12,7 @@
 
 package escape;
 
+import static org.junit.Assume.assumeNoException;
 import escape.board.*;
 import escape.board.coordinate.*;
 import escape.exception.EscapeException;
@@ -35,11 +36,24 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 	 */
 	@Override
 	public boolean move(Coordinate from, Coordinate to)
-	{
-		// TODO Auto-generated method stub
+	{		
+		EscapePiece ep;
+		// Need to first verify that a piece exists on the from coordinate
+		try {
+			ep = getPieceAt(from);
+		} catch (EscapeException e) {
+			return false;
+		}
+		
+		ep.getName();
 		return false;
 	}
 
+	/**
+	 * This method sets an EscapePiece if given a valid coordinate.
+	 * @throws EscapeException
+	 * @return the escape piece 
+	 */
 
 	
 	/**

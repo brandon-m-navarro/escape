@@ -11,6 +11,7 @@
  *******************************************************************************/
 package escape.board;
 
+import static escape.board.LocationType.CLEAR;
 import escape.board.coordinate.*;
 import escape.exception.EscapeException;
 import escape.piece.EscapePiece;
@@ -19,14 +20,22 @@ import escape.piece.EscapePiece;
  * This board has square coordinates and finite bounds, represented by xMax and yMax
  * that are extended from an abstract class, TwoDimensionalBoard. Because a SquareBoard
  * has boundries, we need to account for this when placing a piece on the board.
+ * As a default, all spots on a SquareBoard are set to CLEAR.
  * @version Apr 2, 2020
  */
 public class SquareBoard extends TwoDimensionalBoard
 {
 	
+	/**
+	 * The constructor for a SquareBoard simply takes its x & y 
+	 * constraints and sets all tbe contained spots to CLEAR.
+	 * @param xMax
+	 * @param yMax
+	 */
 	public SquareBoard(int xMax, int yMax)
 	{
 		super(xMax, yMax);
+		initializeEmptyBoard();
 	}
 	
 	/*
@@ -53,5 +62,21 @@ public class SquareBoard extends TwoDimensionalBoard
 	{
 		SquareCoordinate c = (SquareCoordinate) coord;
 		return (c.getX() <= xMax && c.getY() <= yMax);
+	}
+	
+	
+	/**
+	 * This method intializes all the spots on a board to CLEAR to account 
+	 * for lazy configuration boards.
+	 */
+	private void initializeEmptyBoard()
+	{
+		for (int x = 0; x <= xMax; x++)
+		{
+			for (int y = 0; y <= yMax; y++)
+			{
+				this.setLocationType(SquareCoordinate.makeCoordinate(x, y), CLEAR);
+			}
+		}
 	}
 }

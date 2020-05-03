@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <escapeGameInitializer>
-	<coordinateType>ORTHOSQUARE</coordinateType>
+	<coordinateType>HEX</coordinateType>
     <!-- Board items -->
-    <xMax>20</xMax>
-    <yMax>25</yMax>
     <locationInitializers> <!-- An array of these, 0 or more -->
         <x>3</x>
         <y>4</y>
@@ -14,10 +12,16 @@
         <y>6</y>
         <locationType>BLOCK</locationType>
     </locationInitializers>
-    
+    <locationInitializers>
+        <x>0</x>
+        <y>0</y>
+        <locationType>CLEAR</locationType>
+        <player>PLAYER1</player>
+        <pieceName>HORSE</pieceName>
+    </locationInitializers>
     <!-- Piece items, an array of pieceTypes, 1 or more -->
     <pieceTypes>
-        <movementPattern>ORTHOGONAL</movementPattern>
+        <movementPattern>LINEAR</movementPattern>
         <pieceName>FROG</pieceName>
         <attributes>
             <id>DISTANCE</id>
@@ -26,12 +30,17 @@
         </attributes>
     </pieceTypes>
     <pieceTypes>
-        <movementPattern>ORTHOGONAL</movementPattern>
+        <movementPattern>LINEAR</movementPattern>
         <pieceName>HORSE</pieceName>
         <attributes>
             <id>UNBLOCK</id>
             <attrType>BOOLEAN</attrType>
             <booleanValue>false</booleanValue>
+        </attributes>
+        <attributes>
+            <id>FLY</id>
+            <attrType>INTEGER</attrType>
+            <intValue>10</intValue>
         </attributes>
     </pieceTypes>
 </escapeGameInitializer>

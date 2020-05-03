@@ -12,10 +12,11 @@
 
 package escape;
 
+import java.util.*;
 import escape.board.*;
 import escape.board.coordinate.*;
 import escape.exception.EscapeException;
-import escape.piece.EscapePiece;
+import escape.piece.*;
 
 /**
  * This class is a is an abstract implementation of the EscapeGameManager interface
@@ -25,10 +26,12 @@ import escape.piece.EscapePiece;
 public abstract class TwoDimensionalEscapeGameManager implements EscapeGameManager
 {
 	protected TwoDimensionalBoard board;
+	protected Map<PieceName, MovementRules> rules;
 
 	TwoDimensionalEscapeGameManager(TwoDimensionalBoard b)
 	{
 		this.board = b;
+		rules = new HashMap<PieceName, MovementRules>();
 	}
 
 	/*

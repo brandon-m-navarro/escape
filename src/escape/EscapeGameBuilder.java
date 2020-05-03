@@ -14,12 +14,14 @@ package escape;
 
 import static escape.board.LocationType.CLEAR;
 import java.io.*;
+import java.util.ArrayList;
 import javax.xml.bind.*;
 import escape.board.*;
 import escape.board.coordinate.*;
 import escape.exception.EscapeException;
-import escape.piece.EscapePiece;
+import escape.piece.*;
 import escape.util.*;
+import escape.util.PieceTypeInitializer.PieceAttribute;
 
 /**
  * This class is what a client will use to create an instance of a game, given
@@ -54,9 +56,18 @@ public class EscapeGameBuilder
      */
     public EscapeGameManager makeGameManager()
     {
+    	// First we want to validate the XML being passed in
+    	try 
+    	{
+        	validateConfiguration(gameInitializer);
+    	} 
+    	catch (EscapeException e)
+    	{
+    		throw new EscapeException("ERROR: Invalid configuration file!");
+    	}
+    	
     	// Need to create a board
-    	Board b = makeBoard();
-		TwoDimensionalBoard board = (TwoDimensionalBoard) b;
+		TwoDimensionalBoard board = (TwoDimensionalBoard) makeBoard();
     	
 		switch (gameInitializer.getCoordinateType())
 		{
@@ -67,11 +78,103 @@ public class EscapeGameBuilder
 			case HEX:
 				return new HexEscapeGameManager(board);
 			default:
-				throw new EscapeException("Board could not be created!");
+				throw new EscapeException("ERROR: Board could not be created!");
 		}
     }
     
     /**
+	 * This method should perform the validation of a given configuration file.
+	 * The given initializer :
+	 * 		X - has at LEAST one piece type
+	 * 		X - does not define a two rules for a single piece type
+	 * 		X - has at least a distance or fly attribute for every piece
+	 * 		- That the MovementPatternID is correct for the given board
+	 * 	 	- (Check canvas for additional rules)
+	 * @param initializer the given configuration for the game 
+     * @return true i
+	 */
+	private void validateConfiguration(EscapeGameInitializer initializer)
+	{
+		if (!validatePieceTypes(initializer.getPieceTypes()))
+			throw new EscapeException("ERROR: Invalid PieceType!");
+		if (!oneRulePerPiece(initializer.getPieceTypes()))
+			throw new EscapeException("ERROR: A PieceName has multiple PieceTypes " + 
+									  "associated with it!");
+	}
+	
+	/**
+	 * Validate the attributes for all PieceTypes 
+	 * @param pieceTypes the specified PieceTypes in the configuration file
+	 * @return true if a valid PieceType
+	 */
+	private boolean validatePieceTypes(PieceTypeInitializer[] pieceTypes)
+	{
+		if (pieceTypes == null)
+			return false;
+//			throw new EscapeException("ERROR: Configuration needs to specify at " +
+//									  "least one pieceType!");
+		
+		for (PieceTypeInitializer pt : pieceTypes)
+		{
+			if (!validateAttributes(pt.getAttributes()))
+				return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * This method validates an array of attributes
+	 * @param pieceAttributes the attributes of a PieceType
+	 * @return true if the attributes are valid
+	 */
+	private boolean validateAttributes(PieceAttribute[] pieceAttributes)
+	{
+		ArrayList collectedAttributeIDs = new ArrayList<PieceAttributeID>();
+		for (PieceAttribute pa : pieceAttributes)
+		{
+			if (!collectedAttributeIDs.contains(pa.getId()))
+				collectedAttributeIDs.add(pa.getId());
+			else
+				return false;
+		}
+		return hasMovementAttribute(collectedAttributeIDs);
+	}
+
+	/**
+	 * Validate that a given piece has either a FLY or DISTANCE
+	 * attribute
+	 * @param attributes all the attributes of the Piece
+	 * @return true if either a FLY or DISTANCE attribute is specified
+	 */
+	private boolean hasMovementAttribute(ArrayList<PieceAttributeID> collectedAttributeIDs)
+	{
+		return !(!collectedAttributeIDs.contains(PieceAttributeID.FLY) && 
+				 !collectedAttributeIDs.contains(PieceAttributeID.DISTANCE))
+				 &&
+				!(collectedAttributeIDs.contains(PieceAttributeID.FLY) && 
+				  collectedAttributeIDs.contains(PieceAttributeID.DISTANCE));
+	}
+
+	/**
+	 * Validate that each PieceName has one associated PieceType
+	 * @param pieceTypeInitializers the array of pieceTypesInitializer
+	 * @return true if each PieceName has only one PieceType associated with it
+	 */
+	private boolean oneRulePerPiece(PieceTypeInitializer[] pieceTypeInitializers)
+	{
+		ArrayList pieces = new ArrayList<PieceName>();
+		for (PieceTypeInitializer pt : pieceTypeInitializers)
+		{
+			if (!pieces.contains(pt.getPieceName()))
+				pieces.add(pt.getPieceName());
+			else
+				return false;
+		}
+		return true;
+	}
+
+	/**
 	 * This method simply initializes the appropriate board from the unmarshalled XML
 	 * configuration file.
 	 * @return a Board with the type specified in the XML config file 
@@ -105,14 +208,17 @@ public class EscapeGameBuilder
 	 */
 	private void initializeSquareBoard(TwoDimensionalBoard b, LocationInitializer... initializers)
 	{
-		for (LocationInitializer li : initializers) {
-			SquareCoordinate c = SquareCoordinate.makeCoordinate(li.x, li.y);
-			if (li.pieceName != null) {
-				b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
-			}
-			
-			if (li.locationType != null && li.locationType != CLEAR) {
-				b.setLocationType(c, li.locationType);
+		if (initializers != null)
+		{
+			for (LocationInitializer li : initializers) {
+				SquareCoordinate c = SquareCoordinate.makeCoordinate(li.x, li.y);
+				if (li.pieceName != null) {
+					b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
+				}
+				
+				if (li.locationType != null && li.locationType != CLEAR) {
+					b.setLocationType(c, li.locationType);
+				}
 			}
 		}
 	}
@@ -138,13 +244,9 @@ public class EscapeGameBuilder
 				}
 			}	
 		}
-		else
-		{
-			// Should initialize all spaces as clear 
-		}
 		
 	}
-	
+
 	/**
 	 * Initialize each spot on a HexBoard with either a piece or LocationType, depending what
 	 * was specified in the XML config file 
@@ -153,14 +255,17 @@ public class EscapeGameBuilder
 	 */
 	private void initializeHexBoard(TwoDimensionalBoard b, LocationInitializer... initializers)
 	{
-		for (LocationInitializer li : initializers) {
-			HexCoordinate c = HexCoordinate.makeCoordinate(li.x, li.y);
-			if (li.pieceName != null) {
-				b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
-			}
-			
-			if (li.locationType != null && li.locationType != CLEAR) {
-				b.setLocationType(c, li.locationType);
+		if (initializers != null)
+		{
+			for (LocationInitializer li : initializers) {
+				HexCoordinate c = HexCoordinate.makeCoordinate(li.x, li.y);
+				if (li.pieceName != null) {
+					b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
+				}
+				
+				if (li.locationType != null && li.locationType != CLEAR) {
+					b.setLocationType(c, li.locationType);
+				}
 			}
 		}
 	}
