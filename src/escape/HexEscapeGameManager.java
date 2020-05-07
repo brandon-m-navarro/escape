@@ -12,9 +12,10 @@
 
 package escape;
 
+import java.util.Map;
 import escape.board.*;
 import escape.board.coordinate.*;
-import escape.piece.EscapePiece;
+import escape.piece.*;
 
 /**
  * Description
@@ -23,9 +24,9 @@ import escape.piece.EscapePiece;
 public class HexEscapeGameManager extends TwoDimensionalEscapeGameManager
 {
 
-	HexEscapeGameManager(TwoDimensionalBoard b)
+	HexEscapeGameManager(TwoDimensionalBoard b, Map<PieceName, MovementRules> rules)
 	{
-		super(b);
+		super(b, rules);
 	}
 
 	/*
@@ -44,11 +45,7 @@ public class HexEscapeGameManager extends TwoDimensionalEscapeGameManager
 	@Override
 	public Coordinate makeCoordinate(int x, int y)
 	{
-		HexBoard b = (HexBoard) board;
-		if (b.isValidCoordinate(HexCoordinate.makeCoordinate(x, y)))
 			return HexCoordinate.makeCoordinate(x, y);
-		else
-			return null;
 	}
 
 }

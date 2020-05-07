@@ -12,6 +12,8 @@
 
 package escape.piece;
 
+import java.util.Map;
+
 /**
  * This is a class for Pieces.
  * 
@@ -24,6 +26,7 @@ public class EscapePiece
 {
     private final PieceName name;
     private final Player player;
+
     
     /**
      * Constructor that takes the player and piece name.

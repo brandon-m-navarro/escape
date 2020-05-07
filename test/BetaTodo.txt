@@ -18,7 +18,10 @@ EscapeGameBuilder
 		-----------------------------------------------------------------------------------------
 		- Confirm that a board cannot be created if a PieceType does not specify either a
 		  FLY or DISTANCE
-		  	18. egb.makeGameManager(); -> thows EscapeException()
+		  	18. egb.makeGameManager(); -> throws EscapeException()
+		  	
+ 		With InvalidEscapeGameSquare3 config file (EscapeGameManager emg = egb.makeGameManager()) :
+		-----------------------------------------------------------------------------------------
 		
 ConcreteEscapeGameManager
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -81,4 +84,23 @@ ConcreteEscapeGameManager
 				
 	move()
 	======
+		19. - Trying to move piece that doesn't exist
+		20. - Confirm that a piece can move if one exists (basic check without worrying about MovementPatterns)
+		21. - Confirm that a piece cannot move onto a piece of its own team
 		
+		22. - A piece is able to move onto an opposing teams piece
+		23. - Confirm that the moving piece is moving to a valid coordinate on the board
+		27. - Check that a piece can move linearly on SquareGame
+	 	24. - Check that piece cannot move if obstructed
+		28. - Check that piece can jump if needed/set
+		26. - Check that piece can fly over
+		27. - Piece can fly over team, opponent, blocked
+		30. - Check that piece can move is unblocked
+		25. - Check that piece moved a valid distance
+		29. - Check that piece remained in a linear position
+		
+			
+		- After this, we need to then look at the movementPatternID of the piece to put it on a pathfinding
+		  algorithm that will return true or false
+		  
+		- Want to initialize the board with all perimeter locationTypes as BLOCKED

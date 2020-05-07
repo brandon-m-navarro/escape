@@ -28,10 +28,10 @@ public abstract class TwoDimensionalEscapeGameManager implements EscapeGameManag
 	protected TwoDimensionalBoard board;
 	protected Map<PieceName, MovementRules> rules;
 
-	TwoDimensionalEscapeGameManager(TwoDimensionalBoard b)
+	TwoDimensionalEscapeGameManager(TwoDimensionalBoard b, Map<PieceName, MovementRules> rules)
 	{
 		this.board = b;
-		rules = new HashMap<PieceName, MovementRules>();
+		this.rules = new HashMap<PieceName, MovementRules>(rules);
 	}
 
 	/*
@@ -43,6 +43,38 @@ public abstract class TwoDimensionalEscapeGameManager implements EscapeGameManag
 		if (coord != null)
 			return board.getPieceAt((TwoDimensionalCoordinate) coord);
 		else
-			throw new EscapeException("ERROR: invalid coordinate!");
+			throw new EscapeException("ERROR: Invalid coordinate!");
+	}
+	
+	/**
+	 * This method return true if the both pieces are of the same
+	 * player
+	 * @param p1 the piece being compared to p2
+	 * @param p2 the piece being compared to p1
+	 * @return true if both pieces are of the same player 
+	 */
+	protected boolean isSameTeam(EscapePiece p1, EscapePiece p2)
+	{
+		return p1.getPlayer() == p2.getPlayer();
+	}
+	
+	/**
+	 * This method returns the MovementRules of the specified PieceName
+	 * @param pieceName the PieceName enum of the piece
+	 * @return the MovementRules associated 
+	 * @throws EscapeException if that PieceName was not initialized
+	 */
+	protected MovementRules getMovementRulesFor(PieceName pieceName)
+	{
+		try
+		{
+			rules.get(pieceName);
+		}
+		catch(Exception e)
+		{
+			throw new EscapeException("ERROR: PieceName was never given a PieceType");
+
+		}
+		return rules.get(pieceName);
 	}
 }

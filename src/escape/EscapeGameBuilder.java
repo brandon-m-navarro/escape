@@ -14,7 +14,7 @@ package escape;
 
 import static escape.board.LocationType.CLEAR;
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 import javax.xml.bind.*;
 import escape.board.*;
 import escape.board.coordinate.*;
@@ -31,58 +31,111 @@ import escape.util.PieceTypeInitializer.PieceAttribute;
  */
 public class EscapeGameBuilder
 {
-    private EscapeGameInitializer gameInitializer;
-    
-    /**
-     * The constructor takes a file that points to the Escape game
-     * configuration file. It should get the necessary information 
-     * to be ready to create the game manager specified by the configuration
-     * file and other configuration files that it links to.
-     * @param fileName the file for the Escape game configuration file.
-     * @throws Exception 
-     */
-    public EscapeGameBuilder(File fileName) throws Exception
-    {
-        JAXBContext contextObj = JAXBContext.newInstance(EscapeGameInitializer.class);
-        Unmarshaller mub = contextObj.createUnmarshaller();
-        gameInitializer = 
-            (EscapeGameInitializer)mub.unmarshal(new FileReader(fileName));
-    }
-    
-    /**
-     * Once the builder is constructed, this method creates the
-     * EscapeGameManager instance.
-     * @return
-     */
-    public EscapeGameManager makeGameManager()
-    {
-    	// First we want to validate the XML being passed in
-    	try 
-    	{
-        	validateConfiguration(gameInitializer);
-    	} 
-    	catch (EscapeException e)
-    	{
-    		throw new EscapeException("ERROR: Invalid configuration file!");
-    	}
-    	
-    	// Need to create a board
+	private EscapeGameInitializer gameInitializer;
+
+	/**
+	 * The constructor takes a file that points to the Escape game
+	 * configuration file. It should get the necessary information 
+	 * to be ready to create the game manager specified by the configuration
+	 * file and other configuration files that it links to.
+	 * @param fileName the file for the Escape game configuration file.
+	 * @throws Exception 
+	 */
+	public EscapeGameBuilder(File fileName) throws Exception
+	{
+		JAXBContext contextObj = JAXBContext.newInstance(EscapeGameInitializer.class);
+		Unmarshaller mub = contextObj.createUnmarshaller();
+		gameInitializer = 
+				(EscapeGameInitializer)mub.unmarshal(new FileReader(fileName));
+	}
+
+	/**
+	 * Once the builder is constructed, this method creates the
+	 * EscapeGameManager instance.
+	 * @return
+	 */
+	public EscapeGameManager makeGameManager()
+	{
+		// Validate the XML configuration
+		try 
+		{
+			validateConfiguration(gameInitializer);
+		} 
+		catch (EscapeException e)
+		{
+			throw new EscapeException("ERROR: Invalid configuration file!");
+		}
+
+		// Need to create a board
 		TwoDimensionalBoard board = (TwoDimensionalBoard) makeBoard();
-    	
+		
+		// Attach movement rules to pieces
+		Map<PieceName, MovementRules> rules = bindRules();
+
 		switch (gameInitializer.getCoordinateType())
 		{
 			case SQUARE:
-				return new SquareEscapeGameManager(board);
+				return new SquareEscapeGameManager(board, rules);
 			case ORTHOSQUARE:
-				return new OrthoSquareEscapeGameManager(board);
+				return new OrthoSquareEscapeGameManager(board, rules);
 			case HEX:
-				return new HexEscapeGameManager(board);
+				return new HexEscapeGameManager(board, rules);
 			default:
 				throw new EscapeException("ERROR: Board could not be created!");
 		}
-    }
-    
-    /**
+	}
+
+	/**
+	 * This method binds the the movement rules to each piece by their piece name.
+	 * This method assumes that the config file is valid.
+	 * @return
+	 */
+	private Map<PieceName, MovementRules> bindRules()
+	{
+		Map<PieceName, MovementRules> rules = new HashMap<PieceName, MovementRules>();
+		for(PieceTypeInitializer p : gameInitializer.getPieceTypes())
+		{
+			p.getMovementPattern();
+			rules.put(p.getPieceName(), createMovementRules(p));
+		}
+		return rules;
+	}
+
+	/**
+	 * This method creates the MovementRules object
+	 * @param attributes the PieceAttributes used to initialize
+	 * @return an instance of MovementRules
+	 */
+	private MovementRules createMovementRules(PieceTypeInitializer initializer)
+	{
+		MovementRules mr = new MovementRules();
+		mr.setMovementPattern(initializer.getMovementPattern());
+		for(PieceAttribute pa : initializer.getAttributes())
+		{
+			switch(pa.getId())
+			{
+				case DISTANCE:
+					mr.setMaxDistance(pa.getIntValue());
+					break;
+				case FLY:
+					mr.setCanFly(true);
+					mr.setMaxDistance(pa.getIntValue());
+					break;
+				case VALUE:
+					mr.setValue(pa.getIntValue());
+					break;
+				case JUMP:
+					mr.setCanJump(true);
+					break;
+				case UNBLOCK:
+					mr.setCanTravelThroughBlocked(true);
+					break;
+			}
+		}
+		return mr;
+	}
+
+	/**
 	 * This method should perform the validation of a given configuration file.
 	 * The given initializer :
 	 * 		X - has at LEAST one piece type
@@ -91,7 +144,7 @@ public class EscapeGameBuilder
 	 * 		- That the MovementPatternID is correct for the given board
 	 * 	 	- (Check canvas for additional rules)
 	 * @param initializer the given configuration for the game 
-     * @return true i
+	 * @return true i
 	 */
 	private void validateConfiguration(EscapeGameInitializer initializer)
 	{
@@ -100,8 +153,48 @@ public class EscapeGameBuilder
 		if (!oneRulePerPiece(initializer.getPieceTypes()))
 			throw new EscapeException("ERROR: A PieceName has multiple PieceTypes " + 
 									  "associated with it!");
+//		if (!validateMovementPatternId(initializer.getCoordinateType(), initializer.getPieceTypes()))
+//			throw new EscapeException("ERROR: A PieceType has an ambiguous " + 
+//									  "MovementPatternID!");
 	}
-	
+
+	/**
+	 * Validate that each PieceType has a valid MovementPatterID
+	 * @param coordinateType the type of the Coordinate used on the board
+	 * @param pieceTypes all the piecetypes being initialized
+	 * @return true if all pieceTypes have valid MovementPatterIDs
+	 */
+	private boolean validateMovementPatternId(CoordinateID coordinateType,
+			PieceTypeInitializer[] pieceTypes)
+	{
+		boolean isValid = true;
+		switch(coordinateType)
+		{
+			case SQUARE:
+				return isValid;	// All MovementIDs are valid for a SquareBoard
+			case ORTHOSQUARE:
+				for (PieceTypeInitializer pt : pieceTypes)
+				{
+					if(!isValid)
+						return false;
+					
+					isValid = (pt.getMovementPattern() == MovementPatternID.ORTHOGONAL) ||
+							  (pt.getMovementPattern() == MovementPatternID.OMNI);
+				}
+			case HEX:
+				for (PieceTypeInitializer pt : pieceTypes)
+				{
+					if(!isValid)
+						return false;
+					
+					isValid = (pt.getMovementPattern() == MovementPatternID.LINEAR) ||
+							  (pt.getMovementPattern() == MovementPatternID.OMNI);
+				}
+			default:
+				return false;
+		}
+	}
+
 	/**
 	 * Validate the attributes for all PieceTypes 
 	 * @param pieceTypes the specified PieceTypes in the configuration file
@@ -111,18 +204,15 @@ public class EscapeGameBuilder
 	{
 		if (pieceTypes == null)
 			return false;
-//			throw new EscapeException("ERROR: Configuration needs to specify at " +
-//									  "least one pieceType!");
-		
+
 		for (PieceTypeInitializer pt : pieceTypes)
 		{
 			if (!validateAttributes(pt.getAttributes()))
 				return false;
 		}
-		
 		return true;
 	}
-	
+
 	/**
 	 * This method validates an array of attributes
 	 * @param pieceAttributes the attributes of a PieceType
@@ -149,11 +239,11 @@ public class EscapeGameBuilder
 	 */
 	private boolean hasMovementAttribute(ArrayList<PieceAttributeID> collectedAttributeIDs)
 	{
-		return !(!collectedAttributeIDs.contains(PieceAttributeID.FLY) && 
-				 !collectedAttributeIDs.contains(PieceAttributeID.DISTANCE))
-				 &&
+		return (collectedAttributeIDs.contains(PieceAttributeID.FLY) ||
+			    collectedAttributeIDs.contains(PieceAttributeID.DISTANCE)
+				&&
 				!(collectedAttributeIDs.contains(PieceAttributeID.FLY) && 
-				  collectedAttributeIDs.contains(PieceAttributeID.DISTANCE));
+				  collectedAttributeIDs.contains(PieceAttributeID.DISTANCE)));
 	}
 
 	/**
@@ -186,12 +276,12 @@ public class EscapeGameBuilder
 		{
 			case SQUARE:
 				board = new SquareBoard(gameInitializer.getxMax(), gameInitializer.getyMax());
-		        initializeSquareBoard(board, gameInitializer.getLocationInitializers());
+				initializeSquareBoard(board, gameInitializer.getLocationInitializers());
 				return board;
 			case ORTHOSQUARE:
 				board = new OrthoSquareBoard(gameInitializer.getxMax(), gameInitializer.getyMax());
-		        initializeOrthoSquareBoard(board, gameInitializer.getLocationInitializers());
-		        return board;
+				initializeOrthoSquareBoard(board, gameInitializer.getLocationInitializers());
+				return board;
 			case HEX:
 				board = new HexBoard(gameInitializer.getxMax(), gameInitializer.getyMax());
 				initializeHexBoard(board, gameInitializer.getLocationInitializers());
@@ -199,7 +289,7 @@ public class EscapeGameBuilder
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Initialize each spot on a SquareBoard with either a piece or LocationType, depending what
 	 * was specified in the XML config file 
@@ -215,14 +305,14 @@ public class EscapeGameBuilder
 				if (li.pieceName != null) {
 					b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
 				}
-				
+
 				if (li.locationType != null && li.locationType != CLEAR) {
 					b.setLocationType(c, li.locationType);
 				}
 			}
 		}
 	}
-	
+
 	/**
 	 * Initialize each spot on a OrthoSquareBoard with either a piece or LocationType, depending what
 	 * was specified in the XML config file 
@@ -238,13 +328,13 @@ public class EscapeGameBuilder
 				if (li.pieceName != null) {
 					b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
 				}
-				
+
 				if (li.locationType != null && li.locationType != CLEAR) {
 					b.setLocationType(c, li.locationType);
 				}
 			}	
 		}
-		
+
 	}
 
 	/**
@@ -262,7 +352,7 @@ public class EscapeGameBuilder
 				if (li.pieceName != null) {
 					b.putPieceAt(new EscapePiece(li.player, li.pieceName), c);
 				}
-				
+
 				if (li.locationType != null && li.locationType != CLEAR) {
 					b.setLocationType(c, li.locationType);
 				}

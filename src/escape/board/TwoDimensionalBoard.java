@@ -59,9 +59,12 @@ public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordin
 	 * @param coord the Coordinate that is being checked
 	 * @return true if the LocationType of the Coordinate is BLOCKED
 	 */
-	protected boolean isBlocked(TwoDimensionalCoordinate coord)
+	public boolean isBlocked(TwoDimensionalCoordinate coord)
 	{
-		return spots.get(coord) == LocationType.BLOCK;
+		if (coord != null)
+			return spots.get(coord) == LocationType.BLOCK;
+		else
+			return false;	// should throw an error here
 	}
 	
 	/**
@@ -70,13 +73,13 @@ public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordin
 	 * @param coord the Coordinate that is being checked
 	 * @return true if the LocationType of the Coordinate is EXIT
 	 */
-	protected boolean isExit(TwoDimensionalCoordinate coord)
+	public boolean isExit(TwoDimensionalCoordinate coord)
 	{
 		return spots.get(coord) == LocationType.EXIT;
 	}
 	
 	/**
-	 * Get the Coordinate type for the board
+	 * Check that the given coordinate is on the board
 	 * @param coord the coordinate being checked
 	 * @return true if the coordinate lies on the board
 	 */

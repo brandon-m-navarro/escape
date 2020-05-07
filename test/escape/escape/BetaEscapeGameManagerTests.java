@@ -13,15 +13,14 @@
 package escape.escape;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.File;
 import org.junit.jupiter.api.*;
 import escape.*;
-import escape.board.*;
 import escape.board.coordinate.*;
 import escape.exception.EscapeException;
 import escape.piece.*;
@@ -91,7 +90,7 @@ class BetaEscapeGameManagerTests
 			= new EscapeGameBuilder(new File("config/validBetaBoards/SampleEscapeGameSquare.xml"));
 		EscapeGameManager emg = egb.makeGameManager();
 		
-		assertNull(emg.getPieceAt(emg.makeCoordinate(1, 1)));
+		assertNull(emg.getPieceAt(emg.makeCoordinate(5, 1)));
 		
 		EscapePiece p = emg.getPieceAt(emg.makeCoordinate(2, 2));
 		assertNotNull(p);
@@ -197,5 +196,101 @@ class BetaEscapeGameManagerTests
 			    // assertions on the thrown exception
 				assertEquals("ERROR: Invalid configuration file!",
 						thrown.getMessage());
+	}
+	
+//	@Test
+//	void validateMovementIdsOrthoSquare() throws Exception
+//	{
+//		EscapeGameBuilder egb 
+//			= new EscapeGameBuilder(new File("config/invalidBetaBoards/InvalidEscapeGameOrthoSquare1.xml"));
+//
+//		EscapeException thrown = assertThrows(
+//				EscapeException.class,
+//				() -> egb.makeGameManager());
+//
+//		// assertions on the thrown exception
+//		assertEquals("ERROR: Invalid configuration file!",
+//				thrown.getMessage());
+//	}
+	
+	@Test
+	void squareGameBasicMoveChecks() throws Exception
+	{
+		EscapeGameBuilder egb 
+			= new EscapeGameBuilder(new File("config/validBetaBoards/SampleEscapeGameSquare.xml"));
+		EscapeGameManager emg = egb.makeGameManager();
+
+		// Trying to move piece that doesn't exist
+		assertFalse(emg.move(emg.makeCoordinate(3, 4), emg.makeCoordinate(4, 4)));
+		
+		// Move piece that does exist
+		assertTrue(emg.move(emg.makeCoordinate(2, 2), emg.makeCoordinate(2, 3)));
+		
+		// Confirm that a piece cannot move into a teammate
+		assertFalse(emg.move(emg.makeCoordinate(2, 2), emg.makeCoordinate(1, 1)));
+		
+		// Confirm that a piece can move onto an enemies piece
+		assertTrue(emg.move(emg.makeCoordinate(2, 2), emg.makeCoordinate(2, 5)));
+		
+		// Confirm that the moving piece is moving to a valid coordinate
+		assertFalse(emg.move(emg.makeCoordinate(2, 2), emg.makeCoordinate(-1, -1)));
+		assertFalse(emg.move(emg.makeCoordinate(2, 2), emg.makeCoordinate(25, 25)));
+	}
+	
+	@Test
+	void squareGameLinearMovement() throws Exception
+	{
+		EscapeGameBuilder egb 
+			= new EscapeGameBuilder(new File("config/validBetaBoards/SampleEscapeGameSquare.xml"));
+		EscapeGameManager emg = egb.makeGameManager();
+		
+		// Check some valid moves
+		assertTrue(emg.move(emg.makeCoordinate(2, 2), emg.makeCoordinate(1, 3)));
+		assertTrue(emg.move(emg.makeCoordinate(7, 7), emg.makeCoordinate(7, 5)));
+		assertTrue(emg.move(emg.makeCoordinate(7, 7), emg.makeCoordinate(8, 6)));
+		assertTrue(emg.move(emg.makeCoordinate(7, 7), emg.makeCoordinate(8, 7)));
+		
+		// Check that a piece cannot move if obstructed by a piece (No FLY, JUMP)
+		assertFalse(emg.move(emg.makeCoordinate(2, 2), emg.makeCoordinate(2, 6)));
+		
+		// Check that a piece cannot move in a non linear pattern
+		assertFalse(emg.move(emg.makeCoordinate(2, 2), emg.makeCoordinate(3, 4)));
+		
+		// Check that a piece cant move if too much distance
+		assertFalse(emg.move(emg.makeCoordinate(2, 5), emg.makeCoordinate(8, 5)));
+
+		// Check that a piece can move if obstructed by a piece(with fly)
+		assertTrue(emg.move(emg.makeCoordinate(7, 7), emg.makeCoordinate(9, 9)));
+		
+		// Check that you can fly over a blocked square
+		assertTrue(emg.move(emg.makeCoordinate(7, 7), emg.makeCoordinate(4, 7)));
+		
+		// Check that it can fly over both a blocked square and a team piece
+		assertTrue(emg.move(emg.makeCoordinate(7, 7), emg.makeCoordinate(7, 10)));
+		
+		// Check that a piece can land on an enemy piece (with fly)
+		assertTrue(emg.move(emg.makeCoordinate(7, 7), emg.makeCoordinate(8, 8)));
+		
+		// Check that a piece cannot fly in a non linear pattern
+		assertFalse(emg.move(emg.makeCoordinate(7, 7), emg.makeCoordinate(5, 6)));
+
+		// Check that a piece can jump a single piece (not a block)
+		assertTrue(emg.move(emg.makeCoordinate(1, 1), emg.makeCoordinate(5, 1)));
+
+		// Check that a piece cannot jump two pieces consecutively
+		assertTrue(emg.move(emg.makeCoordinate(1, 1), emg.makeCoordinate(7, 1)));
+
+		// Check that a piece cannot change direction and jump
+		assertFalse(emg.move(emg.makeCoordinate(1, 1), emg.makeCoordinate(2, 5)));
+
+		// Check that a piece cannot jump over two pieces
+		assertFalse(emg.move(emg.makeCoordinate(1, 1), emg.makeCoordinate(10, 1)));
+
+		// Check that a piece can jump and land on an enemy piece
+		assertTrue(emg.move(emg.makeCoordinate(1, 1), emg.makeCoordinate(1, 3)));
+
+		// Check that a piece can move through a blocked location if it's able
+		assertTrue(emg.move(emg.makeCoordinate(7, 6), emg.makeCoordinate(7, 4)));
+
 	}
 }

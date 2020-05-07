@@ -12,10 +12,11 @@
 
 package escape;
 
+import java.util.Map;
 import escape.board.*;
 import escape.board.coordinate.*;
 import escape.exception.EscapeException;
-import escape.piece.EscapePiece;
+import escape.piece.*;
 
 /**
  * Description
@@ -24,9 +25,9 @@ import escape.piece.EscapePiece;
 public class OrthoSquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 {
 	
-	OrthoSquareEscapeGameManager(TwoDimensionalBoard b)
+	OrthoSquareEscapeGameManager(TwoDimensionalBoard b, Map<PieceName, MovementRules> rules)
 	{
-		super(b);
+		super(b, rules);
 	}
 
 	/*
