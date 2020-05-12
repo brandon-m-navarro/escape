@@ -157,6 +157,11 @@
             <intValue>15</intValue>
         </attributes>
         <attributes>
+            <id>VALUE</id>
+            <attrType>INTEGER</attrType>
+            <intValue>15</intValue>
+        </attributes>
+        <attributes>
             <id>UNBLOCK</id>
             <attrType>BOOLEAN</attrType>
             <booleanValue>TRUE</booleanValue>

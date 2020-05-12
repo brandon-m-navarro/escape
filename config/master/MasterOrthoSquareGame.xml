@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<escapeGameInitializer>
+	<coordinateType>ORTHOSQUARE</coordinateType>
+    <!-- Board items -->
+    <xMax>24</xMax>
+    <yMax>18</yMax>
+    
+    <!-- Pieces -->
+    <locationInitializers>
+        <x>5</x><y>6</y>
+        <player>PLAYER1</player><pieceName>FROG</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>16</x><y>4</y>
+        <player>PLAYER2</player><pieceName>FROG</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>17</x><y>4</y>
+        <player>PLAYER1</player><pieceName>FROG</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>17</x><y>6</y>
+        <player>PLAYER2</player><pieceName>HORSE</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>19</x><y>2</y>
+        <player>PLAYER2</player><pieceName>HUMMINGBIRD</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>15</x><y>6</y>
+        <player>PLAYER2</player><pieceName>HUMMINGBIRD</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>13</x><y>10</y>
+        <player>PLAYER1</player><pieceName>SNAIL</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>19</x><y>9</y>
+        <player>PLAYER1</player><pieceName>FOX</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>15</x><y>4</y>
+        <player>PLAYER1</player><pieceName>FOX</pieceName>
+    </locationInitializers>
+    
+    <!-- Blocks -->
+    <locationInitializers>
+    	<x>19</x><y>8</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+    <locationInitializers>
+    	<x>19</x><y>10</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+	<locationInitializers>
+    	<x>18</x><y>8</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+	<locationInitializers>
+    	<x>18</x><y>10</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+	<locationInitializers>
+    	<x>18</x><y>9</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+	<locationInitializers>
+    	<x>17</x><y>9</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+	<locationInitializers>
+    	<x>16</x><y>9</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+	<locationInitializers>
+    	<x>15</x><y>9</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+	<locationInitializers>
+    	<x>14</x><y>9</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+    <locationInitializers>
+    	<x>6</x><y>5</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+    <locationInitializers>
+    	<x>6</x><y>7</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+    
+    <!-- Exits -->
+    <locationInitializers>
+    	<x>18</x><y>5</y><locationType>EXIT</locationType>
+    </locationInitializers>
+    <locationInitializers>
+    	<x>6</x><y>6</y><locationType>EXIT</locationType>
+    </locationInitializers>
+    
+    
+    <!-- Piece items, an array of pieceTypes, 1 or more -->
+    <pieceTypes>
+        <pieceName>FROG</pieceName>
+        <movementPattern>ORTHOGONAL</movementPattern>
+        <attributes>
+            <id>JUMP</id>
+            <attrType>BOOLEAN</attrType>
+            <booleanValue>true</booleanValue>
+        </attributes>
+    	<attributes>
+    		<id>DISTANCE</id>
+    		<attrType>INTEGER</attrType>
+    		<intValue>3</intValue>
+    	</attributes>
+    </pieceTypes>
+    
+     <pieceTypes>
+        <pieceName>HORSE</pieceName>
+        <movementPattern>OMNI</movementPattern>
+        <attributes>
+            <id>JUMP</id>
+            <attrType>BOOLEAN</attrType>
+            <booleanValue>true</booleanValue>
+        </attributes>
+    	<attributes>
+    		<id>DISTANCE</id>
+    		<attrType>INTEGER</attrType>
+    		<intValue>5</intValue>
+    	</attributes>
+    </pieceTypes>
+    
+    <pieceTypes>
+        <pieceName>HUMMINGBIRD</pieceName>
+        <movementPattern>LINEAR</movementPattern>
+        <attributes>
+            <id>FLY</id>
+            <attrType>INTEGER</attrType>
+            <intValue>7</intValue>
+    	</attributes>
+    </pieceTypes>
+    
+    <pieceTypes>
+        <pieceName>SNAIL</pieceName>
+        <movementPattern>OMNI</movementPattern>
+        <attributes>
+            <id>DISTANCE</id>
+            <attrType>INTEGER</attrType>
+            <intValue>1</intValue>
+    	</attributes>
+    </pieceTypes>
+    
+    <pieceTypes>
+        <pieceName>FOX</pieceName>
+        <movementPattern>OMNI</movementPattern>
+        <attributes>
+            <id>DISTANCE</id>
+            <attrType>INTEGER</attrType>
+            <intValue>6</intValue>
+    	</attributes>
+    	<attributes>
+    		<id>UNBLOCK</id>
+    		<attrType>BOOLEAN</attrType>
+    		<booleanValue>true</booleanValue>
+    	</attributes>
+    </pieceTypes>
+</escapeGameInitializer>

@@ -40,10 +40,7 @@ public abstract class TwoDimensionalEscapeGameManager implements EscapeGameManag
 	@Override
 	public EscapePiece getPieceAt(Coordinate coord)
 	{
-		if (coord != null)
 			return board.getPieceAt((TwoDimensionalCoordinate) coord);
-		else
-			throw new EscapeException("ERROR: Invalid coordinate!");
 	}
 	
 	/**

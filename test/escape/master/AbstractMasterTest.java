@@ -10,30 +10,27 @@
  * Copyright ©2020 Gary F. Pollice
  *******************************************************************************/
 
-package escape;
+package escape.master;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import escape.*;
 
 /**
- * Description
- * @version Apr 24, 2020
+ * Base class for each of the new tests.
+ * @version May 7, 2020
  */
-class BetaEscapeGameTests
+class AbstractMasterTest
 {
+    static String masterTestLocation = "config/master/";
+    static String fileName;
+    EscapeGameManager game;
     
-    /**
-     * Example of how the game manager tests will be structured.
-     * @throws Exception
-     */
-    @Test
-    void test() throws Exception
+    @BeforeEach
+    void setup() throws Exception
     {
-        EscapeGameBuilder egb 
-            = new EscapeGameBuilder(new File("config/SampleEscapeGame.xml"));
-        EscapeGameManager emg = egb.makeGameManager();
-        // Exercise the game now: make moves, check the board, etc.
+        EscapeGameBuilder egb = new EscapeGameBuilder(new File(fileName));
+        game = egb.makeGameManager();
     }
-    
 }

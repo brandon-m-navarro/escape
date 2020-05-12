@@ -146,11 +146,11 @@ class BetaEscapeGameManagerTests
 			= new EscapeGameBuilder(new File("config/validBetaBoards/SampleEscapeGameHex.xml"));
 		EscapeGameManager emg = egb.makeGameManager();
 		
-		assertNull(emg.getPieceAt(emg.makeCoordinate(2, 2)));
+		assertNotNull(emg.getPieceAt(emg.makeCoordinate(2, 2)));
 		
-		EscapePiece p = emg.getPieceAt(emg.makeCoordinate(0, 0));
+		EscapePiece p = emg.getPieceAt(emg.makeCoordinate(1, 1));
 		assertNotNull(p);
-		assertEquals(p.getName(), PieceName.HORSE);
+		assertEquals(p.getName(), PieceName.FROG);
 	}
 	
 	@Test
@@ -158,6 +158,21 @@ class BetaEscapeGameManagerTests
 	{
 		EscapeGameBuilder egb
 			= new EscapeGameBuilder(new File("config/invalidBetaBoards/InvalidEscapeGameSquare1.xml"));
+		
+		 EscapeException thrown = assertThrows(
+		    		EscapeException.class,
+				    () -> egb.makeGameManager());
+
+			    // assertions on the thrown exception
+				assertEquals("ERROR: Invalid configuration file!",
+						thrown.getMessage());
+	}
+	
+	@Test
+	void validateConfigurationIncorrectBoardType() throws Exception
+	{
+		EscapeGameBuilder egb
+			= new EscapeGameBuilder(new File("config/invalidBetaBoards/InvalidBoard1.xml"));
 		
 		 EscapeException thrown = assertThrows(
 		    		EscapeException.class,
@@ -197,21 +212,6 @@ class BetaEscapeGameManagerTests
 				assertEquals("ERROR: Invalid configuration file!",
 						thrown.getMessage());
 	}
-	
-//	@Test
-//	void validateMovementIdsOrthoSquare() throws Exception
-//	{
-//		EscapeGameBuilder egb 
-//			= new EscapeGameBuilder(new File("config/invalidBetaBoards/InvalidEscapeGameOrthoSquare1.xml"));
-//
-//		EscapeException thrown = assertThrows(
-//				EscapeException.class,
-//				() -> egb.makeGameManager());
-//
-//		// assertions on the thrown exception
-//		assertEquals("ERROR: Invalid configuration file!",
-//				thrown.getMessage());
-//	}
 	
 	@Test
 	void squareGameBasicMoveChecks() throws Exception
@@ -291,6 +291,40 @@ class BetaEscapeGameManagerTests
 
 		// Check that a piece can move through a blocked location if it's able
 		assertTrue(emg.move(emg.makeCoordinate(7, 6), emg.makeCoordinate(7, 4)));
+		
+		// Check that a piece cannot move through a blocked square
+		assertFalse(emg.move(emg.makeCoordinate(7, 9), emg.makeCoordinate(7, 6)));
+	}
+	
+	@Test
+	void squareGameDiagonalMovement() throws Exception
+	{
+		EscapeGameBuilder egb 
+			= new EscapeGameBuilder(new File("config/validBetaBoards/SquareEscapeDiagonalMovement.xml"));
+		EscapeGameManager emg = egb.makeGameManager();
+		
+		assertTrue(emg.move(emg.makeCoordinate(4, 3), emg.makeCoordinate(7, 2)));
+		assertFalse(emg.move(emg.makeCoordinate(4, 3), emg.makeCoordinate(7, 3)));
 
+	}
+	
+	@Test
+	void hexGameLinearMovement() throws Exception
+	{
+		EscapeGameBuilder egb 
+			= new EscapeGameBuilder(new File("config/validBetaBoards/SampleEscapeGameHex.xml"));
+		EscapeGameManager emg = egb.makeGameManager();
+		
+		assertFalse(emg.move(emg.makeCoordinate(1, 1), emg.makeCoordinate(10, 1)));
+	}
+	
+	@Test
+	void orthoSquareGameMovement() throws Exception
+	{
+		EscapeGameBuilder egb 
+			= new EscapeGameBuilder(new File("config/validBetaBoards/SampleEscapeGameOrtho.xml"));
+		EscapeGameManager emg = egb.makeGameManager();
+		
+		assertFalse(emg.move(emg.makeCoordinate(1, 1), emg.makeCoordinate(10, 1)));
 	}
 }

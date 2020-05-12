@@ -99,7 +99,6 @@ ConcreteEscapeGameManager
 		25. - Check that piece moved a valid distance
 		29. - Check that piece remained in a linear position
 		
-			
 		- After this, we need to then look at the movementPatternID of the piece to put it on a pathfinding
 		  algorithm that will return true or false
 		  

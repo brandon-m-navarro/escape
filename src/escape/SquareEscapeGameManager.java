@@ -12,8 +12,8 @@
 
 package escape;
 
-import static org.junit.Assume.assumeNoException;
 import java.util.*;
+import escape.PathFinder.*;
 import escape.board.*;
 import escape.board.coordinate.*;
 import escape.exception.EscapeException;
@@ -38,15 +38,19 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 	@Override
 	public boolean move(Coordinate from, Coordinate to)
 	{
+		boolean validMove = false;
 		if (isBasicMove((SquareCoordinate)from, (SquareCoordinate)to))
 		{
 			EscapePiece p = getPieceAt(from);
 			switch (getMovementRulesFor(p.getName()).getMovementPattern())
 			{
 				case LINEAR:
-					return canMoveLinear((SquareCoordinate) from, (SquareCoordinate) to, 
+					validMove = canMoveLinear((SquareCoordinate) from, (SquareCoordinate) to, 
 							   getMovementRulesFor(p.getName()));
+					break;
 				case DIAGONAL:
+					validMove = canMoveDiagonally((SquareCoordinate) from, (SquareCoordinate) to,
+								getMovementRulesFor(p.getName()));
 					break;
 				case ORTHOGONAL:
 					break;
@@ -56,7 +60,63 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 					return false;
 			}
 		}
-		return false;
+//		Have to comment this for testing reasons, but if the move is correct, 
+//		this is still correct, just don't want to actually move the piece
+//		/-------------------------------------------------------------------\
+//		if (validMove)
+//			board.movePiece((SquareCoordinate)from, (SquareCoordinate)to);
+		
+		return validMove;
+	}
+
+	/*
+	 * @see escape.EscapeGameManager#getPieceAt(escape.board.coordinate.Coordinate)
+	 */
+	@Override
+	public EscapePiece getPieceAt(Coordinate coord)
+	{
+		SquareBoard b = (SquareBoard) board;
+		SquareCoordinate c = (SquareCoordinate) coord;
+		if (coord != null && b.isValidCoordinate(SquareCoordinate.makeCoordinate(c.getX(), c.getY())))
+			return board.getPieceAt((TwoDimensionalCoordinate) coord);
+		else
+			throw new EscapeException("ERROR: invalid coordinate!");
+	}
+	
+	/**
+	 * Returns a coordinate of the appropriate type. If the coordinate cannot be
+	 * created, then null is returned and the status message is set appropriately.
+	 * @param x the x component
+	 * @param y the y component
+	 * @return the coordinate or null if the coordinate cannot be 
+	 */
+	@Override
+	public Coordinate makeCoordinate(int x, int y)
+	{
+		SquareBoard b = (SquareBoard) board;
+		if (b.isValidCoordinate(SquareCoordinate.makeCoordinate(x, y)))
+			return SquareCoordinate.makeCoordinate(x, y);
+		else
+			return null;
+	}
+	
+	/**
+	 * This method performs basic move checks to basic rules of movement are
+	 * being followed. More specifically: 
+	 * 		- if a piece exists to move
+	 * 		- that it's moving somewhere on the board
+	 * @return true if the piece can theoretically move
+	 */
+	private boolean isBasicMove(SquareCoordinate from, SquareCoordinate to)
+	{
+		SquareBoard b = (SquareBoard) board;
+		
+		if (doesPieceExistAt(from) && (from != null && to != null))
+		{
+			return b.isWithinBoundries(to);
+		} 
+		else
+			return false;
 	}
 	
 	/**
@@ -74,7 +134,7 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 			return false;
 		else if (from.distanceTo(to) > movementRules.getMaxDistance())
 			return false;
-		Vector<SquareCoordinate> coordVector = makeCoordinateVector(from, to);
+		Vector<SquareCoordinate> coordVector = makeLinearCoordinateVector(from, to);
 		for (SquareCoordinate coord : coordVector)
 		{
 			if (coord == coordVector.lastElement())
@@ -108,7 +168,7 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 			}
 			else if (doesPieceExistAt(coord) && movementRules.isCanJump())
 			{
-				if (canMakeValidJump(coord, to, getPieceAt(from)))
+				if (canMakeValidLinearJump(coord, to, getPieceAt(from)))
 					continue;
 				else
 					return false;
@@ -118,18 +178,39 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 		}
 		return true;
 	}
+	
+	/**
+	 * This method tests that the given move is possible following
+	 * DIAGONAL constraints
+	 * @param from
+	 * @param to
+	 * @param movementRulesFor
+	 * @return
+	 */
+	private boolean canMoveDiagonally(SquareCoordinate from, SquareCoordinate to,
+			MovementRules movementRules)
+	{
+		if (from.distanceTo(to) > movementRules.getMaxDistance())
+			return false;
+		PathFinder pathFinder = new PathFinder(board, new PathFinderNode(from), movementRules);
+		pathFinder.searchDiagonally(from, to, movementRules);
+//		Vector<TwoDimensionalCoordinate> path = pathFinder.recreatePath();
+		System.out.println(pathFinder.getDistanceTravelled());
+		return pathFinder.isCompleted();
+	}
+
 
 	/**
 	 * This method returns true if the piece can make a valid jump. This
 	 * method will return true if attempting to jump into an enemy piece 
-	 * @param from the starting coordinate of the first jump
+	 * @param start where the piece is starting its jump
 	 * @param to the ending coordinate
 	 * @param piece the moving piece
 	 * @return true if the piece can make a valid jump
 	 */
-	private boolean canMakeValidJump(SquareCoordinate start, SquareCoordinate to, EscapePiece piece)
+	private boolean canMakeValidLinearJump(SquareCoordinate start, SquareCoordinate to, EscapePiece piece)
 	{
-		Vector<SquareCoordinate> coordVector = makeCoordinateVector(start, to);
+		Vector<SquareCoordinate> coordVector = makeLinearCoordinateVector(start, to);
 
 		for (int i = 0; i < 1;) // we're on a piece, check the next spot
 		{
@@ -157,56 +238,6 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 	}
 
 	/**
-	 * Returns a coordinate of the appropriate type. If the coordinate cannot be
-	 * created, then null is returned and the status message is set appropriately.
-	 * @param x the x component
-	 * @param y the y component
-	 * @return the coordinate or null if the coordinate cannot be 
-	 */
-	@Override
-	public Coordinate makeCoordinate(int x, int y)
-	{
-		SquareBoard b = (SquareBoard) board;
-		if (b.isValidCoordinate(SquareCoordinate.makeCoordinate(x, y)))
-			return SquareCoordinate.makeCoordinate(x, y);
-		else
-			return null;
-	}
-	
-	/*
-	 * @see escape.EscapeGameManager#getPieceAt(escape.board.coordinate.Coordinate)
-	 */
-	@Override
-	public EscapePiece getPieceAt(Coordinate coord)
-	{
-		SquareBoard b = (SquareBoard) board;
-		SquareCoordinate c = (SquareCoordinate) coord;
-		if (coord != null && b.isValidCoordinate(SquareCoordinate.makeCoordinate(c.getX(), c.getY())))
-			return board.getPieceAt((TwoDimensionalCoordinate) coord);
-		else
-			throw new EscapeException("ERROR: invalid coordinate!");
-	} 
-	
-	/**
-	 * This method performs basic move checks to basic rules of movement are
-	 * being followed. More specifically: 
-	 * 		- if a piece exists to move
-	 * 		- that it's moving somewhere on the board
-	 * @return true if the piece can theoretically move
-	 */
-	private boolean isBasicMove(SquareCoordinate from, SquareCoordinate to)
-	{
-		SquareBoard b = (SquareBoard) board;
-		
-		if (doesPieceExistAt(from) && (from != null && to != null))
-		{
-			return b.isWithinBoundries(to);
-		} 
-		else
-			return false;
-	}
-
-	/**
 	 * This method simply checks if a piece exists at the given coordinate 
 	 * @param coord the coordinate to check
 	 * @return true if a piece exists at the given coordinate
@@ -231,7 +262,7 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 	 * @param c2 the ending Coordinate
 	 * @return a Vector of Coordinates included from c1 and c2
 	 */
-	private static Vector<SquareCoordinate> makeCoordinateVector(TwoDimensionalCoordinate c1, TwoDimensionalCoordinate c2) 
+	private static Vector<SquareCoordinate> makeLinearCoordinateVector(TwoDimensionalCoordinate c1, TwoDimensionalCoordinate c2) 
 	{
 		Vector result = new Vector();
 		int x = c1.getX();

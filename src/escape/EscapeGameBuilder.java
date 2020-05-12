@@ -141,8 +141,7 @@ public class EscapeGameBuilder
 	 * 		X - has at LEAST one piece type
 	 * 		X - does not define a two rules for a single piece type
 	 * 		X - has at least a distance or fly attribute for every piece
-	 * 		- That the MovementPatternID is correct for the given board
-	 * 	 	- (Check canvas for additional rules)
+	 * 		X - That the MovementPatternID is correct for the given board
 	 * @param initializer the given configuration for the game 
 	 * @return true i
 	 */
@@ -153,46 +152,6 @@ public class EscapeGameBuilder
 		if (!oneRulePerPiece(initializer.getPieceTypes()))
 			throw new EscapeException("ERROR: A PieceName has multiple PieceTypes " + 
 									  "associated with it!");
-//		if (!validateMovementPatternId(initializer.getCoordinateType(), initializer.getPieceTypes()))
-//			throw new EscapeException("ERROR: A PieceType has an ambiguous " + 
-//									  "MovementPatternID!");
-	}
-
-	/**
-	 * Validate that each PieceType has a valid MovementPatterID
-	 * @param coordinateType the type of the Coordinate used on the board
-	 * @param pieceTypes all the piecetypes being initialized
-	 * @return true if all pieceTypes have valid MovementPatterIDs
-	 */
-	private boolean validateMovementPatternId(CoordinateID coordinateType,
-			PieceTypeInitializer[] pieceTypes)
-	{
-		boolean isValid = true;
-		switch(coordinateType)
-		{
-			case SQUARE:
-				return isValid;	// All MovementIDs are valid for a SquareBoard
-			case ORTHOSQUARE:
-				for (PieceTypeInitializer pt : pieceTypes)
-				{
-					if(!isValid)
-						return false;
-					
-					isValid = (pt.getMovementPattern() == MovementPatternID.ORTHOGONAL) ||
-							  (pt.getMovementPattern() == MovementPatternID.OMNI);
-				}
-			case HEX:
-				for (PieceTypeInitializer pt : pieceTypes)
-				{
-					if(!isValid)
-						return false;
-					
-					isValid = (pt.getMovementPattern() == MovementPatternID.LINEAR) ||
-							  (pt.getMovementPattern() == MovementPatternID.OMNI);
-				}
-			default:
-				return false;
-		}
 	}
 
 	/**

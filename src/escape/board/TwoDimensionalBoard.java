@@ -14,6 +14,7 @@ package escape.board;
 
 import java.util.*;
 import escape.board.coordinate.*;
+import escape.exception.EscapeException;
 import escape.piece.EscapePiece;
 
 /**
@@ -48,9 +49,12 @@ public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordin
 	 * @see escape.board.Board#getPieceAt(escape.board.coordinate.Coordinate)
 	 */
 	@Override
-	public EscapePiece getPieceAt(TwoDimensionalCoordinate coord)
+	public EscapePiece getPieceAt(TwoDimensionalCoordinate from)
 	{
-		return pieces.get(coord);
+		if (pieces.containsKey(from))
+			return pieces.get(from);
+		else
+			return null;
 	}
 	
 	/**
@@ -61,10 +65,7 @@ public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordin
 	 */
 	public boolean isBlocked(TwoDimensionalCoordinate coord)
 	{
-		if (coord != null)
-			return spots.get(coord) == LocationType.BLOCK;
-		else
-			return false;	// should throw an error here
+		return spots.get(coord) == LocationType.BLOCK;
 	}
 	
 	/**
@@ -86,5 +87,27 @@ public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordin
 	public boolean isValidCoordinate(TwoDimensionalCoordinate coord)
 	{
 		return ((coord.getX() <= xMax && coord.getY() <= yMax) && (coord.getX() > 0 && coord.getY() > 0));
+	}
+
+	/**
+	 * This method moves a piece, replacing any piece at that coordinate with the moving
+	 * piece. This method DOES NOT check whether or not the move itself is valid!
+	 * @throws EscapeException if the from coordinate doesn't contain an EscapePiece
+	 * @param from the coordinate the EscapePiece is moving from
+	 * @param to the coordinate that the EscapePiece will move to
+	 */
+	public void movePiece(TwoDimensionalCoordinate from, TwoDimensionalCoordinate to)
+	{
+		EscapePiece piece = getPieceAt(from);
+		if (piece != null)
+		{
+			piece = getPieceAt(from);
+			pieces.put(from, null);
+			pieces.put(to, piece);
+		}
+		else
+		{
+			throw new EscapeException("Error: could not move piece!");
+		}
 	}
 }

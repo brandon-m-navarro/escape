@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<escapeGameInitializer>
+	<coordinateType>RANDO</coordinateType>
+    <!-- Board items -->
+    <locationInitializers> <!-- An array of these, 0 or more -->
+        <x>3</x>
+        <y>4</y>
+        <locationType>CLEAR</locationType>
+    </locationInitializers>
+    <locationInitializers>
+        <x>5</x>
+        <y>6</y>
+        <locationType>BLOCK</locationType>
+    </locationInitializers>
+    <locationInitializers>
+        <x>0</x>
+        <y>0</y>
+        <locationType>CLEAR</locationType>
+        <player>PLAYER1</player>
+        <pieceName>HORSE</pieceName>
+    </locationInitializers>
+</escapeGameInitializer>

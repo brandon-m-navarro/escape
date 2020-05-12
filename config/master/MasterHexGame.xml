@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<escapeGameInitializer>
+	<coordinateType>HEX</coordinateType>
+    <!-- Board items -->
+    <xMax>0</xMax>
+    <yMax>0</yMax>
+    
+    <!-- Pieces -->
+    <locationInitializers>
+        <x>-3</x><y>4</y>
+        <player>PLAYER1</player><pieceName>FROG</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>-4</x><y>5</y>
+        <player>PLAYER2</player><pieceName>FROG</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>-1</x><y>0</y>
+        <player>PLAYER1</player><pieceName>FROG</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>-1</x><y>-1</y>
+        <player>PLAYER2</player><pieceName>FROG</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>-1</x><y>-2</y>
+        <player>PLAYER1</player><pieceName>FROG</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>2</x><y>3</y>
+        <player>PLAYER2</player><pieceName>FOX</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>-1</x><y>6</y>
+        <player>PLAYER1</player><pieceName>HUMMINGBIRD</pieceName>
+    </locationInitializers>
+   
+    
+    <!-- Blocks -->
+    <locationInitializers>
+    	<x>3</x><y>3</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+    <locationInitializers>
+    	<x>4</x><y>3</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+	<locationInitializers>
+    	<x>5</x><y>3</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+	<locationInitializers>
+    	<x>6</x><y>3</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+	<locationInitializers>
+    	<x>7</x><y>3</y><locationType>BLOCK</locationType>
+    </locationInitializers>
+    
+    <!-- Exits -->
+    <locationInitializers>
+    	<x>-3</x><y>-1</y><locationType>EXIT</locationType>
+    </locationInitializers>
+    
+    
+    <!-- Piece items, an array of pieceTypes, 1 or more -->
+    <pieceTypes>
+        <pieceName>FROG</pieceName>
+        <movementPattern>OMNI</movementPattern>
+        <attributes>
+            <id>JUMP</id>
+            <attrType>BOOLEAN</attrType>
+            <booleanValue>true</booleanValue>
+        </attributes>
+    	<attributes>
+    		<id>DISTANCE</id>
+    		<attrType>INTEGER</attrType>
+    		<intValue>3</intValue>
+    	</attributes>
+    </pieceTypes>
+     
+    <pieceTypes>
+        <pieceName>HUMMINGBIRD</pieceName>
+        <movementPattern>LINEAR</movementPattern>
+        <attributes>
+            <id>FLY</id>
+            <attrType>INTEGER</attrType>
+            <intValue>7</intValue>
+    	</attributes>
+    </pieceTypes>
+    
+    <pieceTypes>
+        <pieceName>FOX</pieceName>
+        <movementPattern>OMNI</movementPattern>
+        <attributes>
+            <id>DISTANCE</id>
+            <attrType>INTEGER</attrType>
+            <intValue>6</intValue>
+    	</attributes>
+    	<attributes>
+    		<id>UNBLOCK</id>
+    		<attrType>BOOLEAN</attrType>
+    		<booleanValue>true</booleanValue>
+    	</attributes>
+    </pieceTypes>
+</escapeGameInitializer>

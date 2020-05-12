@@ -84,3 +84,20 @@ Additional Notes from Canvas/Office Hours
 	You must have at least one piece type in the game.
 	
 	If a piece has FLY, UNBLOCK redundant
+	
+	
+	
+	
+	
+	###################
+	#				  #
+	#				  #
+	#				  #
+	#			(3,3) #
+	#				  #
+	#				  #
+	#				  #
+	#				  #
+	#	(1,1)		  #
+	###################
+	
