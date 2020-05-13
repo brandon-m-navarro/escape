@@ -297,7 +297,7 @@ class BetaEscapeGameManagerTests
 	}
 	
 	@Test
-	void squareGameDiagonalMovement() throws Exception
+	void squareGameDiagonalMovement1() throws Exception
 	{
 		EscapeGameBuilder egb 
 			= new EscapeGameBuilder(new File("config/validBetaBoards/SquareEscapeDiagonalMovement.xml"));
@@ -305,6 +305,57 @@ class BetaEscapeGameManagerTests
 		
 		assertTrue(emg.move(emg.makeCoordinate(4, 3), emg.makeCoordinate(7, 2)));
 		assertFalse(emg.move(emg.makeCoordinate(4, 3), emg.makeCoordinate(7, 3)));
+		assertTrue(emg.move(emg.makeCoordinate(6, 2), emg.makeCoordinate(2, 4)));
+
+	}
+	
+	@Test
+	void squareGameDiagonalMovement2() throws Exception
+	{
+		EscapeGameBuilder egb 
+			= new EscapeGameBuilder(new File("config/validBetaBoards/SquareEscapeDiagonalMovement2.xml"));
+		EscapeGameManager emg = egb.makeGameManager();
+		
+		assertTrue(emg.move(emg.makeCoordinate(4, 1), emg.makeCoordinate(6, 1)));
+		assertFalse(emg.move(emg.makeCoordinate(1, 3), emg.makeCoordinate(3, 5)));
+		assertTrue(emg.move(emg.makeCoordinate(1, 3), emg.makeCoordinate(2, 4)));
+		assertTrue(emg.move(emg.makeCoordinate(4, 3), emg.makeCoordinate(6, 1)));
+
+	}
+	
+	@Test
+	void squareGameDiagonalMovement3() throws Exception
+	{
+		EscapeGameBuilder egb 
+			= new EscapeGameBuilder(new File("config/validBetaBoards/SquareEscapeDiagonalMovement3.xml"));
+		EscapeGameManager emg = egb.makeGameManager();
+		
+		assertTrue(emg.move(emg.makeCoordinate(4, 1), emg.makeCoordinate(7, 4)));
+		assertFalse(emg.move(emg.makeCoordinate(4, 1), emg.makeCoordinate(8, 5)));
+		assertTrue(emg.move(emg.makeCoordinate(8, 3), emg.makeCoordinate(5, 6)));
+	}
+	
+	@Test
+	void squareGameDiagonalMovement4() throws Exception
+	{
+		EscapeGameBuilder egb 
+			= new EscapeGameBuilder(new File("config/validBetaBoards/SquareEscapeDiagonalMovement4.xml"));
+		EscapeGameManager emg = egb.makeGameManager();
+		
+		assertFalse(emg.move(emg.makeCoordinate(3, 1), emg.makeCoordinate(6, 4)));
+
+	}
+	
+	@Test
+	void squareGameOrthogonalMovement1() throws Exception
+	{
+		EscapeGameBuilder egb 
+			= new EscapeGameBuilder(new File("config/validBetaBoards/SquareEscapeOrthogonalMovement.xml"));
+		EscapeGameManager emg = egb.makeGameManager();
+		
+		assertTrue(emg.move(emg.makeCoordinate(3, 1), emg.makeCoordinate(5, 4)));
+		assertFalse(emg.move(emg.makeCoordinate(3, 1), emg.makeCoordinate(6, 3)));
+		assertTrue(emg.move(emg.makeCoordinate(3, 1), emg.makeCoordinate(1, 2)));
 
 	}
 	
@@ -316,6 +367,7 @@ class BetaEscapeGameManagerTests
 		EscapeGameManager emg = egb.makeGameManager();
 		
 		assertFalse(emg.move(emg.makeCoordinate(1, 1), emg.makeCoordinate(10, 1)));
+		
 	}
 	
 	@Test

@@ -31,18 +31,25 @@ public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordin
 	Map<TwoDimensionalCoordinate, LocationType> spots;
 	Map<TwoDimensionalCoordinate, EscapePiece> pieces;
 	protected final int xMax, yMax;
+	protected final CoordinateID coordType;
 	
-	public TwoDimensionalBoard(int xMax, int yMax)
+	public TwoDimensionalBoard(int xMax, int yMax, CoordinateID coordType)
 	{
 		this.xMax = xMax;
 		this.yMax = yMax;
 		pieces = new HashMap<TwoDimensionalCoordinate, EscapePiece>();
 		spots = new HashMap<TwoDimensionalCoordinate, LocationType>();
+		this.coordType = null;
 	}
 	
 	public void setLocationType(TwoDimensionalCoordinate c, LocationType lt)
 	{
 		spots.put(c, lt);
+	}
+	
+	public CoordinateID getCoordType()
+	{
+		return this.coordType;
 	}
 	
 	/*

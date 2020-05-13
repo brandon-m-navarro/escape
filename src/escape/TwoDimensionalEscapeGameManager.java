@@ -74,4 +74,22 @@ public abstract class TwoDimensionalEscapeGameManager implements EscapeGameManag
 		}
 		return rules.get(pieceName);
 	}
+	
+	/**
+	 * This method simply checks if a piece exists at the given coordinate 
+	 * @param coord the coordinate to check
+	 * @return true if a piece exists at the given coordinate
+	 */
+	protected boolean doesPieceExistAt(TwoDimensionalCoordinate coord)
+	{
+		EscapePiece p;
+		try {
+			p = getPieceAt(coord);
+		}
+		catch (EscapeException e) {
+			p = null;
+		}
+		return p != null;
+	}
+
 }

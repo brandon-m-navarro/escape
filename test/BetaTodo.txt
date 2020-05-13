@@ -84,22 +84,34 @@ ConcreteEscapeGameManager
 				
 	move()
 	======
-		19. - Trying to move piece that doesn't exist
-		20. - Confirm that a piece can move if one exists (basic check without worrying about MovementPatterns)
-		21. - Confirm that a piece cannot move onto a piece of its own team
+		LINEAR SQUARE
+		~~~~~~~~~~~~~
+			19. - Trying to move piece that doesn't exist
+			20. - Confirm that a piece can move if one exists (basic check without worrying about MovementPatterns)
+			21. - Confirm that a piece cannot move onto a piece of its own team
+			
+			22. - A piece is able to move onto an opposing teams piece
+			23. - Confirm that the moving piece is moving to a valid coordinate on the board
+			27. - Check that a piece can move linearly on SquareGame
+		 	24. - Check that piece cannot move if obstructed
+			28. - Check that piece can jump if needed/set
+			26. - Check that piece can fly over
+			27. - Piece can fly over team, opponent, blocked
+			30. - Check that piece can move is unblocked
+			25. - Check that piece moved a valid distance
+			29. - Check that piece remained in a linear position
 		
-		22. - A piece is able to move onto an opposing teams piece
-		23. - Confirm that the moving piece is moving to a valid coordinate on the board
-		27. - Check that a piece can move linearly on SquareGame
-	 	24. - Check that piece cannot move if obstructed
-		28. - Check that piece can jump if needed/set
-		26. - Check that piece can fly over
-		27. - Piece can fly over team, opponent, blocked
-		30. - Check that piece can move is unblocked
-		25. - Check that piece moved a valid distance
-		29. - Check that piece remained in a linear position
-		
-		- After this, we need to then look at the movementPatternID of the piece to put it on a pathfinding
-		  algorithm that will return true or false
-		  
+		DIAGONAL SQUARE
+		~~~~~~~~~~~~~~~
+			31. Check that a piece can find a valid path around a BLOCKED site
+				that is valid
+			32. Check that no path results in false
+			33. Check that a the path will not allow for going out-of-bounds
+			34. Check that a move will be false if the piece doesn't have a valid maxDistance
+		  	35. Check that a Piece can end it's move on an enemy piece
+		  	36. Check that a Piece can fly over blocked and other Piece
+		  	37. Check that a piece cannot end it's turn on a blocked spot
+		  	38. Check that a jump can't land on piece or wall
+		  	
+		  	
 		- Want to initialize the board with all perimeter locationTypes as BLOCKED

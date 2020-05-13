@@ -26,7 +26,7 @@ public class HexBoard extends TwoDimensionalBoard
 
 	public HexBoard(int xMax, int yMax)
 	{
-		super(yMax, yMax);
+		super(yMax, yMax, CoordinateID.HEX);
 	}
 
 	/*

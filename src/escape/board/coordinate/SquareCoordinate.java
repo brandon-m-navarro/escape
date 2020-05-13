@@ -22,7 +22,7 @@ package escape.board.coordinate;
 public class SquareCoordinate extends TwoDimensionalCoordinate
 {
     
-    private SquareCoordinate(int x, int y)
+    SquareCoordinate(int x, int y)
     {
     	super(x, y);
     }

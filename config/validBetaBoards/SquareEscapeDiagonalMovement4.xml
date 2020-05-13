@@ -6,36 +6,51 @@
     <yMax>20</yMax>
     <locationInitializers> <!-- An array of these, 0 or more -->
         <x>5</x>
-        <y>2</y>
+        <y>3</y>
         <locationType>BLOCK</locationType>
     </locationInitializers>
     <locationInitializers>
         <x>5</x>
-        <y>3</y>
+        <y>2</y>
+        <locationType>BLOCK</locationType>
+    </locationInitializers>
+        <locationInitializers>
+        <x>5</x>
+        <y>1</y>
         <locationType>BLOCK</locationType>
     </locationInitializers>
     <locationInitializers>
-        <x>4</x>
-        <y>3</y>
+        <x>8</x>
+        <y>5</y>
+        <locationType>BLOCK</locationType>
+    </locationInitializers>
+    <locationInitializers>
+        <x>3</x>
+        <y>1</y>
         <locationType>CLEAR</locationType>
         <player>PLAYER1</player>
-        <pieceName>FOX</pieceName>
+        <pieceName>FROG</pieceName>
     </locationInitializers>
-        <locationInitializers>
-        <x>6</x>
+    <locationInitializers>
+        <x>4</x>
         <y>2</y>
         <locationType>CLEAR</locationType>
-        <player>PLAYER2</player>
-        <pieceName>FOX</pieceName>
+        <player>PLAYER1</player>
+        <pieceName>FROG</pieceName>
     </locationInitializers>
     <!-- Piece items, an array of pieceTypes, 1 or more -->
     <pieceTypes>
         <movementPattern>DIAGONAL</movementPattern>
-        <pieceName>FOX</pieceName>
+        <pieceName>FROG</pieceName>
         <attributes>
             <id>DISTANCE</id>
             <attrType>INTEGER</attrType>
-            <intValue>15</intValue>
+            <intValue>4</intValue>
+        </attributes>
+        <attributes>
+            <id>JUMP</id>
+            <attrType>BOOLEAN</attrType>
+            <booleanValue>TRUE</booleanValue>
         </attributes>
     </pieceTypes>
 </escapeGameInitializer>

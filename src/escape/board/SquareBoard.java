@@ -34,7 +34,7 @@ public class SquareBoard extends TwoDimensionalBoard
 	 */
 	public SquareBoard(int xMax, int yMax)
 	{
-		super(xMax, yMax);
+		super(xMax, yMax, CoordinateID.SQUARE);
 		initializeEmptyBoard();
 	}
 	
@@ -80,4 +80,7 @@ public class SquareBoard extends TwoDimensionalBoard
 			}
 		}
 	}
+	
+	
 }
+

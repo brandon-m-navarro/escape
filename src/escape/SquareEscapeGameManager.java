@@ -53,8 +53,12 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 								getMovementRulesFor(p.getName()));
 					break;
 				case ORTHOGONAL:
+					validMove = canMoveOrthogonally((SquareCoordinate) from, (SquareCoordinate) to,
+							getMovementRulesFor(p.getName()));
 					break;
 				case OMNI:
+					validMove = canMoveOmni((SquareCoordinate) from, (SquareCoordinate) to,
+							getMovementRulesFor(p.getName()));
 					break;
 				default:
 					return false;
@@ -63,8 +67,14 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 //		Have to comment this for testing reasons, but if the move is correct, 
 //		this is still correct, just don't want to actually move the piece
 //		/-------------------------------------------------------------------\
-//		if (validMove)
-//			board.movePiece((SquareCoordinate)from, (SquareCoordinate)to);
+		
+		if (validMove)
+		{
+			if (board.isExit((SquareCoordinate) to))
+				board.putPieceAt(null, (SquareCoordinate) from);
+			else
+				board.movePiece((SquareCoordinate)from, (SquareCoordinate)to);
+		}
 		
 		return validMove;
 	}
@@ -110,11 +120,13 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 	private boolean isBasicMove(SquareCoordinate from, SquareCoordinate to)
 	{
 		SquareBoard b = (SquareBoard) board;
-		
-		if (doesPieceExistAt(from) && (from != null && to != null))
+		if (doesPieceExistAt(from) && (from != null && to != null) && !board.isBlocked(to))
 		{
-			return b.isWithinBoundries(to);
-		} 
+			if (doesPieceExistAt(to) && (from != null && to != null) && b.isWithinBoundries(to))
+				return !isSameTeam(getPieceAt(from), getPieceAt(to));
+			else
+				return b.isWithinBoundries(to);
+		}
 		else
 			return false;
 	}
@@ -158,13 +170,9 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 			else if (getPieceAt(coord) == null && board.isBlocked(coord))
 			{
 				if (movementRules.isCanTravelThroughBlocked())
-				{
 					continue;
-				}
 				else
-				{
 					return false;	// BLOCKED
-				}
 			}
 			else if (doesPieceExistAt(coord) && movementRules.isCanJump())
 			{
@@ -182,10 +190,10 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 	/**
 	 * This method tests that the given move is possible following
 	 * DIAGONAL constraints
-	 * @param from
-	 * @param to
-	 * @param movementRulesFor
-	 * @return
+	 * @param from the starting coordinate of the piece
+	 * @param to the coordinate the piece is attempting to move to
+	 * @param movementRules the movement rules for the piece moving
+	 * @return true if the piece is able to make the move
 	 */
 	private boolean canMoveDiagonally(SquareCoordinate from, SquareCoordinate to,
 			MovementRules movementRules)
@@ -194,11 +202,57 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 			return false;
 		PathFinder pathFinder = new PathFinder(board, new PathFinderNode(from), movementRules);
 		pathFinder.searchDiagonally(from, to, movementRules);
-//		Vector<TwoDimensionalCoordinate> path = pathFinder.recreatePath();
-		System.out.println(pathFinder.getDistanceTravelled());
-		return pathFinder.isCompleted();
+		Vector<TwoDimensionalCoordinate> path = pathFinder.recreatePath();
+		return (pathFinder.isCompleted() && 
+				pathFinder.getDistanceTravelled() <= movementRules.getMaxDistance());		
 	}
 
+	/**
+	 * This method tests that the given move is possible following
+	 * ORTHOGONAL constraints
+	 * @param from the starting coordinate of the piece
+	 * @param to the coordinate the piece is attempting to move to
+	 * @param movementRules the movement rules for the piece moving
+	 * @return true if the piece is able to make the move
+	 */
+	private boolean canMoveOrthogonally(SquareCoordinate from, SquareCoordinate to,
+			MovementRules movementRules)
+	{
+		if (from.distanceTo(to) > movementRules.getMaxDistance())
+			return false;
+		PathFinder pathFinder = new PathFinder(board, new PathFinderNode(from), movementRules);
+		pathFinder.searchOrthogonally(from, to, movementRules);
+		Vector<TwoDimensionalCoordinate> path = pathFinder.recreatePath();
+		return (pathFinder.isCompleted() && 
+				pathFinder.getDistanceTravelled() <= movementRules.getMaxDistance());		
+	}
+	
+	/**
+	 * This method tests that the given move is possible following
+	 * ORTHOGONAL constraints
+	 * @param from the starting coordinate of the piece
+	 * @param to the coordinate the piece is attempting to move to
+	 * @param movementRules the movement rules for the piece moving
+	 * @return true if the piece is able to make the move
+	 */
+	private boolean canMoveOmni(SquareCoordinate from, SquareCoordinate to,
+			MovementRules movementRules)
+	{
+		if (from.distanceTo(to) > movementRules.getMaxDistance())
+			return false;
+		PathFinder pathFinder = new PathFinder(board, new PathFinderNode(from), movementRules);
+		pathFinder.searchOmni(from, to, movementRules);
+		Vector<TwoDimensionalCoordinate> path = pathFinder.recreatePath();
+		System.out.println("Travelled: " + pathFinder.getDistanceTravelled() + " - " + " Piece: " + movementRules.getMaxDistance());
+
+		for (TwoDimensionalCoordinate c : path)
+		{
+			System.out.print("(" + c.getX() + "," + c.getY() + ")" + " -> ");
+		}
+		System.out.println();
+		return (pathFinder.isCompleted() && 
+				pathFinder.getDistanceTravelled() <= movementRules.getMaxDistance());		
+	}
 
 	/**
 	 * This method returns true if the piece can make a valid jump. This
@@ -235,23 +289,6 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 	private boolean isLinearMovement(SquareCoordinate from, SquareCoordinate to)
 	{
 		return (getLinearDirection(from, to) != null);
-	}
-
-	/**
-	 * This method simply checks if a piece exists at the given coordinate 
-	 * @param coord the coordinate to check
-	 * @return true if a piece exists at the given coordinate
-	 */
-	private boolean doesPieceExistAt(SquareCoordinate coord)
-	{
-		EscapePiece p;
-		try {
-			p = getPieceAt(coord);
-		}
-		catch (EscapeException e) {
-			p = null;
-		}
-		return p != null;
 	}
 
 	/**
