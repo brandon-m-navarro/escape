@@ -51,86 +51,26 @@ public class OrthoSquareEscapeGameManager extends TwoDimensionalEscapeGameManage
 					validMove = canMoveOrthogonally((OrthoSquareCoordinate) from, (OrthoSquareCoordinate) to,
 							getMovementRulesFor(p.getName()));
 					break;
+				case LINEAR:
+					validMove = false;
+				case DIAGONAL:
+					validMove = false;
 				default:
-					return false;
+					validMove = false;
 			}
 		}
 		
 		if (validMove)
 		{
-			if (board.isExit((OrthoSquareCoordinate) to))
+			if (board.isExit((OrthoSquareCoordinate) to)) 
+			{
 				board.putPieceAt(null, (OrthoSquareCoordinate) from);
+				return true;
+			}
 			else
 				board.movePiece((OrthoSquareCoordinate)from, (OrthoSquareCoordinate)to);
 		}
 		
 		return validMove;
-	}
-
-	/*
-	 * @see escape.EscapeGameManager#makeCoordinate(int, int)
-	 */
-	@Override
-	public Coordinate makeCoordinate(int x, int y)
-	{
-		OrthoSquareBoard b = (OrthoSquareBoard) board;
-		if (b.isValidCoordinate(OrthoSquareCoordinate.makeCoordinate(x, y)))
-			return OrthoSquareCoordinate.makeCoordinate(x, y);
-		else
-			return null;
-	}
-
-	/*
-	 * @see escape.EscapeGameManager#getPieceAt(escape.board.coordinate.Coordinate)
-	 */
-	@Override
-	public EscapePiece getPieceAt(Coordinate coord)
-	{
-		OrthoSquareBoard b = (OrthoSquareBoard) board;
-		OrthoSquareCoordinate c = (OrthoSquareCoordinate) coord;
-		if (coord != null && b.isValidCoordinate(OrthoSquareCoordinate.makeCoordinate(c.getX(), c.getY())))
-			return board.getPieceAt((TwoDimensionalCoordinate) coord);
-		else
-			throw new EscapeException("ERROR: invalid coordinate!");
-	}
-	
-	/**
-	 * This method performs basic move checks to basic rules of movement are
-	 * being followed. More specifically: 
-	 * 		- if a piece exists to move
-	 * 		- that it's moving somewhere on the board
-	 * @return true if the piece can theoretically move
-	 */
-	private boolean isBasicMove(OrthoSquareCoordinate from, OrthoSquareCoordinate to)
-	{
-		OrthoSquareBoard b = (OrthoSquareBoard) board;
-		if (doesPieceExistAt(from) && (from != null && to != null) && !board.isBlocked(to))
-		{
-			if (doesPieceExistAt(to) && (from != null && to != null) && b.isWithinBoundries(to))
-				return !isSameTeam(getPieceAt(from), getPieceAt(to));
-			else
-				return b.isWithinBoundries(to);
-		}
-		else
-			return false;
-	}
-	
-	/**
-	 * This method tests that the given move is possible following
-	 * ORTHOGONAL constraints
-	 * @param from the starting coordinate of the piece
-	 * @param to the coordinate the piece is attempting to move to
-	 * @param movementRules the movement rules for the piece moving
-	 * @return true if the piece is able to make the move
-	 */
-	private boolean canMoveOrthogonally(OrthoSquareCoordinate from, OrthoSquareCoordinate to,
-			MovementRules movementRules)
-	{
-		if (from.distanceTo(to) > movementRules.getMaxDistance())
-			return false;
-		PathFinder pathFinder = new PathFinder(board, new PathFinderNode(from), movementRules);
-		pathFinder.searchOrthogonally(from, to, movementRules);
-		return (pathFinder.isCompleted() && 
-				pathFinder.getDistanceTravelled() <= movementRules.getMaxDistance());		
 	}
 }

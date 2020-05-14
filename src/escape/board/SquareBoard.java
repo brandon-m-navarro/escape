@@ -34,7 +34,7 @@ public class SquareBoard extends TwoDimensionalBoard
 	 */
 	public SquareBoard(int xMax, int yMax)
 	{
-		super(xMax, yMax, CoordinateID.SQUARE);
+		super(xMax, yMax);
 		initializeEmptyBoard();
 	}
 	
@@ -79,6 +79,15 @@ public class SquareBoard extends TwoDimensionalBoard
 				this.setLocationType(SquareCoordinate.makeCoordinate(x, y), CLEAR);
 			}
 		}
+	}
+
+	/*
+	 * @see escape.board.Board#getCoordType()
+	 */
+	@Override
+	public CoordinateID getCoordType()
+	{
+		return CoordinateID.SQUARE;
 	}
 	
 	

@@ -27,7 +27,7 @@ public class OrthoSquareBoard extends TwoDimensionalBoard
 
 	public OrthoSquareBoard(int xMax, int yMax)
 	{
-		super(xMax, yMax, CoordinateID.HEX);
+		super(xMax, yMax);
 	}
 
 	/*
@@ -53,6 +53,15 @@ public class OrthoSquareBoard extends TwoDimensionalBoard
 	public boolean isWithinBoundries(TwoDimensionalCoordinate coord)
 	{
 		OrthoSquareCoordinate c = (OrthoSquareCoordinate) coord;
-		return (c.getX() <= xMax && c.getY() <= yMax);
+		return (c.getX() <= xMax && c.getY() <= yMax && c.getX() > 0 && c.getY() > 0);
+	}
+
+	/*
+	 * @see escape.board.Board#getCoordType()
+	 */
+	@Override
+	public CoordinateID getCoordType()
+	{
+		return CoordinateID.ORTHOSQUARE;
 	}
 }

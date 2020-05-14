@@ -26,7 +26,7 @@ public class HexBoard extends TwoDimensionalBoard
 
 	public HexBoard(int xMax, int yMax)
 	{
-		super(yMax, yMax, CoordinateID.HEX);
+		super(yMax, yMax);
 	}
 
 	/*
@@ -50,5 +50,14 @@ public class HexBoard extends TwoDimensionalBoard
 	public boolean isValidCoordinate(TwoDimensionalCoordinate coord)
 	{
 		return true;
+	}
+
+	/*
+	 * @see escape.board.Board#getCoordType()
+	 */
+	@Override
+	public CoordinateID getCoordType()
+	{
+		return CoordinateID.HEX;
 	}
 }

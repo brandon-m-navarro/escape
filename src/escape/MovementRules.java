@@ -10,7 +10,9 @@
  * Copyright ©2020 Brandon Navarro
  *******************************************************************************/
 
-package escape.piece;
+package escape;
+
+import escape.piece.MovementPatternID;
 
 /**
  * This class contains the constraints that a piece can have for movement

@@ -48,7 +48,8 @@ public class HexCoordinate extends TwoDimensionalCoordinate
 	 * @param c the coordinate that is being travelled to
 	 * @return the distance from one hex coordinate to another
 	 */
-	private static int calcHexDistance(int x1, int y1, int x2, int y2) {
+	private static int calcHexDistance(int x1, int y1, int x2, int y2) 
+	{
 	    int dx=x2-x1;
 	    int dy=y2-y1;
 

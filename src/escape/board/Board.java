@@ -12,7 +12,7 @@
 
 package escape.board;
 
-import escape.board.coordinate.Coordinate;
+import escape.board.coordinate.*;
 import escape.piece.EscapePiece;
 
 /**
@@ -35,4 +35,9 @@ public interface Board<C extends Coordinate>
      * @param coord the coordinate where the piece must be placed
      */
     void putPieceAt(EscapePiece p, C coord);
+    
+    /**
+     * 
+     */
+    CoordinateID getCoordType();
 }

@@ -36,7 +36,7 @@ public class PathFinder
 		public PathFinderNode(TwoDimensionalCoordinate coord)
 		{
 			this.setCoord(coord);
-			this.setNeighbors(new Vector<PathFinderNode>());
+			this.setNeighbors(new Vector<PathFinderNode>(8));
 			this.setPath(new Vector<PathFinderNode>());
 		}
 
@@ -481,9 +481,7 @@ public class PathFinder
 				else if (this.getMovementRules().isCanJump())
 				{
 					if (isJumpPossible(n, getDirection(p.getCoord(), n.getCoord())))
-					{
 						continue;
-					}
 					else
 						continue;
 				}
@@ -562,12 +560,15 @@ public class PathFinder
 			}
 		}
 		
-		TwoDimensionalCoordinate coord = CoordinateFactory.makeCoordinate(x, y, board.getCoordType());
+		TwoDimensionalCoordinate coord = CoordinateFactory.makeCoordinate(x, y, this.coordType);
 		
 		if (board.isBlocked(coord))
 			return false;
 		
 		if (board.getPieceAt(coord) != null)
+			return false;
+		
+		if (!board.isValidCoordinate(coord))
 			return false;
 		
 		addValidNeighbor(new PathFinderNode(coord), p);
@@ -611,7 +612,7 @@ public class PathFinder
 			return results;
 		}
 		else
-			return null;
+			return results;
 	}
 
 	/**
@@ -657,10 +658,10 @@ public class PathFinder
 	 */
 	private void getDiagonalNeighbors(PathFinderNode p)
 	{
-		p.addNeighbor(new PathFinderNode(TwoDimensionalCoordinate.makeCoordinate(p.getCoord().getX() - 1, p.getCoord().getY() + 1)));
-		p.addNeighbor(new PathFinderNode(TwoDimensionalCoordinate.makeCoordinate(p.getCoord().getX() + 1, p.getCoord().getY() + 1)));
-		p.addNeighbor(new PathFinderNode(TwoDimensionalCoordinate.makeCoordinate(p.getCoord().getX() - 1, p.getCoord().getY() - 1)));
-		p.addNeighbor(new PathFinderNode(TwoDimensionalCoordinate.makeCoordinate(p.getCoord().getX() + 1, p.getCoord().getY() - 1)));
+		p.addNeighbor(new PathFinderNode(CoordinateFactory.makeCoordinate(p.getCoord().getX() - 1, p.getCoord().getY() + 1, this.coordType)));
+		p.addNeighbor(new PathFinderNode(CoordinateFactory.makeCoordinate(p.getCoord().getX() + 1, p.getCoord().getY() + 1, this.coordType)));
+		p.addNeighbor(new PathFinderNode(CoordinateFactory.makeCoordinate(p.getCoord().getX() - 1, p.getCoord().getY() - 1, this.coordType)));
+		p.addNeighbor(new PathFinderNode(CoordinateFactory.makeCoordinate(p.getCoord().getX() + 1, p.getCoord().getY() - 1, this.coordType)));
 	}
 	
 	/**
@@ -671,10 +672,10 @@ public class PathFinder
 	 */
 	private void getOrthogonalNeighbors(PathFinderNode p)
 	{
-		p.addNeighbor(new PathFinderNode(TwoDimensionalCoordinate.makeCoordinate(p.getCoord().getX() + 1, p.getCoord().getY())));
-		p.addNeighbor(new PathFinderNode(TwoDimensionalCoordinate.makeCoordinate(p.getCoord().getX(), p.getCoord().getY() + 1)));
-		p.addNeighbor(new PathFinderNode(TwoDimensionalCoordinate.makeCoordinate(p.getCoord().getX() - 1, p.getCoord().getY())));
-		p.addNeighbor(new PathFinderNode(TwoDimensionalCoordinate.makeCoordinate(p.getCoord().getX(), p.getCoord().getY() - 1)));
+		p.addNeighbor(new PathFinderNode(CoordinateFactory.makeCoordinate(p.getCoord().getX() + 1, p.getCoord().getY(), this.coordType)));
+		p.addNeighbor(new PathFinderNode(CoordinateFactory.makeCoordinate(p.getCoord().getX(), p.getCoord().getY() + 1, this.coordType)));
+		p.addNeighbor(new PathFinderNode(CoordinateFactory.makeCoordinate(p.getCoord().getX() - 1, p.getCoord().getY(), this.coordType)));
+		p.addNeighbor(new PathFinderNode(CoordinateFactory.makeCoordinate(p.getCoord().getX(), p.getCoord().getY() - 1, this.coordType)));
 	}
 
 	/**

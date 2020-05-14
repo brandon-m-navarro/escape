@@ -120,7 +120,7 @@
     
     <pieceTypes>
         <pieceName>HUMMINGBIRD</pieceName>
-        <movementPattern>LINEAR</movementPattern>
+        <movementPattern>OMNI</movementPattern>
         <attributes>
             <id>FLY</id>
             <attrType>INTEGER</attrType>

@@ -31,15 +31,13 @@ public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordin
 	Map<TwoDimensionalCoordinate, LocationType> spots;
 	Map<TwoDimensionalCoordinate, EscapePiece> pieces;
 	protected final int xMax, yMax;
-	protected final CoordinateID coordType;
 	
-	public TwoDimensionalBoard(int xMax, int yMax, CoordinateID coordType)
+	public TwoDimensionalBoard(int xMax, int yMax)
 	{
 		this.xMax = xMax;
 		this.yMax = yMax;
 		pieces = new HashMap<TwoDimensionalCoordinate, EscapePiece>();
 		spots = new HashMap<TwoDimensionalCoordinate, LocationType>();
-		this.coordType = null;
 	}
 	
 	public void setLocationType(TwoDimensionalCoordinate c, LocationType lt)
@@ -47,10 +45,6 @@ public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordin
 		spots.put(c, lt);
 	}
 	
-	public CoordinateID getCoordType()
-	{
-		return this.coordType;
-	}
 	
 	/*
 	 * @see escape.board.Board#getPieceAt(escape.board.coordinate.Coordinate)
@@ -113,8 +107,6 @@ public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordin
 			pieces.put(to, piece);
 		}
 		else
-		{
 			throw new EscapeException("Error: could not move piece!");
-		}
 	}
 }

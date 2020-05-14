@@ -64,10 +64,6 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 					return false;
 			}
 		}
-//		Have to comment this for testing reasons, but if the move is correct, 
-//		this is still correct, just don't want to actually move the piece
-//		/-------------------------------------------------------------------\
-		
 		if (validMove)
 		{
 			if (board.isExit((SquareCoordinate) to))
@@ -79,58 +75,6 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 		return validMove;
 	}
 
-	/*
-	 * @see escape.EscapeGameManager#getPieceAt(escape.board.coordinate.Coordinate)
-	 */
-	@Override
-	public EscapePiece getPieceAt(Coordinate coord)
-	{
-		SquareBoard b = (SquareBoard) board;
-		SquareCoordinate c = (SquareCoordinate) coord;
-		if (coord != null && b.isValidCoordinate(SquareCoordinate.makeCoordinate(c.getX(), c.getY())))
-			return board.getPieceAt((TwoDimensionalCoordinate) coord);
-		else
-			throw new EscapeException("ERROR: invalid coordinate!");
-	}
-	
-	/**
-	 * Returns a coordinate of the appropriate type. If the coordinate cannot be
-	 * created, then null is returned and the status message is set appropriately.
-	 * @param x the x component
-	 * @param y the y component
-	 * @return the coordinate or null if the coordinate cannot be 
-	 */
-	@Override
-	public Coordinate makeCoordinate(int x, int y)
-	{
-		SquareBoard b = (SquareBoard) board;
-		if (b.isValidCoordinate(SquareCoordinate.makeCoordinate(x, y)))
-			return SquareCoordinate.makeCoordinate(x, y);
-		else
-			return null;
-	}
-	
-	/**
-	 * This method performs basic move checks to basic rules of movement are
-	 * being followed. More specifically: 
-	 * 		- if a piece exists to move
-	 * 		- that it's moving somewhere on the board
-	 * @return true if the piece can theoretically move
-	 */
-	private boolean isBasicMove(SquareCoordinate from, SquareCoordinate to)
-	{
-		SquareBoard b = (SquareBoard) board;
-		if (doesPieceExistAt(from) && (from != null && to != null) && !board.isBlocked(to))
-		{
-			if (doesPieceExistAt(to) && (from != null && to != null) && b.isWithinBoundries(to))
-				return !isSameTeam(getPieceAt(from), getPieceAt(to));
-			else
-				return b.isWithinBoundries(to);
-		}
-		else
-			return false;
-	}
-	
 	/**
 	 * This method tests that the given move is possible following
 	 * LINEAR constraints
@@ -203,53 +147,6 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager
 		PathFinder pathFinder = new PathFinder(board, new PathFinderNode(from), movementRules);
 		pathFinder.searchDiagonally(from, to, movementRules);
 		Vector<TwoDimensionalCoordinate> path = pathFinder.recreatePath();
-		return (pathFinder.isCompleted() && 
-				pathFinder.getDistanceTravelled() <= movementRules.getMaxDistance());		
-	}
-
-	/**
-	 * This method tests that the given move is possible following
-	 * ORTHOGONAL constraints
-	 * @param from the starting coordinate of the piece
-	 * @param to the coordinate the piece is attempting to move to
-	 * @param movementRules the movement rules for the piece moving
-	 * @return true if the piece is able to make the move
-	 */
-	private boolean canMoveOrthogonally(SquareCoordinate from, SquareCoordinate to,
-			MovementRules movementRules)
-	{
-		if (from.distanceTo(to) > movementRules.getMaxDistance())
-			return false;
-		PathFinder pathFinder = new PathFinder(board, new PathFinderNode(from), movementRules);
-		pathFinder.searchOrthogonally(from, to, movementRules);
-		Vector<TwoDimensionalCoordinate> path = pathFinder.recreatePath();
-		return (pathFinder.isCompleted() && 
-				pathFinder.getDistanceTravelled() <= movementRules.getMaxDistance());		
-	}
-	
-	/**
-	 * This method tests that the given move is possible following
-	 * ORTHOGONAL constraints
-	 * @param from the starting coordinate of the piece
-	 * @param to the coordinate the piece is attempting to move to
-	 * @param movementRules the movement rules for the piece moving
-	 * @return true if the piece is able to make the move
-	 */
-	private boolean canMoveOmni(SquareCoordinate from, SquareCoordinate to,
-			MovementRules movementRules)
-	{
-		if (from.distanceTo(to) > movementRules.getMaxDistance())
-			return false;
-		PathFinder pathFinder = new PathFinder(board, new PathFinderNode(from), movementRules);
-		pathFinder.searchOmni(from, to, movementRules);
-		Vector<TwoDimensionalCoordinate> path = pathFinder.recreatePath();
-		System.out.println("Travelled: " + pathFinder.getDistanceTravelled() + " - " + " Piece: " + movementRules.getMaxDistance());
-
-		for (TwoDimensionalCoordinate c : path)
-		{
-			System.out.print("(" + c.getX() + "," + c.getY() + ")" + " -> ");
-		}
-		System.out.println();
 		return (pathFinder.isCompleted() && 
 				pathFinder.getDistanceTravelled() <= movementRules.getMaxDistance());		
 	}
