@@ -1,8 +1,9 @@
 // import { xmlString } from './SampleEscapeSquare.js';
-// import { xmlString } from './SampleEscapeOrtho.js';
-import { xmlString } from "./SampleEscapeHex.js";
+import { xmlString } from './SampleEscapeOrtho.js';
+// import { xmlString } from "./SampleEscapeHex.js";
 import Honeycomb from "./honeycomb.js";
 const { Grid, defineHex, rectangle } = Honeycomb;
+let isHex;
 
 function parseXML(xml) {
   const parser = new DOMParser();
@@ -12,9 +13,11 @@ function parseXML(xml) {
 
   let xMax, yMax;
   if (coordinateType === "HEX") {
+    isHex = true;
     xMax = 25;
     yMax = 25;
   } else {
+    isHex = false;
     xMax = parseInt(xmlDoc.querySelector("xMax").textContent);
     yMax = parseInt(xmlDoc.querySelector("yMax").textContent);
   }
@@ -182,7 +185,7 @@ function createHexCell(hex, cellData, container, x, y) {
 
   // Position the cell relative to the top-left of the container
   cell.style.position = "absolute";
-  
+
   // The x and y properties are the center point.
   // Subtract half the width/height to position the div's top-left corner.
   cell.style.left = `${pixelX - hex.width / 2}px`;
@@ -259,5 +262,9 @@ function createLegend() {
 
 // Parse and display
 const boardData = parseXML(xmlString);
-// createBoard(boardData);
-createHexBoard(boardData);
+
+if (isHex) {
+  createHexBoard(boardData);
+} else {
+  createBoard(boardData);
+}

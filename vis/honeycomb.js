@@ -1,3 +1,6 @@
+// This is the HoneyComb library (to simplify creating a HEX board)
+// https://github.com/flauwekeul/honeycomb/tree/master
+// DOCS: https://abbekeultjes.nl/honeycomb/
 const honeycomb = (function () {
   (function (u, h) {
     typeof exports == "object" && typeof module < "u"
