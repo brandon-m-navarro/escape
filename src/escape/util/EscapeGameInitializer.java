@@ -18,103 +18,90 @@ import escape.board.coordinate.CoordinateID;
 
 /**
  * An example of reading a game configuration file and the board and piece
- * initializers that it 
- * @version Apr 22, 2020
+ * initializers that it
+ * 
+ * @version Dec 2025
  */
 @XmlRootElement
-public class EscapeGameInitializer
-{
+public class EscapeGameInitializer {
 	private CoordinateID coordinateType;
-	
+
 	// Board items
 	private int xMax, yMax;
 	private LocationInitializer[] locationInitializers;
-	
-	// Piece items
-	private PieceTypeInitializer[] pieceTypes; 	// At least one
-    
-    public EscapeGameInitializer()
-    {
-        // Needed for JAXB
-    }
 
-    /**
-     * @return the coordinateType
-     */
-    public CoordinateID getCoordinateType()
-    {
-        return coordinateType;
-    }
+	// Piece items (at least 1)
+	private PieceTypeInitializer[] pieceTypes;
 
-    /**
-     * @param coordinateType the coordinateType to set
-     */
-    public void setCoordinateType(CoordinateID coordinateType)
-    {
-        this.coordinateType = coordinateType;
-    }
+	public EscapeGameInitializer() { /* Needed for JAXB */ }
+
+	/**
+	 * @return the coordinateType
+	 */
+	public CoordinateID getCoordinateType() {
+		return coordinateType;
+	}
+
+	/**
+	 * @param coordinateType the coordinateType to set
+	 */
+	public void setCoordinateType(CoordinateID coordinateType) {
+		this.coordinateType = coordinateType;
+	}
 
 	/**
 	 * @return the xMax
 	 */
-	public int getxMax()
-	{
+	public int getxMax() {
 		return xMax;
 	}
 
 	/**
 	 * @param xMax the xMax to set
 	 */
-	public void setxMax(int xMax)
-	{
+	public void setxMax(int xMax) {
 		this.xMax = xMax;
 	}
 
 	/**
 	 * @return the yMax
 	 */
-	public int getyMax()
-	{
+	public int getyMax() {
 		return yMax;
 	}
 
 	/**
 	 * @param yMax the yMax to set
 	 */
-	public void setyMax(int yMax)
-	{
+	public void setyMax(int yMax) {
 		this.yMax = yMax;
 	}
 
 	/**
 	 * @return the locationInitializers
 	 */
-	public LocationInitializer[] getLocationInitializers()
-	{
+	public LocationInitializer[] getLocationInitializers() {
 		return locationInitializers;
 	}
 
 	/**
 	 * @param locationInitializers the locationInitializers to set
 	 */
-	public void setLocationInitializers(LocationInitializer ... locationInitializers)
-	{
+	public void setLocationInitializers(LocationInitializer... locationInitializers) {
 		this.locationInitializers = locationInitializers;
 	}
 
 	/**
 	 * @return the types
 	 */
-	public PieceTypeInitializer[] getPieceTypes()
-	{
+	public PieceTypeInitializer[] getPieceTypes() {
 		return pieceTypes;
 	}
 
 	/**
 	 * @param types the types to set
 	 */
-	public void setPieceTypes(PieceTypeInitializer ... types)
-	{
+	public void setPieceTypes(PieceTypeInitializer... types) {
 		this.pieceTypes = types;
 	}
 
@@ -122,12 +109,11 @@ public class EscapeGameInitializer
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "EscapeGameInitializer [xMax=" + xMax + ", yMax=" + yMax
-		    + ", coordinateType=" + coordinateType + ", locationInitializers="
-		    + Arrays.toString(locationInitializers) + ", types="
-		    + Arrays.toString(pieceTypes) + "]";
+				+ ", coordinateType=" + coordinateType + ", locationInitializers="
+				+ Arrays.toString(locationInitializers) + ", types="
+				+ Arrays.toString(pieceTypes) + "]";
 	}
-	
+
 }

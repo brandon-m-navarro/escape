@@ -4,23 +4,23 @@ EscapeGameBuilder
 	
 	validateConfiguration()
 	=======================
-		With InvalidEscapeGameSquare1 config file (EscapeGameManager emg = egb.makeGameManager()) :
+		With InvalidEscapeGameSquare1 config file (EscapeGameManager egm = egb.makeGameManager()) :
 		-----------------------------------------------------------------------------------------
 		- Confirm that a board cannot be initialized with no PieceTypes
 			16. egb.makeGameManager(); -> throws EscapeException()
 		
-		With InvalidEscapeGameSquare2 config file (EscapeGameManager emg = egb.makeGameManager()) :
+		With InvalidEscapeGameSquare2 config file (EscapeGameManager egm = egb.makeGameManager()) :
 		-----------------------------------------------------------------------------------------
 		- Confirm that a board cannot be initialized multiple PieceTypes on a single piece
 			17. egb.makeGameManager(); -> throws EscapeException()
 		
-		With InvalidEscapeGameSquare3 config file (EscapeGameManager emg = egb.makeGameManager()) :
+		With InvalidEscapeGameSquare3 config file (EscapeGameManager egm = egb.makeGameManager()) :
 		-----------------------------------------------------------------------------------------
 		- Confirm that a board cannot be created if a PieceType does not specify either a
 		  FLY or DISTANCE
 		  	18. egb.makeGameManager(); -> throws EscapeException()
 		  	
- 		With InvalidEscapeGameSquare3 config file (EscapeGameManager emg = egb.makeGameManager()) :
+ 		With InvalidEscapeGameSquare3 config file (EscapeGameManager egm = egb.makeGameManager()) :
 		-----------------------------------------------------------------------------------------
 		
 ConcreteEscapeGameManager
@@ -28,59 +28,59 @@ ConcreteEscapeGameManager
 
 	makeCoordinate()
 	================
-		With SampleEscapeGameSquare config file (EscapeGameManager emg = egb.makeGameManager()) :
+		With SampleEscapeGameSquare config file (EscapeGameManager egm = egb.makeGameManager()) :
 		-----------------------------------------------------------------------------------------
 		- Confirm that a coordinate of the appropriate type created
-			1. emg.makeCoordinate(1, 1).equals(SquareCoordinate.makeCoordinate(1, 1) -> true
+			1. egm.makeCoordinate(1, 1).equals(SquareCoordinate.makeCoordinate(1, 1) -> true
 		- Check that equals is behaving as expected
-			2. emg.makeCoordinate(3, 3).equals(OrthoSquareCoordinate.makeCoordinate(3, 3) -> false
+			2. egm.makeCoordinate(3, 3).equals(OrthoSquareCoordinate.makeCoordinate(3, 3) -> false
 		- Check that it returns null for a coordinate not on the board
-			5. emg.makeCoordinate(-1, 1) -> null 
+			5. egm.makeCoordinate(-1, 1) -> null 
 			
-		With SampleEscapeGameOrtho config file (EscapeGameManager emg = egb.makeGameManager()) :
+		With SampleEscapeGameOrtho config file (EscapeGameManager egm = egb.makeGameManager()) :
 		----------------------------------------------------------------------------------------
 		- Confirm that a coordinate of the appropriate type created
-			3. emg.makeCoordinate(4, 1).equals(OrthoSquareCoordinate.makeCoordinate(4, 1) -> true
+			3. egm.makeCoordinate(4, 1).equals(OrthoSquareCoordinate.makeCoordinate(4, 1) -> true
 		- Check that it returns null for a coordinate not on the board
-			6. emg.makeCoordinate(-1, 1) -> null 
+			6. egm.makeCoordinate(-1, 1) -> null 
 			
-		With SampleEscapeGameHex config file (EscapeGameManager emg = egb.makeGameManager()) :
+		With SampleEscapeGameHex config file (EscapeGameManager egm = egb.makeGameManager()) :
 		--------------------------------------------------------------------------------------
 		- Confirm that a coordinate of the appropriate type created
-			4. emg.makeCoordinate(10, -1).equals(HexSquareCoordinate.makeCoordinate(10, -1) -> true
+			4. egm.makeCoordinate(10, -1).equals(HexSquareCoordinate.makeCoordinate(10, -1) -> true
 			
 	getPieceAt()
 	============
-		With SampleEscapeGameSquare config file (EscapeGameManager emg = egb.makeGameManager()) :
+		With SampleEscapeGameSquare config file (EscapeGameManager egm = egb.makeGameManager()) :
 		-----------------------------------------------------------------------------------------
 			- Confirm that a piece is returned correctly
-				7. emg.getPieceAt(emg.makeCoordinate(2, 2)) -> EscapePiece.HORSE
+				7. egm.getPieceAt(egm.makeCoordinate(2, 2)) -> EscapePiece.HORSE
 			- Confirm that null is returned if an empty space is queried
-				10 emg.getPieceAt(emg.makeCoordinate(1, 1)) -> null
+				10 egm.getPieceAt(egm.makeCoordinate(1, 1)) -> null
 			- Confirm that an error is thrown for a piece that is not on the board
-				8. emg.getPieceAt(emg.makeCoordinate(-1,-1)) - > throw EscapeException()
-			- Confirm that an error is thrown for a piece that is not on the board using non emg created coordinate
+				8. egm.getPieceAt(egm.makeCoordinate(-1,-1)) - > throw EscapeException()
+			- Confirm that an error is thrown for a piece that is not on the board using non egm created coordinate
 			  (this may not actually be possible, but I'm accounting for it anyways)
-			  	9. emg.getPieceAt(SquareCoordinate.makeCoordinate(-1,-1)) - > throw EscapeException()
+			  	9. egm.getPieceAt(SquareCoordinate.makeCoordinate(-1,-1)) - > throw EscapeException()
 			  	
-		With SampleEscapeGameOrtho config file (EscapeGameManager emg = egb.makeGameManager()) :
+		With SampleEscapeGameOrtho config file (EscapeGameManager egm = egb.makeGameManager()) :
 		-----------------------------------------------------------------------------------------
 			- Confirm that a piece is returned correctly
-				10. emg.getPieceAt(emg.makeCoordinate(5, 2)) -> EscapePiece.FROG
+				10. egm.getPieceAt(egm.makeCoordinate(5, 2)) -> EscapePiece.FROG
 			- Confirm that null is returned if an empty coordinate is queried
-				11. emg.getPieceAt(emg.makeCoordinate(2, 2)) -> EscapePiece.HORSE
+				11. egm.getPieceAt(egm.makeCoordinate(2, 2)) -> EscapePiece.HORSE
 			- Confirm that an error is thrown for a piece that is not on the board
-				12. emg.getPieceAt(emg.makeCoordinate(-1,-1)) - > throw EscapeException()
-			- Confirm that an error is thrown for a piece that is not on the board using non emg created coordinate
+				12. egm.getPieceAt(egm.makeCoordinate(-1,-1)) - > throw EscapeException()
+			- Confirm that an error is thrown for a piece that is not on the board using non egm created coordinate
 			  (this may not actually be possible, but I'm accounting for it anyways)
-			  	13. emg.getPieceAt(SquareCoordinate.makeCoordinate(-1,-1)) - > throw EscapeException()
+			  	13. egm.getPieceAt(SquareCoordinate.makeCoordinate(-1,-1)) - > throw EscapeException()
 			  	
-		With SampleEscapeGameHex config file (EscapeGameManager emg = egb.makeGameManager()) :
+		With SampleEscapeGameHex config file (EscapeGameManager egm = egb.makeGameManager()) :
 		-----------------------------------------------------------------------------------------
 			- Confirm that a piece is returned correctly
-				14. emg.getPieceAt(emg.makeCoordinate(0, 0)) -> EscapePiece.HORSE
+				14. egm.getPieceAt(egm.makeCoordinate(0, 0)) -> EscapePiece.HORSE
 			- Confirm that null is returned if an empty space is queried
-				15. emg.getPieceAt(emg.makeCoordinate(2, 2)) -> null
+				15. egm.getPieceAt(egm.makeCoordinate(2, 2)) -> null
 				
 	move()
 	======

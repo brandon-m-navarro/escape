@@ -1,5 +1,5 @@
-// import { xmlString } from './SampleEscapeSquare.js';
-import { xmlString } from './SampleEscapeOrtho.js';
+import { xmlString } from './SampleEscapeSquare.js';
+// import { xmlString } from './SampleEscapeOrtho.js';
 // import { xmlString } from "./SampleEscapeHex.js";
 import Honeycomb from "./honeycomb.js";
 const { Grid, defineHex, rectangle } = Honeycomb;
@@ -175,7 +175,7 @@ function createHexBoard(data) {
   createLegend();
 }
 
-function createHexCell(hex, cellData, container, x, y) {
+function createHexCell(hex, cellData, container) {
   const cell = document.createElement("div");
   cell.className = "hex-cell";
 
@@ -206,10 +206,8 @@ function createHexCell(hex, cellData, container, x, y) {
     const abbrev = getPieceAbbreviation(cellData.pieceName);
     cell.textContent = abbrev;
     cell.title = `${cellData.pieceName} (${cellData.player})`;
-    console.log("SET ", cellData);
   } else if (cellData.locationType === "BLOCK") {
     cell.textContent = "█";
-    console.log("SET BLOCK");
   }
 
   // Add coordinates as tooltip
