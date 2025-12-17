@@ -169,7 +169,7 @@ public class EscapeGameBuilder {
 	 * @return true if the attributes are valid
 	 */
 	private boolean validateAttributes(PieceAttribute[] pieceAttributes) {
-		ArrayList collectedAttributeIDs = new ArrayList<PieceAttributeID>();
+		ArrayList<PieceAttributeID> collectedAttributeIDs = new ArrayList<PieceAttributeID>();
 		for (PieceAttribute pa : pieceAttributes) {
 			if (!collectedAttributeIDs.contains(pa.getId()))
 				collectedAttributeIDs.add(pa.getId());
@@ -187,11 +187,13 @@ public class EscapeGameBuilder {
 	 * @return true if either a FLY or DISTANCE attribute is specified
 	 */
 	private boolean hasMovementAttribute(ArrayList<PieceAttributeID> collectedAttributeIDs) {
-		return (collectedAttributeIDs.contains(PieceAttributeID.FLY) ||
-				collectedAttributeIDs.contains(PieceAttributeID.DISTANCE)
-						&&
-						!(collectedAttributeIDs.contains(PieceAttributeID.FLY) &&
-								collectedAttributeIDs.contains(PieceAttributeID.DISTANCE)));
+		return (
+			collectedAttributeIDs.contains(PieceAttributeID.FLY) ||
+			collectedAttributeIDs.contains(PieceAttributeID.DISTANCE)
+				&&
+			!(collectedAttributeIDs.contains(PieceAttributeID.FLY) &&
+			collectedAttributeIDs.contains(PieceAttributeID.DISTANCE))
+		);
 	}
 
 	/**
@@ -201,7 +203,7 @@ public class EscapeGameBuilder {
 	 * @return true if each PieceName has only one PieceType associated with it
 	 */
 	private boolean oneRulePerPiece(PieceTypeInitializer[] pieceTypeInitializers) {
-		ArrayList pieces = new ArrayList<PieceName>();
+		ArrayList<PieceName> pieces = new ArrayList<PieceName>();
 		for (PieceTypeInitializer pt : pieceTypeInitializers) {
 			if (!pieces.contains(pt.getPieceName()))
 				pieces.add(pt.getPieceName());
@@ -218,7 +220,7 @@ public class EscapeGameBuilder {
 	 * 
 	 * @return a Board with the type specified in the XML config file
 	 */
-	public Board makeBoard() {
+	public Board<?> makeBoard() {
 		TwoDimensionalBoard board;
 		switch (gameInitializer.getCoordinateType()) {
 			case SQUARE:
@@ -234,7 +236,7 @@ public class EscapeGameBuilder {
 				initializeHexBoard(board, gameInitializer.getLocationInitializers());
 				return board;
 		}
-		return null;
+		throw new EscapeException("ERROR: Unrecognized Board type!");
 	}
 
 	/**
