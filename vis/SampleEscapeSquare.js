@@ -1,0 +1,195 @@
+
+  export const xmlString = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <escapeGameInitializer>
+
+        <!-- Board items -->
+        <coordinateType>SQUARE</coordinateType>
+        <xMax>20</xMax>
+        <yMax>25</yMax>
+
+        <locationInitializers>
+            <x>3</x>
+            <y>4</y>
+            <locationType>CLEAR</locationType>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>5</x>
+            <y>6</y>
+            <locationType>BLOCK</locationType>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>5</x>
+            <y>7</y>
+            <locationType>BLOCK</locationType>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>7</x>
+            <y>8</y>
+            <locationType>BLOCK</locationType>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>2</x>
+            <y>2</y>
+            <locationType>CLEAR</locationType>
+            <player>PLAYER1</player>
+            <pieceName>HORSE</pieceName>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>7</x>
+            <y>9</y>
+            <locationType>CLEAR</locationType>
+            <player>PLAYER1</player>
+            <pieceName>HORSE</pieceName>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>4</x>
+            <y>1</y>
+            <locationType>CLEAR</locationType>
+            <player>PLAYER1</player>
+            <pieceName>HORSE</pieceName>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>1</x>
+            <y>1</y>
+            <locationType>CLEAR</locationType>
+            <player>PLAYER1</player>
+            <pieceName>FROG</pieceName>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>2</x>
+            <y>5</y>
+            <locationType>CLEAR</locationType>
+            <player>PLAYER2</player>
+            <pieceName>HORSE</pieceName>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>6</x>
+            <y>1</y>
+            <locationType>CLEAR</locationType>
+            <player>PLAYER2</player>
+            <pieceName>HORSE</pieceName>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>9</x>
+            <y>1</y>
+            <locationType>CLEAR</locationType>
+            <player>PLAYER2</player>
+            <pieceName>HORSE</pieceName>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>8</x>
+            <y>1</y>
+            <locationType>CLEAR</locationType>
+            <player>PLAYER2</player>
+            <pieceName>HORSE</pieceName>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>7</x>
+            <y>7</y>
+            <locationType>CLEAR</locationType>
+            <player>PLAYER1</player>
+            <pieceName>HUMMINGBIRD</pieceName>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>1</x>
+            <y>2</y>
+            <locationType>CLEAR</locationType>
+            <player>PLAYER2</player>
+            <pieceName>HUMMINGBIRD</pieceName>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>1</x>
+            <y>3</y>
+            <locationType>CLEAR</locationType>
+            <player>PLAYER2</player>
+            <pieceName>HUMMINGBIRD</pieceName>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>8</x>
+            <y>8</y>
+            <locationType>CLEAR</locationType>
+            <player>PLAYER2</player>
+            <pieceName>HUMMINGBIRD</pieceName>
+        </locationInitializers>
+
+        <locationInitializers>
+            <x>7</x>
+            <y>6</y>
+            <locationType>CLEAR</locationType>
+            <player>PLAYER2</player>
+            <pieceName>FOX</pieceName>
+        </locationInitializers>
+
+        <!-- Piece items, an array of pieceTypes, 1 or more -->
+        <pieceTypes>
+            <movementPattern>LINEAR</movementPattern>
+            <pieceName>FROG</pieceName>
+            <attributes>
+                <id>DISTANCE</id>
+                <attrType>INTEGER</attrType>
+                <intValue>10</intValue>
+            </attributes>
+            <attributes>
+                <id>JUMP</id>
+                <attrType>BOOLEAN</attrType>
+                <intValue>TRUE</intValue>
+            </attributes>
+        </pieceTypes>
+
+        <pieceTypes>
+            <movementPattern>LINEAR</movementPattern>
+            <pieceName>HORSE</pieceName>
+            <attributes>
+                <id>DISTANCE</id>
+                <attrType>INTEGER</attrType>
+                <intValue>5</intValue>
+            </attributes>
+        </pieceTypes>
+
+        <pieceTypes>
+            <movementPattern>LINEAR</movementPattern>
+            <pieceName>HUMMINGBIRD</pieceName>
+            <attributes>
+                <id>FLY</id>
+                <attrType>INTEGER</attrType>
+                <intValue>3</intValue>
+            </attributes>
+        </pieceTypes>
+
+        <pieceTypes>
+            <movementPattern>LINEAR</movementPattern>
+            <pieceName>FOX</pieceName>
+            <attributes>
+                <id>DISTANCE</id>
+                <attrType>INTEGER</attrType>
+                <intValue>15</intValue>
+            </attributes>
+            <attributes>
+                <id>VALUE</id>
+                <attrType>INTEGER</attrType>
+                <intValue>15</intValue>
+            </attributes>
+            <attributes>
+                <id>UNBLOCK</id>
+                <attrType>BOOLEAN</attrType>
+                <booleanValue>TRUE</booleanValue>
+            </attributes>
+        </pieceTypes>
+
+    </escapeGameInitializer>
+`;

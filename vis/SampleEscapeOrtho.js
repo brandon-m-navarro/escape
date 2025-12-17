@@ -1,0 +1,56 @@
+export const xmlString = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<escapeGameInitializer>
+	<coordinateType>ORTHOSQUARE</coordinateType>
+    <!-- Board items -->
+    <xMax>20</xMax>
+    <yMax>25</yMax>
+    <locationInitializers> <!-- An array of these, 0 or more -->
+        <x>3</x>
+        <y>4</y>
+        <locationType>CLEAR</locationType>
+    </locationInitializers>
+    <locationInitializers>
+        <x>5</x>
+        <y>6</y>
+        <locationType>BLOCK</locationType>
+    </locationInitializers>
+    <locationInitializers>
+        <x>5</x>
+        <y>2</y>
+        <locationType>CLEAR</locationType>
+        <player>PLAYER1</player>
+        <pieceName>FROG</pieceName>
+    </locationInitializers>
+    <locationInitializers>
+        <x>5</x>
+        <y>3</y>
+        <locationType>CLEAR</locationType>
+        <player>PLAYER2</player>
+        <pieceName>HORSE</pieceName>
+    </locationInitializers>
+    
+    <!-- Piece items, an array of pieceTypes, 1 or more -->
+    <pieceTypes>
+        <movementPattern>ORTHOGONAL</movementPattern>
+        <pieceName>FROG</pieceName>
+        <attributes>
+            <id>DISTANCE</id>
+            <attrType>INTEGER</attrType>
+            <intValue>5</intValue>
+        </attributes>
+    </pieceTypes>
+    <pieceTypes>
+        <movementPattern>ORTHOGONAL</movementPattern>
+        <pieceName>HORSE</pieceName>
+        <attributes>
+            <id>UNBLOCK</id>
+            <attrType>BOOLEAN</attrType>
+            <booleanValue>false</booleanValue>
+        </attributes>
+        <attributes>
+            <id>DISTANCE</id>
+            <attrType>INTEGER</attrType>
+            <intValue>10</intValue>
+        </attributes>
+    </pieceTypes>
+</escapeGameInitializer>`;

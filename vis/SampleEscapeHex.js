@@ -1,35 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+export const xmlString =`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <escapeGameInitializer>
-
+	<coordinateType>HEX</coordinateType>
     <!-- Board items -->
-	<coordinateType>SQUARE</coordinateType>
-    <xMax>20</xMax>
-    <yMax>25</yMax>
-
-    <locationInitializers>
+    <locationInitializers> <!-- An array of these, 0 or more -->
         <x>3</x>
         <y>4</y>
         <locationType>CLEAR</locationType>
     </locationInitializers>
-
     <locationInitializers>
         <x>5</x>
         <y>6</y>
         <locationType>BLOCK</locationType>
     </locationInitializers>
-
     <locationInitializers>
         <x>5</x>
         <y>7</y>
         <locationType>BLOCK</locationType>
     </locationInitializers>
-
     <locationInitializers>
         <x>7</x>
         <y>8</y>
         <locationType>BLOCK</locationType>
     </locationInitializers>
-
     <locationInitializers>
         <x>2</x>
         <y>2</y>
@@ -37,7 +29,6 @@
         <player>PLAYER1</player>
         <pieceName>HORSE</pieceName>
     </locationInitializers>
-
     <locationInitializers>
         <x>7</x>
         <y>9</y>
@@ -45,7 +36,6 @@
         <player>PLAYER1</player>
         <pieceName>HORSE</pieceName>
     </locationInitializers>
-
     <locationInitializers>
         <x>4</x>
         <y>1</y>
@@ -53,7 +43,6 @@
         <player>PLAYER1</player>
         <pieceName>HORSE</pieceName>
     </locationInitializers>
-
     <locationInitializers>
         <x>1</x>
         <y>1</y>
@@ -61,7 +50,6 @@
         <player>PLAYER1</player>
         <pieceName>FROG</pieceName>
     </locationInitializers>
-
     <locationInitializers>
         <x>2</x>
         <y>5</y>
@@ -69,7 +57,6 @@
         <player>PLAYER2</player>
         <pieceName>HORSE</pieceName>
     </locationInitializers>
-
     <locationInitializers>
         <x>6</x>
         <y>1</y>
@@ -77,7 +64,6 @@
         <player>PLAYER2</player>
         <pieceName>HORSE</pieceName>
     </locationInitializers>
-
     <locationInitializers>
         <x>9</x>
         <y>1</y>
@@ -85,7 +71,6 @@
         <player>PLAYER2</player>
         <pieceName>HORSE</pieceName>
     </locationInitializers>
-
     <locationInitializers>
         <x>8</x>
         <y>1</y>
@@ -93,15 +78,13 @@
         <player>PLAYER2</player>
         <pieceName>HORSE</pieceName>
     </locationInitializers>
-
-    <locationInitializers>
+        <locationInitializers>
         <x>7</x>
         <y>7</y>
         <locationType>CLEAR</locationType>
         <player>PLAYER1</player>
         <pieceName>HUMMINGBIRD</pieceName>
     </locationInitializers>
-
     <locationInitializers>
         <x>1</x>
         <y>2</y>
@@ -109,7 +92,6 @@
         <player>PLAYER2</player>
         <pieceName>HUMMINGBIRD</pieceName>
     </locationInitializers>
-
     <locationInitializers>
         <x>1</x>
         <y>3</y>
@@ -117,7 +99,6 @@
         <player>PLAYER2</player>
         <pieceName>HUMMINGBIRD</pieceName>
     </locationInitializers>
-
     <locationInitializers>
         <x>8</x>
         <y>8</y>
@@ -125,7 +106,6 @@
         <player>PLAYER2</player>
         <pieceName>HUMMINGBIRD</pieceName>
     </locationInitializers>
-
     <locationInitializers>
         <x>7</x>
         <y>6</y>
@@ -133,7 +113,6 @@
         <player>PLAYER2</player>
         <pieceName>FOX</pieceName>
     </locationInitializers>
-
     <!-- Piece items, an array of pieceTypes, 1 or more -->
     <pieceTypes>
         <movementPattern>LINEAR</movementPattern>
@@ -149,7 +128,6 @@
             <intValue>TRUE</intValue>
         </attributes>
     </pieceTypes>
-
     <pieceTypes>
         <movementPattern>LINEAR</movementPattern>
         <pieceName>HORSE</pieceName>
@@ -159,7 +137,6 @@
             <intValue>5</intValue>
         </attributes>
     </pieceTypes>
-
     <pieceTypes>
         <movementPattern>LINEAR</movementPattern>
         <pieceName>HUMMINGBIRD</pieceName>
@@ -169,7 +146,6 @@
             <intValue>3</intValue>
         </attributes>
     </pieceTypes>
-
     <pieceTypes>
         <movementPattern>LINEAR</movementPattern>
         <pieceName>FOX</pieceName>
@@ -179,15 +155,9 @@
             <intValue>15</intValue>
         </attributes>
         <attributes>
-            <id>VALUE</id>
-            <attrType>INTEGER</attrType>
-            <intValue>15</intValue>
-        </attributes>
-        <attributes>
             <id>UNBLOCK</id>
             <attrType>BOOLEAN</attrType>
             <booleanValue>TRUE</booleanValue>
         </attributes>
     </pieceTypes>
-
-</escapeGameInitializer>
+</escapeGameInitializer>`;
