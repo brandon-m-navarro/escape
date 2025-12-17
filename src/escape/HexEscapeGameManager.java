@@ -13,7 +13,7 @@
 package escape;
 
 import java.util.*;
-import escape.PathFinder.PathFinderNode;
+// import escape.PathFinder.PathFinderNode;
 import escape.board.*;
 import escape.board.coordinate.*;
 import escape.exception.EscapeException;

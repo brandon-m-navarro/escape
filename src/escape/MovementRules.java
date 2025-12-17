@@ -117,13 +117,13 @@ public class MovementRules
 		this.canTravelThroughBlocked = canTravelThroughBlocked;
 	}
 
-//	/**
-//	 * @return the value
-//	 */
-//	public int getValue()
-//	{
-//		return value;
-//	}
+	/**
+	 * @return the value
+	 */
+	public int getValue()
+	{
+		return value;
+	}
 
 	/**
 	 * @param value the value to set

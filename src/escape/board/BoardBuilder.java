@@ -15,6 +15,7 @@ import static escape.board.LocationType.CLEAR;
 import java.io.*;
 import javax.xml.bind.*;
 import escape.board.coordinate.*;
+import escape.exception.EscapeException;
 import escape.piece.EscapePiece;
 import escape.util.*;
 
@@ -47,7 +48,7 @@ public class BoardBuilder
 	 * configuration file.
 	 * @return a Board with the type specified in the XML config file 
 	 */
-	public Board makeBoard()
+	public Board<?> makeBoard()
 	{
 		TwoDimensionalBoard board;
 		switch (bi.getCoordinateId())
@@ -65,7 +66,7 @@ public class BoardBuilder
 				initializeHexBoard( board, bi.getLocationInitializers());
 				return board;
 		}
-		return null;
+		throw new EscapeException("ERROR: Unrecognized Board type");
 	}
 	
 	/**
