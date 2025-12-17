@@ -48,7 +48,7 @@ public class BoardBuilder
 	 * configuration file.
 	 * @return a Board with the type specified in the XML config file 
 	 */
-	public Board<?> makeBoard()
+	public Board makeBoard()
 	{
 		TwoDimensionalBoard board;
 		switch (bi.getCoordinateId())
