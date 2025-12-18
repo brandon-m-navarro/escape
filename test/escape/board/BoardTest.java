@@ -21,8 +21,7 @@ import escape.exception.EscapeException;
 import escape.piece.*;
 
 /**
- * Testing Board creation and initialization methods. @SuppressWarnings("unchecked") is
- * used for all makeBoard() calls as the BoardConfig xml files specify the type.
+ * Testing Board creation and initialization methods.
  * @version Dec 2025
  */
 class BoardTest {
@@ -32,11 +31,9 @@ class BoardTest {
 		BoardBuilder bb1 = new BoardBuilder(new File("config/board/BoardConfig1.xml"));
 		BoardBuilder bb2 = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
 
-		@SuppressWarnings("unchecked")
-		Board<SquareCoordinate> b1 = (Board<SquareCoordinate>) bb1.makeBoard();
+		SquareBoard b1 = (SquareBoard) bb1.makeBoard();
 
-		@SuppressWarnings("unchecked")
-		Board<OrthoSquareCoordinate> b2 = (Board<OrthoSquareCoordinate>) bb2.makeBoard();
+		OrthoSquareBoard b2 = (OrthoSquareBoard) bb2.makeBoard();
 
 		assertFalse(b1.equals("Should Fail"));
 		assertFalse(b1.equals(b2));
@@ -45,7 +42,9 @@ class BoardTest {
 
 	@Test
 	void initializeSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig1.xml"));
+		BoardBuilder bb = new BoardBuilder(
+			new File("config/board/BoardConfig1.xml")
+		);
 		assertNotNull(bb.makeBoard());
 		assertTrue(bb.makeBoard().getClass() == SquareBoard.class);
 	}
@@ -57,8 +56,7 @@ class BoardTest {
 
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
 
-		@SuppressWarnings("unchecked")
-		Board<SquareCoordinate> b = (Board<SquareCoordinate>) bb.makeBoard();
+		SquareBoard b = (SquareBoard) bb.makeBoard();
 
 		assertNotNull(b.getPieceAt(sc));
 		EscapePiece ep = b.getPieceAt(sc);
@@ -67,14 +65,15 @@ class BoardTest {
 
 	@Test
 	void putPieceAtSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig1.xml"));
+		BoardBuilder bb = new BoardBuilder(
+			new File("config/board/BoardConfig1.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
 
-		@SuppressWarnings("unchecked")
-		Board<SquareCoordinate> b = (Board<SquareCoordinate>) bb.makeBoard();
+		SquareBoard b = (SquareBoard) bb.makeBoard();
 
 		b.putPieceAt(ep, sc);
 		assertEquals(ep, b.getPieceAt(sc));
@@ -88,12 +87,12 @@ class BoardTest {
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(10, 10);
 
-		@SuppressWarnings("unchecked")
-		Board<SquareCoordinate> b = (Board<SquareCoordinate>) bb.makeBoard();
+		SquareBoard b = (SquareBoard) bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
-				EscapeException.class,
-				() -> b.putPieceAt(ep, sc));
+			EscapeException.class,
+			() -> b.putPieceAt(ep, sc)
+		);
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
@@ -110,8 +109,7 @@ class BoardTest {
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(10, 10);
 
-		@SuppressWarnings("unchecked")
-		Board<SquareCoordinate> b = (Board<SquareCoordinate>) bb.makeBoard();
+		SquareBoard b = (SquareBoard) bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
 				EscapeException.class,
@@ -131,25 +129,26 @@ class BoardTest {
 
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(3, 5);
 
-		@SuppressWarnings("unchecked")
-		Board<SquareCoordinate> b = (Board<SquareCoordinate>) bb.makeBoard();
+		SquareBoard b = (SquareBoard) bb.makeBoard();
 		assertNull(b.getPieceAt(sc));
 	}
 
 	@Test
 	void putPieceAtBlockedLocationSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig1.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig1.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(3, 5);
 
-		@SuppressWarnings("unchecked")
-		Board<SquareCoordinate> b = (Board<SquareCoordinate>) bb.makeBoard();
+		SquareBoard b = (SquareBoard) bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
-				EscapeException.class,
-				() -> b.putPieceAt(ep, sc));
+			EscapeException.class,
+			() -> b.putPieceAt(ep, sc)
+		);
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
@@ -166,55 +165,58 @@ class BoardTest {
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
 
-		@SuppressWarnings("unchecked")
-		Board<SquareCoordinate> b = (Board<SquareCoordinate>) bb.makeBoard();
+		SquareBoard b = (SquareBoard) bb.makeBoard();
 		b.putPieceAt(ep, sc);
 		assertEquals(ep.getPlayer(), b.getPieceAt(sc).getPlayer());
 	}
 
 	@Test
 	void removePieceWithPutPieceAtSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig1.xml"));
+		BoardBuilder bb = new BoardBuilder(
+			new File("config/board/BoardConfig1.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
 
-		@SuppressWarnings("unchecked")
-		Board<SquareCoordinate> b = (Board<SquareCoordinate>) bb.makeBoard();
+		SquareBoard b = (SquareBoard) bb.makeBoard();
 		b.putPieceAt(null, sc);
 		assertNull(b.getPieceAt(sc));
 	}
 
 	@Test
 	void putPieceAtExitLocationSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig4.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig4.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(4, 5);
 
-		@SuppressWarnings("unchecked")
-		Board<SquareCoordinate> b = (Board<SquareCoordinate>) bb.makeBoard();
+		SquareBoard b = (SquareBoard) bb.makeBoard();
 		b.putPieceAt(ep, sc);
 		assertNull(b.getPieceAt(sc));
 	}
 
 	@Test
 	void initializeOrthoSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig2.xml")
+		);
 		assertNotNull(bb.makeBoard());
 		assertTrue(bb.makeBoard().getClass() == OrthoSquareBoard.class);
 	}
 
 	@Test
 	void getInitializedPieceOrthoSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig2.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
-
-		@SuppressWarnings("unchecked")
-		Board<OrthoSquareCoordinate> b = (Board<OrthoSquareCoordinate>) bb.makeBoard();
+		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
 		assertNotNull(b.getPieceAt(sc));
 		EscapePiece ep = b.getPieceAt(sc);
@@ -223,14 +225,14 @@ class BoardTest {
 
 	@Test
 	void putPieceAtOrthoSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
+		BoardBuilder bb = new BoardBuilder(
+			new File("config/board/BoardConfig2.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
-
-		@SuppressWarnings("unchecked")
-		Board<OrthoSquareCoordinate> b = (Board<OrthoSquareCoordinate>) bb.makeBoard();
+		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
 		b.putPieceAt(ep, sc);
 		assertEquals(ep, b.getPieceAt(sc));
@@ -243,13 +245,12 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(10, 10);
-
-		@SuppressWarnings("unchecked")
-		Board<OrthoSquareCoordinate> b = (Board<OrthoSquareCoordinate>) bb.makeBoard();
+		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
-				EscapeException.class,
-				() -> b.putPieceAt(ep, sc));
+			EscapeException.class,
+			() -> b.putPieceAt(ep, sc)
+		);
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
@@ -265,13 +266,12 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(10, 10);
-
-		@SuppressWarnings("unchecked")
-		Board<OrthoSquareCoordinate> b = (Board<OrthoSquareCoordinate>) bb.makeBoard();
+		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
-				EscapeException.class,
-				() -> b.putPieceAt(ep, sc));
+			EscapeException.class,
+			() -> b.putPieceAt(ep, sc)
+		);
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
@@ -287,25 +287,26 @@ class BoardTest {
 
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(3, 5);
 
-		@SuppressWarnings("unchecked")
-		Board<OrthoSquareCoordinate> b = (Board<OrthoSquareCoordinate>) bb.makeBoard();
+		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 		assertNull(b.getPieceAt(sc));
 	}
 
 	@Test
 	void putPieceAtBlockedLocationOrthoSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig2.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(3, 5);
 
-		@SuppressWarnings("unchecked")
-		Board<OrthoSquareCoordinate> b = (Board<OrthoSquareCoordinate>) bb.makeBoard();
+		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
-				EscapeException.class,
-				() -> b.putPieceAt(ep, sc));
+			EscapeException.class,
+			() -> b.putPieceAt(ep, sc)
+		);
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
@@ -322,8 +323,7 @@ class BoardTest {
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
 
-		@SuppressWarnings("unchecked")
-		Board<OrthoSquareCoordinate> b = (Board<OrthoSquareCoordinate>) bb.makeBoard();
+		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
 		b.putPieceAt(ep, sc);
 		assertEquals(ep.getPlayer(), b.getPieceAt(sc).getPlayer());
@@ -331,13 +331,13 @@ class BoardTest {
 
 	@Test
 	void removePieceWithPutPieceAtOrthoSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig2.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
-
-		@SuppressWarnings("unchecked")
-		Board<OrthoSquareCoordinate> b = (Board<OrthoSquareCoordinate>) bb.makeBoard();
+		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
 		b.putPieceAt(null, sc);
 		assertNull(b.getPieceAt(sc));
@@ -345,14 +345,15 @@ class BoardTest {
 
 	@Test
 	void putPieceAtExitLocationOrthoSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig2.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(3, 6);
 
-		@SuppressWarnings("unchecked")
-		Board<OrthoSquareCoordinate> b = (Board<OrthoSquareCoordinate>) bb.makeBoard();
+		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
 		b.putPieceAt(ep, sc);
 		assertNull(b.getPieceAt(sc));
@@ -360,20 +361,22 @@ class BoardTest {
 
 	@Test
 	void initializeHexBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig3.xml")
+		);
 		assertNotNull(bb.makeBoard());
 		assertTrue(bb.makeBoard().getClass() == HexBoard.class);
 	}
 
 	@Test
 	void getInitializedPieceHexBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig3.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
-
-		@SuppressWarnings("unchecked")
-		Board<HexCoordinate> b = (Board<HexCoordinate>) bb.makeBoard();
+		HexBoard b = (HexBoard) bb.makeBoard();
 
 		assertNotNull(b.getPieceAt(sc));
 		EscapePiece ep = b.getPieceAt(sc);
@@ -382,14 +385,15 @@ class BoardTest {
 
 	@Test
 	void putPieceAtHexBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig3.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
 
-		@SuppressWarnings("unchecked")
-		Board<HexCoordinate> b = (Board<HexCoordinate>) bb.makeBoard();
+		HexBoard b = (HexBoard) bb.makeBoard();
 
 		b.putPieceAt(ep, sc);
 		assertEquals(ep, b.getPieceAt(sc));
@@ -397,30 +401,33 @@ class BoardTest {
 
 	@Test
 	void getPieceAtOnLocationTypeHexBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig3.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(3, 5);
 
-		@SuppressWarnings("unchecked")
-		Board<HexCoordinate> b = (Board<HexCoordinate>) bb.makeBoard();
+		HexBoard b = (HexBoard) bb.makeBoard();
 		assertNull(b.getPieceAt(sc));
 	}
 
 	@Test
 	void putPieceAtBlockedLocationHexBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig3.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(3, 5);
 
-		@SuppressWarnings("unchecked")
-		Board<HexCoordinate> b = (Board<HexCoordinate>) bb.makeBoard();
+		HexBoard b = (HexBoard) bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
-				EscapeException.class,
-				() -> b.putPieceAt(ep, sc));
+			EscapeException.class,
+			() -> b.putPieceAt(ep, sc)
+		);
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
@@ -431,14 +438,15 @@ class BoardTest {
 
 	@Test
 	void putPieceOnAnotherPieceHexBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig3.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
 
-		@SuppressWarnings("unchecked")
-		Board<HexCoordinate> b = (Board<HexCoordinate>) bb.makeBoard();
+		HexBoard b = (HexBoard) bb.makeBoard();
 
 		b.putPieceAt(ep, sc);
 		assertEquals(ep.getPlayer(), b.getPieceAt(sc).getPlayer());
@@ -446,13 +454,14 @@ class BoardTest {
 
 	@Test
 	void removePieceWithPutPieceAtHexBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig3.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
 
-		@SuppressWarnings("unchecked")
-		Board<HexCoordinate> b = (Board<HexCoordinate>) bb.makeBoard();
+		HexBoard b = (HexBoard) bb.makeBoard();
 
 		b.putPieceAt(null, sc);
 		assertNull(b.getPieceAt(sc));
@@ -460,14 +469,15 @@ class BoardTest {
 
 	@Test
 	void putPieceAtExitLocationHexBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig3.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig3.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(3, 6);
 
-		@SuppressWarnings("unchecked")
-		Board<HexCoordinate> b = (Board<HexCoordinate>) bb.makeBoard();
+		HexBoard b = (HexBoard) bb.makeBoard();
 		
 		b.putPieceAt(ep, sc);
 		assertNull(b.getPieceAt(sc));
@@ -475,7 +485,9 @@ class BoardTest {
 
 	@Test
 	void initializeHexBoardWithNoSpecifiedMaxXAndMaxY() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig5.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig5.xml")
+		);
 		assertNotNull(bb.makeBoard());
 	}
 }

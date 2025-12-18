@@ -24,10 +24,10 @@ import static escape.piece.EscapePiece.*;
 /**
  * Tests for the Escape Board class(es).
  * 
- * @version Apr 2, 2020
+ * @version Dec 2025
  */
 class MasterBoardTest {
-	private Board board = null;
+	// private Board board = null;
 
 	/**
 	 * Make sure that if there are no initializers, you still have a board.
@@ -37,8 +37,10 @@ class MasterBoardTest {
 	@Test
 	void emptySquareBoard() throws Exception {
 		BoardBuilder bb = new BoardBuilder(new File("config/board/EmptySquareBoard.xml"));
-		board = bb.makeBoard();
+		SquareBoard board = (SquareBoard) bb.makeBoard();
+
 		assertNotNull(board);
+
 		// Now I will do some tests on this board and its contents.
 		SquareCoordinate sc = SquareCoordinate.makeCoordinate(5, 5);
 		EscapePiece ep = makePiece(PLAYER1, SNAIL);
@@ -53,9 +55,12 @@ class MasterBoardTest {
 	@Test
 	void orthoSquareBoard() throws Exception {
 		BoardBuilder bb = new BoardBuilder(
-				new File("config/board/OrthoSquareBoard.xml"));
-		board = bb.makeBoard();
+			new File("config/board/OrthoSquareBoard.xml")
+		);
+
+		OrthoSquareBoard board = (OrthoSquareBoard) bb.makeBoard();
 		assertNotNull(board);
+
 		// Now I will do some tests on this board and its contents.
 		OrthoSquareCoordinate sc = OrthoSquareCoordinate.makeCoordinate(5, 5);
 		EscapePiece ep = makePiece(PLAYER1, SNAIL);
@@ -70,8 +75,10 @@ class MasterBoardTest {
 	@Test
 	void hexBoard() throws Exception {
 		BoardBuilder bb = new BoardBuilder(
-				new File("config/board/HexBoardConfig.xml"));
-		board = bb.makeBoard();
+			new File("config/board/HexBoardConfig.xml")
+		);
+		HexBoard board = (HexBoard) bb.makeBoard();
+
 		assertNotNull(board);
 		// Now I will do some tests on this board and its contents.
 		HexCoordinate sc = HexCoordinate.makeCoordinate(-55, 23);
