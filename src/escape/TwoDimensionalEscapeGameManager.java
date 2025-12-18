@@ -183,14 +183,16 @@ System.out.println(isMoveOnBoard);
 	 * @param movementRules the movement rules for the piece moving
 	 * @return true if the piece is able to make the move
 	 */
-	protected boolean canMoveOmni(TwoDimensionalCoordinate from, TwoDimensionalCoordinate to,
-			MovementRules movementRules) {
-		if (from.distanceTo(to) > movementRules.getMaxDistance())
+	protected boolean canMoveOmni(TwoDimensionalCoordinate from, TwoDimensionalCoordinate to, MovementRules movementRules) {
+		if (from.distanceTo(to) > movementRules.getMaxDistance()) {
 			return false;
+		}
 		PathFinder pathFinder = new PathFinder(board, new PathFinderNode(from), movementRules);
 		pathFinder.searchOmni(from, to, movementRules);
-		return (pathFinder.isCompleted() &&
-				pathFinder.getDistanceTravelled() <= movementRules.getMaxDistance());
+		return (
+			pathFinder.isCompleted() &&
+			pathFinder.getDistanceTravelled() <= movementRules.getMaxDistance()
+		);
 	}
 
 	/**
