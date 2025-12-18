@@ -17,19 +17,18 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
-import escape.board.coordinate.Coordinate;
+import escape.board.coordinate.OrthoSquareCoordinate;
 import escape.exception.EscapeException;
 import escape.piece.PieceName;
 
 /**
  * Description
  * 
- * @version May 7, 2020
+ * @version Dec 2025
  */
-class MasterOrthoSquareTests extends AbstractMasterTest {
+class MasterOrthoSquareTests extends AbstractMasterTest<OrthoSquareCoordinate> {
     /**
-     * Description
-     * 
+     * Create path to xml
      * @throws java.lang.Exception
      */
     @BeforeAll
@@ -49,8 +48,8 @@ class MasterOrthoSquareTests extends AbstractMasterTest {
     @ParameterizedTest
     @MethodSource("validMoveProvider")
     void validMove(int x1, int y1, int x2, int y2, PieceName p, String test) {
-        Coordinate c1 = game.makeCoordinate(x1, y1);
-        Coordinate c2 = game.makeCoordinate(x2, y2);
+        OrthoSquareCoordinate c1 = game.makeCoordinate(x1, y1);
+        OrthoSquareCoordinate c2 = game.makeCoordinate(x2, y2);
         assertEquals(test, p, game.getPieceAt(c1).getName());
         assertTrue(test, game.move(c1, c2));
         assertEquals(test, p, game.getPieceAt(c2).getName());
@@ -85,8 +84,8 @@ class MasterOrthoSquareTests extends AbstractMasterTest {
     @ParameterizedTest
     @MethodSource("invalidMoveProvider")
     void invalidMove(int x1, int y1, int x2, int y2, String test) {
-        Coordinate c1 = game.makeCoordinate(x1, y1);
-        Coordinate c2 = game.makeCoordinate(x2, y2);
+        OrthoSquareCoordinate c1 = game.makeCoordinate(x1, y1);
+        OrthoSquareCoordinate c2 = game.makeCoordinate(x2, y2);
         try {
             assertFalse(test, game.move(c1, c2));
         } catch (EscapeException e) {

@@ -220,7 +220,7 @@ public class EscapeGameBuilder {
 	 * 
 	 * @return a Board with the type specified in the XML config file
 	 */
-	public Board makeBoard() {
+	public Board<? extends Coordinate> makeBoard() {
 		TwoDimensionalBoard board;
 		switch (gameInitializer.getCoordinateType()) {
 			case SQUARE:

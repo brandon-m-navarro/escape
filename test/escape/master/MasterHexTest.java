@@ -16,24 +16,22 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-// import static org.junit.jupiter.api.Assertions.*;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
-import escape.board.coordinate.Coordinate;
+import escape.board.coordinate.HexCoordinate;
 import escape.exception.EscapeException;
 import escape.piece.PieceName;
 
 /**
  * Description
  * 
- * @version May 7, 2020
+ * @version Dec 2025
  */
-class MasterHexTest extends AbstractMasterTest {
+class MasterHexTest extends AbstractMasterTest<HexCoordinate> {
     /**
-     * Description
-     * 
+     * Create path to xml
      * @throws java.lang.Exception
      */
     @BeforeAll
@@ -53,8 +51,8 @@ class MasterHexTest extends AbstractMasterTest {
     @ParameterizedTest
     @MethodSource("validMoveProvider")
     void validMove(int x1, int y1, int x2, int y2, PieceName p, String test) {
-        Coordinate c1 = game.makeCoordinate(x1, y1);
-        Coordinate c2 = game.makeCoordinate(x2, y2);
+        HexCoordinate c1 = game.makeCoordinate(x1, y1);
+        HexCoordinate c2 = game.makeCoordinate(x2, y2);
         assertEquals(test, p, game.getPieceAt(c1).getName());
         assertTrue(test, game.move(c1, c2));
         assertEquals(test, p, game.getPieceAt(c2).getName());
@@ -96,8 +94,8 @@ class MasterHexTest extends AbstractMasterTest {
     @ParameterizedTest
     @MethodSource("invalidMoveProvider")
     void invalidMove(int x1, int y1, int x2, int y2, String test) {
-        Coordinate c1 = game.makeCoordinate(x1, y1);
-        Coordinate c2 = game.makeCoordinate(x2, y2);
+        HexCoordinate c1 = game.makeCoordinate(x1, y1);
+        HexCoordinate c2 = game.makeCoordinate(x2, y2);
         try {
             assertFalse(test, game.move(c1, c2));
         } catch (EscapeException e) {

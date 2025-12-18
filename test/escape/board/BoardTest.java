@@ -26,6 +26,7 @@ import escape.piece.*;
  */
 class BoardTest {
 
+	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	void equalsTwoDimensionalBoard() throws Exception {
 		BoardBuilder bb1 = new BoardBuilder(new File(

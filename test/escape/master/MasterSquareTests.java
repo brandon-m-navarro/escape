@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
-import escape.board.coordinate.Coordinate;
+import escape.board.coordinate.SquareCoordinate;
 import escape.exception.EscapeException;
 import escape.piece.PieceName;
 import static escape.piece.PieceName.*;
@@ -27,11 +27,10 @@ import static escape.piece.PieceName.*;
  * 
  * @version May 7, 2020
  */
-class MasterSquareTests extends AbstractMasterTest {
+class MasterSquareTests extends AbstractMasterTest<SquareCoordinate> {
 
     /**
-     * Description
-     * 
+     * Create path to xml
      * @throws java.lang.Exception
      */
     @BeforeAll
@@ -51,8 +50,8 @@ class MasterSquareTests extends AbstractMasterTest {
     @ParameterizedTest
     @MethodSource("validMoveProvider")
     void validMove(int x1, int y1, int x2, int y2, PieceName p, String test) {
-        Coordinate c1 = game.makeCoordinate(x1, y1);
-        Coordinate c2 = game.makeCoordinate(x2, y2);
+        SquareCoordinate c1 = game.makeCoordinate(x1, y1);
+        SquareCoordinate c2 = game.makeCoordinate(x2, y2);
         assertEquals(test, p, game.getPieceAt(c1).getName());
         assertTrue(test, game.move(c1, c2));
         assertEquals(test, p, game.getPieceAt(c2).getName());
@@ -61,28 +60,29 @@ class MasterSquareTests extends AbstractMasterTest {
 
     static Stream<Arguments> validMoveProvider() {
         return Stream.of(
-                // Test one in all directions
-                Arguments.of(5, 6, 5, 7, FROG, "move 1"),
-                Arguments.of(13, 10, 12, 11, SNAIL, "move 1"),
-                Arguments.of(5, 6, 4, 6, FROG, "move 1"),
-                Arguments.of(13, 10, 12, 9, SNAIL, "move 1"),
-                Arguments.of(5, 6, 5, 5, FROG, "move 1"),
-                Arguments.of(17, 4, 18, 4, FROG, "move 1"),
-                Arguments.of(19, 2, 20, 1, HUMMINGBIRD, "move 1"),
-                // Test > 1 and limits
-                Arguments.of(17, 4, 19, 5, FROG, "limit"),
-                Arguments.of(15, 4, 9, 4, FOX, "limit"),
-                Arguments.of(19, 2, 12, 2, HUMMINGBIRD, "limit"),
-                Arguments.of(17, 6, 12, 6, HORSE, "limit"),
-                // Jump
-                Arguments.of(17, 4, 17, 7, FROG, "jump"),
-                Arguments.of(17, 6, 12, 1, HORSE, "jump"),
-                // Fly
-                Arguments.of(19, 2, 16, 5, HUMMINGBIRD, "fly"),
-                // UNBLOCK
-                Arguments.of(19, 9, 13, 9, FOX, "unblock"),
-                // Land on opponent
-                Arguments.of(17, 4, 16, 4, FROG, "land on opponent"));
+            // Test one in all directions
+            Arguments.of(5, 6, 5, 7, FROG, "move 1"),
+            Arguments.of(13, 10, 12, 11, SNAIL, "move 1"),
+            Arguments.of(5, 6, 4, 6, FROG, "move 1"),
+            Arguments.of(13, 10, 12, 9, SNAIL, "move 1"),
+            Arguments.of(5, 6, 5, 5, FROG, "move 1"),
+            Arguments.of(17, 4, 18, 4, FROG, "move 1"),
+            Arguments.of(19, 2, 20, 1, HUMMINGBIRD, "move 1"),
+            // Test > 1 and limits
+            Arguments.of(17, 4, 19, 5, FROG, "limit"),
+            Arguments.of(15, 4, 9, 4, FOX, "limit"),
+            Arguments.of(19, 2, 12, 2, HUMMINGBIRD, "limit"),
+            Arguments.of(17, 6, 12, 6, HORSE, "limit"),
+            // Jump
+            Arguments.of(17, 4, 17, 7, FROG, "jump"),
+            Arguments.of(17, 6, 12, 1, HORSE, "jump"),
+            // Fly
+            Arguments.of(19, 2, 16, 5, HUMMINGBIRD, "fly"),
+            // UNBLOCK
+            Arguments.of(19, 9, 13, 9, FOX, "unblock"),
+            // Land on opponent
+            Arguments.of(17, 4, 16, 4, FROG, "land on opponent")
+        );
     }
 
     /**
@@ -97,8 +97,8 @@ class MasterSquareTests extends AbstractMasterTest {
     @ParameterizedTest
     @MethodSource("invalidMoveProvider")
     void invalidMove(int x1, int y1, int x2, int y2, String test) {
-        Coordinate c1 = game.makeCoordinate(x1, y1);
-        Coordinate c2 = game.makeCoordinate(x2, y2);
+        SquareCoordinate c1 = game.makeCoordinate(x1, y1);
+        SquareCoordinate c2 = game.makeCoordinate(x2, y2);
         try {
             assertFalse(test, game.move(c1, c2));
         } catch (EscapeException e) {

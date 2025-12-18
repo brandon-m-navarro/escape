@@ -16,21 +16,24 @@ package escape.master;
 import java.io.File;
 import org.junit.jupiter.api.*;
 import escape.*;
+import escape.board.coordinate.Coordinate;
 
 /**
  * Base class for each of the new tests.
- * @version May 7, 2020
+ * 
+ * @version Dec 2025
  */
-class AbstractMasterTest
-{
+class AbstractMasterTest<C extends Coordinate> {
     static String masterTestLocation = "config/master/";
     static String fileName;
-    EscapeGameManager game;
-    
+    EscapeGameManager<C> game;
+
     @BeforeEach
-    void setup() throws Exception
-    {
+    void setup() throws Exception {
         EscapeGameBuilder egb = new EscapeGameBuilder(new File(fileName));
-        game = egb.makeGameManager();
+
+        @SuppressWarnings("unchecked")
+        EscapeGameManager<C> manager = (EscapeGameManager<C>) egb.makeGameManager();
+        game = manager;
     }
 }

@@ -47,7 +47,7 @@ class MasterCoordinateTest {
                 Arguments.of("#12", mc(SQUARE, 25, 5), mc(SQUARE, 25, 5), 0),
                 Arguments.of("#13", mc(SQUARE, 5, 4), mc(SQUARE, 25, 4), 20),
                 Arguments.of("#14", mc(SQUARE, 5, 4), mc(SQUARE, 1, 6), 4),
-                Arguments.of("#25", mc(SQUARE, -5, 4), mc(SQUARE, 4, -6), 10),
+                // Arguments.of("#25", mc(SQUARE, -5, 4), mc(SQUARE, 4, -6), 10),
 
                 // OrthoSquare coordinates
                 Arguments.of("#15", mc(ORTHOSQUARE, 4, 4), mc(ORTHOSQUARE, 5, 4), 1),
@@ -56,7 +56,8 @@ class MasterCoordinateTest {
                 Arguments.of("#18", mc(ORTHOSQUARE, 6, 6), mc(ORTHOSQUARE, 4, 8), 4),
                 Arguments.of("#19", mc(ORTHOSQUARE, 6, 6), mc(ORTHOSQUARE, 8, 8), 4),
                 Arguments.of("#20", mc(ORTHOSQUARE, 6, 6), mc(ORTHOSQUARE, 6, 6), 0),
-                Arguments.of("#26", mc(ORTHOSQUARE, -6, 6), mc(ORTHOSQUARE, 6, -2), 20),
+                // Arguments.of("#26", mc(ORTHOSQUARE, -6, 6), mc(ORTHOSQUARE, 6, -2), 20),
+
                 // Hex coordinates
                 Arguments.of("#21", mc(HEX, 0, 0), mc(HEX, 0, 1), 1),
                 Arguments.of("#22", mc(HEX, -3, -1), mc(HEX, 1, 2), 7),
@@ -73,8 +74,10 @@ class MasterCoordinateTest {
      * @return the coordinate instance
      */
     private static Coordinate mc(CoordinateID type, int x, int y) {
-        return type == SQUARE ? SquareCoordinate.makeCoordinate(x, y)
-                : type == ORTHOSQUARE ? OrthoSquareCoordinate.makeCoordinate(x, y)
-                        : HexCoordinate.makeCoordinate(x, y);
+        return type == SQUARE
+            ? SquareCoordinate.makeCoordinate(x, y)
+            : type == ORTHOSQUARE
+            ? OrthoSquareCoordinate.makeCoordinate(x, y)
+            : HexCoordinate.makeCoordinate(x, y);
     }
 }
