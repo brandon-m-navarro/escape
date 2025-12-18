@@ -3,7 +3,8 @@
 // import { xmlString } from "./SampleEscapeHex.js";
 // import { xmlString } from './SquareEscapeDiagonalMovement2.js';
 // import { xmlString } from './SquareEscapeOrthogonalMovement.js';
-import { xmlString } from './BoardConfig1.js';
+// import { xmlString } from './BoardConfig1.js';
+import { xmlString } from './MasterHexGame.js';
 
 import Honeycomb from "./honeycomb.js";
 const { Grid, defineHex, rectangle } = Honeycomb;
@@ -35,7 +36,7 @@ function parseXML(xml) {
   locationElements.forEach((loc) => {
     const x = parseInt(loc.querySelector("x").textContent);
     const y = parseInt(loc.querySelector("y").textContent);
-    const locationType = loc.querySelector("locationType").textContent;
+    const locationType = loc.querySelector("locationType")?.textContent;
     const player = loc.querySelector("player")?.textContent || null;
     const pieceName = loc.querySelector("pieceName")?.textContent || null;
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+export const xmlString = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <escapeGameInitializer>
 	<coordinateType>HEX</coordinateType>
     <!-- Board items -->
@@ -106,4 +106,4 @@
     		<booleanValue>true</booleanValue>
     	</attributes>
     </pieceTypes>
-</escapeGameInitializer>
+</escapeGameInitializer>`;
