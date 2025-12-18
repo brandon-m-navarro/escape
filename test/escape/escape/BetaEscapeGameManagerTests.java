@@ -217,8 +217,9 @@ class BetaEscapeGameManagerTests {
 		);
 
 		EscapeException thrown = assertThrows(
-				EscapeException.class,
-				() -> egb.makeGameManager());
+			EscapeException.class,
+			() -> egb.makeGameManager()
+		);
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: Invalid configuration file!", thrown.getMessage());
@@ -229,10 +230,7 @@ class BetaEscapeGameManagerTests {
 		EscapeGameBuilder egb = new EscapeGameBuilder(
 			new File("config/validBetaBoards/SampleEscapeGameSquare.xml")
 		);
-		testSquareMove(egb.makeGameManager());
-	}
-
-	private <C extends Coordinate> void testSquareMove(EscapeGameManager<C> manager) {
+		SquareEscapeGameManager manager = (SquareEscapeGameManager) egb.makeGameManager();
 
 		// Trying to move piece that doesn't exist
 		assertFalse(manager.move(manager.makeCoordinate(3, 4), manager.makeCoordinate(4, 4)));
@@ -240,11 +238,15 @@ class BetaEscapeGameManagerTests {
 		// Move piece that does exist
 		assertTrue(manager.move(manager.makeCoordinate(2, 2), manager.makeCoordinate(2, 3)));
 
+		// Move piece back to original position
+		assertTrue(manager.move(manager.makeCoordinate(2, 3), manager.makeCoordinate(2, 2)));
+
 		// Confirm that a piece cannot move into a teammate
 		assertFalse(manager.move(manager.makeCoordinate(2, 2), manager.makeCoordinate(1, 1)));
 
 		// Confirm that a piece can move onto an enemies piece
 		assertTrue(manager.move(manager.makeCoordinate(2, 2), manager.makeCoordinate(2, 5)));
+		assertTrue(manager.move(manager.makeCoordinate(2, 5), manager.makeCoordinate(2, 2)));
 
 		// Confirm that the moving piece is moving to a valid coordinate
 		assertFalse(manager.move(manager.makeCoordinate(2, 2), manager.makeCoordinate(-1, -1)));
@@ -256,16 +258,18 @@ class BetaEscapeGameManagerTests {
 		EscapeGameBuilder egb = new EscapeGameBuilder(
 			new File("config/validBetaBoards/SampleEscapeGameSquare.xml")
 		);
-		testLinearMove(egb.makeGameManager());
-	}
 
-	private <C extends Coordinate> void testLinearMove(EscapeGameManager<C> manager) {
+		SquareEscapeGameManager manager = (SquareEscapeGameManager) egb.makeGameManager();
 
 		// Check some valid moves
 		assertTrue(manager.move(manager.makeCoordinate(2, 2), manager.makeCoordinate(1, 3)));
+		assertTrue(manager.move(manager.makeCoordinate(1, 3), manager.makeCoordinate(2, 2)));
+
 		assertTrue(manager.move(manager.makeCoordinate(7, 7), manager.makeCoordinate(7, 5)));
+		assertTrue(manager.move(manager.makeCoordinate(7, 5), manager.makeCoordinate(7, 7)));
+
 		assertTrue(manager.move(manager.makeCoordinate(7, 7), manager.makeCoordinate(8, 6)));
-		assertTrue(manager.move(manager.makeCoordinate(7, 7), manager.makeCoordinate(8, 7)));
+		assertTrue(manager.move(manager.makeCoordinate(8, 6), manager.makeCoordinate(7, 7)));
 
 		// Check that a piece cannot move if obstructed by a piece (No FLY, JUMP)
 		assertFalse(manager.move(manager.makeCoordinate(2, 2), manager.makeCoordinate(2, 6)));
@@ -278,24 +282,30 @@ class BetaEscapeGameManagerTests {
 
 		// Check that a piece can move if obstructed by a piece(with fly)
 		assertTrue(manager.move(manager.makeCoordinate(7, 7), manager.makeCoordinate(9, 9)));
+		assertTrue(manager.move(manager.makeCoordinate(9, 9), manager.makeCoordinate(7, 7)));
 
 		// Check that you can fly over a blocked square
 		assertTrue(manager.move(manager.makeCoordinate(7, 7), manager.makeCoordinate(4, 7)));
+		assertTrue(manager.move(manager.makeCoordinate(4, 7), manager.makeCoordinate(7, 7)));
 
 		// Check that it can fly over both a blocked square and a team piece
 		assertTrue(manager.move(manager.makeCoordinate(7, 7), manager.makeCoordinate(7, 10)));
+		assertTrue(manager.move(manager.makeCoordinate(7, 10), manager.makeCoordinate(7, 7)));
 
 		// Check that a piece can land on an enemy piece (with fly)
 		assertTrue(manager.move(manager.makeCoordinate(7, 7), manager.makeCoordinate(8, 8)));
+		assertTrue(manager.move(manager.makeCoordinate(8, 8), manager.makeCoordinate(7, 7)));
 
 		// Check that a piece cannot fly in a non linear pattern
 		assertFalse(manager.move(manager.makeCoordinate(7, 7), manager.makeCoordinate(5, 6)));
 
 		// Check that a piece can jump a single piece (not a block)
 		assertTrue(manager.move(manager.makeCoordinate(1, 1), manager.makeCoordinate(5, 1)));
+		assertTrue(manager.move(manager.makeCoordinate(5, 1), manager.makeCoordinate(1, 1)));
 
-		// Check that a piece cannot jump two pieces consecutively
+		// Check that a piece can jump two pieces consecutively
 		assertTrue(manager.move(manager.makeCoordinate(1, 1), manager.makeCoordinate(7, 1)));
+		assertTrue(manager.move(manager.makeCoordinate(7, 1), manager.makeCoordinate(1, 1)));
 
 		// Check that a piece cannot change direction and jump
 		assertFalse(manager.move(manager.makeCoordinate(1, 1), manager.makeCoordinate(2, 5)));
@@ -308,6 +318,7 @@ class BetaEscapeGameManagerTests {
 
 		// Check that a piece can move through a blocked location if it's able
 		assertTrue(manager.move(manager.makeCoordinate(7, 6), manager.makeCoordinate(7, 4)));
+		assertTrue(manager.move(manager.makeCoordinate(7, 4), manager.makeCoordinate(7, 6)));
 
 		// Check that a piece cannot move through a blocked square
 		assertFalse(manager.move(manager.makeCoordinate(7, 9), manager.makeCoordinate(7, 6)));
@@ -332,14 +343,21 @@ class BetaEscapeGameManagerTests {
 		EscapeGameBuilder egb = new EscapeGameBuilder(
 			new File("config/validBetaBoards/SquareEscapeDiagonalMovement2.xml")
 		);
-		testSquareDiagonalMove2(egb.makeGameManager());
-	}
+		SquareEscapeGameManager manager = (SquareEscapeGameManager) egb.makeGameManager();
 
-	private <C extends Coordinate> void testSquareDiagonalMove2(EscapeGameManager<C> manager) {
+		// Needs to move 8 space and traverse around pieces and BLOCKs
 		assertTrue(manager.move(manager.makeCoordinate(4, 1), manager.makeCoordinate(6, 1)));
+		assertTrue(manager.move(manager.makeCoordinate(6, 1), manager.makeCoordinate(4, 1)));
+
+		// A enemy horse is in the way
 		assertFalse(manager.move(manager.makeCoordinate(1, 3), manager.makeCoordinate(3, 5)));
+
+		// A Horse moving one space and landing on enemy horse
 		assertTrue(manager.move(manager.makeCoordinate(1, 3), manager.makeCoordinate(2, 4)));
+
+		// A Frog with UNBLOCK=TRUE should be able to make this move
 		assertTrue(manager.move(manager.makeCoordinate(4, 3), manager.makeCoordinate(6, 1)));
+		assertTrue(manager.move(manager.makeCoordinate(6, 1), manager.makeCoordinate(4, 3)));
 	}
 
 	@Test
@@ -372,12 +390,15 @@ class BetaEscapeGameManagerTests {
 		EscapeGameBuilder egb = new EscapeGameBuilder(
 			new File("config/validBetaBoards/SquareEscapeOrthogonalMovement.xml")
 		);
-		testSquareOrthoMove1(egb.makeGameManager());
-	}
-	private <C extends Coordinate> void testSquareOrthoMove1(EscapeGameManager<C> manager) {
+		SquareEscapeGameManager manager = (SquareEscapeGameManager) egb.makeGameManager();
+
 		assertTrue(manager.move(manager.makeCoordinate(3, 1), manager.makeCoordinate(5, 4)));
+		assertTrue(manager.move(manager.makeCoordinate(5, 4), manager.makeCoordinate(3, 1)));
+
 		assertFalse(manager.move(manager.makeCoordinate(3, 1), manager.makeCoordinate(6, 3)));
+
 		assertTrue(manager.move(manager.makeCoordinate(3, 1), manager.makeCoordinate(1, 2)));
+		assertTrue(manager.move(manager.makeCoordinate(1, 2), manager.makeCoordinate(3, 1)));
 	}
 
 	@Test

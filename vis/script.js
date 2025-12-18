@@ -1,6 +1,9 @@
-import { xmlString } from './SampleEscapeSquare.js';
+// import { xmlString } from './SampleEscapeSquare.js';
 // import { xmlString } from './SampleEscapeOrtho.js';
 // import { xmlString } from "./SampleEscapeHex.js";
+// import { xmlString } from './SquareEscapeDiagonalMovement2.js';
+import { xmlString } from './SquareEscapeOrthogonalMovement.js';
+
 import Honeycomb from "./honeycomb.js";
 const { Grid, defineHex, rectangle } = Honeycomb;
 let isHex;

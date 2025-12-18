@@ -147,11 +147,29 @@ public abstract class TwoDimensionalEscapeGameManager implements EscapeGameManag
 	 * @return true if the piece can theoretically move
 	 */
 	protected boolean isBasicMove(TwoDimensionalCoordinate from, TwoDimensionalCoordinate to) {
-		if (doesPieceExistAt(from) && (from != null && to != null) && !board.isBlocked(to)) {
-			if (doesPieceExistAt(to) && (from != null && to != null) && board.isValidCoordinate(to))
-				return !isSameTeam(getPieceAt(from), getPieceAt(to));
-			else
+
+		boolean isAPieceMoving = doesPieceExistAt(from);
+		boolean doesMoveEndOnPiece = doesPieceExistAt(to);
+		boolean isNotMovingToBlockedCoord = !board.isBlocked(to);
+		boolean isMoveOnBoard = board.isValidCoordinate(to) && board.isValidCoordinate(from);
+System.out.println(isAPieceMoving); 
+System.out.println(doesMoveEndOnPiece); 
+System.out.println(isNotMovingToBlockedCoord); 
+System.out.println(isMoveOnBoard); 
+
+
+		if (isAPieceMoving && isMoveOnBoard && isNotMovingToBlockedCoord) {
+
+			// If a Piece exists on the ending Coord, the move is only valid if
+			// that Piece is on the other team. All pieces have a default value of 1
+			if (doesMoveEndOnPiece) {
+				boolean arePiecesOnDifferentTeams = !isSameTeam(getPieceAt(from), getPieceAt(to));
+
+				return arePiecesOnDifferentTeams;
+			}
+			else {
 				return board.isValidCoordinate(to);
+			}
 		} else
 			return false;
 	}

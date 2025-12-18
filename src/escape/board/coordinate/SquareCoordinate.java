@@ -28,9 +28,9 @@ public class SquareCoordinate extends TwoDimensionalCoordinate {
 	}
 
 	public static SquareCoordinate makeCoordinate(int x, int y) {
-		if (x<0 || y < 0) {
-			throw new EscapeException("Square Coordinates must be positive!");
-		}
+		// if (x<0 || y < 0) {
+		// 	throw new EscapeException("Square Coordinates must be positive!");
+		// }
 		return new SquareCoordinate(x, y);
 	}
 

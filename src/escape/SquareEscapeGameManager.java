@@ -39,7 +39,8 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager {
 	public boolean move(Coordinate from, Coordinate to) {
 		// Validate coordinate types first
 		if (!(from instanceof SquareCoordinate) || !(to instanceof SquareCoordinate)) {
-			throw new IllegalArgumentException("SquareEscapeGameManager only accepts SquareCoordinate");
+			return false;
+			// throw new IllegalArgumentException("SquareEscapeGameManager only accepts SquareCoordinate");
 		}
 
 		SquareCoordinate squareFrom = (SquareCoordinate) from;
@@ -69,6 +70,8 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager {
 					return false;
 			}
 		}
+
+		// If the move is valid, move the Piece
 		if (validMove) {
 			if (board.isExit(squareTo)) {
 				board.putPieceAt(null, squareFrom);
@@ -96,6 +99,7 @@ public class SquareEscapeGameManager extends TwoDimensionalEscapeGameManager {
 		} else if (from.distanceTo(to) > movementRules.getMaxDistance()) {
 			return false;
 		}
+
 		Vector<SquareCoordinate> coordVector = makeLinearCoordinateVector(from, to);
 		for (SquareCoordinate coord : coordVector) {
 			if (coord == coordVector.lastElement()) {
