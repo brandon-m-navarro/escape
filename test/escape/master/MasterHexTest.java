@@ -25,8 +25,6 @@ import escape.exception.EscapeException;
 import escape.piece.PieceName;
 
 /**
- * Description
- *
  * @version Dec 2025
  */
 class MasterHexTest extends AbstractMasterTest<HexCoordinate> {
@@ -110,7 +108,7 @@ class MasterHexTest extends AbstractMasterTest<HexCoordinate> {
                 Arguments.of(2, 3, 3, 3, "land on block"),
                 Arguments.of(-1, 0, -5, 4, "> limit"));
                 // Arguments.of(-1, 0, -1, -3, "attempt double jump"),
-                // Arguments.of(-1, -1, -4, -1, "attempt to go over exit"),
+                // Arguments.of(-1, -1, -4, -1, "attempt to go over exit"));
     }
 
     @Test

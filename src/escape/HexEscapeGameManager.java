@@ -125,8 +125,12 @@ public class HexEscapeGameManager extends TwoDimensionalEscapeGameManager {
 	private boolean canPassThrough(HexCoordinate coord, MovementRules movementRules,
 								HexCoordinate from, HexCoordinate destination) {
 		if (getPieceAt(coord) == null) {
-			// Empty coordinate - check if blocked
-			return !board.isBlocked(coord) || movementRules.isCanTravelThroughBlocked();
+			// Empty coordinate - check if blocked or exist
+			if (!board.isExit(coord)) {
+				return !board.isBlocked(coord) || movementRules.isCanTravelThroughBlocked();
+			} else {
+				return false;
+			}
 		} else {
 			// Occupied coordinate - check if can jump
 			return movementRules.isCanJump() && 

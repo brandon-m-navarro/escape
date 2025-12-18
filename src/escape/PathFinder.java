@@ -22,10 +22,9 @@ import escape.piece.*;
  * This class contains the logic needed to perform a BFS search of
  * a grid (represented by a map of Coordinates). A PathFinder is consisted
  * of 0..n PathFinderNode's (PFNs) as well as all data structures needed to
- * build
- * a path from one coordinate to the target.
+ * build a path from one coordinate to the target.
  * 
- * @version May 10, 2020
+ * @version Dec 2025
  */
 public class PathFinder {
 	public static class PathFinderNode {
@@ -204,11 +203,9 @@ public class PathFinder {
 	 * @param from the root coordinate for the search
 	 * @param to   the coordinate that is attempted to reach
 	 */
-	public void searchOmni(TwoDimensionalCoordinate from, TwoDimensionalCoordinate to,
-			MovementRules movementRules) {
+	public void searchOmni(TwoDimensionalCoordinate from, TwoDimensionalCoordinate to, MovementRules movementRules) {
 		this.setPathNode(new PathFinderNode(to));
 		visited.put(root.getCoord(), true);
-
 		this.getQueue().add(this.getRoot());
 
 		while (!this.getQueue().isEmpty()) {
