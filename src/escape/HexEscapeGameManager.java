@@ -81,54 +81,68 @@ public class HexEscapeGameManager extends TwoDimensionalEscapeGameManager {
 	 * @return true if the piece is able to make the move
 	 */
 	private boolean canMoveLinear(HexCoordinate from, HexCoordinate to,
-			MovementRules movementRules) {
+								MovementRules movementRules) {
+		// Early exit: basic constraints
 		if (!isLinearMovement(from, to)) {
 			return false;
 		}
-		else if (from.distanceTo(to) > movementRules.getMaxDistance()) {
+		if (from.distanceTo(to) > movementRules.getMaxDistance()) {
 			return false;
 		}
-		Vector<HexCoordinate> coordVector = createLinearCoordinateVector(from, to);
-		for (HexCoordinate coord : coordVector) {
-			if (coord == coordVector.lastElement()) {
-				if (doesPieceExistAt(coord)) {
-					if (!isSameTeam(getPieceAt(from), getPieceAt(to))) {
-						return true; // Need to remove piece from board
-					}
-					else {
-						return false;
-					}
-				} else if (board.isBlocked(coord)) {
-					return false;
-				}
-				else {
-					return true;
-				}
-			} else if (movementRules.isCanFly()) {
-				return true;
-			}
-			else if (getPieceAt(coord) == null && !board.isBlocked(coord)) {
-				continue;
-			}
-			else if (getPieceAt(coord) == null && board.isBlocked(coord)) {
-				if (movementRules.isCanTravelThroughBlocked()) {
-					continue;
-				}
-				else {
-					return false; // BLOCKED
-				}
-			} else if (doesPieceExistAt(coord) && movementRules.isCanJump()) {
-				if (canMakeValidLinearJump(coord, to, getPieceAt(from))) {
-					continue;
-				}
-				else {
-					return false;
-				}
-			} else {
+		
+		List<HexCoordinate> path = createLinearCoordinateVector(from, to);
+		return canTraversePath(path, movementRules, from);
+	}
+
+	/**
+	 * Determines if a piece can traverse the entire path to destination
+	 */
+	private boolean canTraversePath(List<HexCoordinate> path, 
+								MovementRules movementRules,
+								HexCoordinate from) {
+		// Flying pieces ignore intermediate path obstacles
+		if (movementRules.isCanFly()) {
+			return isValidDestination(path.get(path.size() - 1), from);
+		}
+		
+		HexCoordinate destination = path.get(path.size() - 1);
+		List<HexCoordinate> intermediatePath = path.subList(0, path.size() - 1);
+		
+		// Check intermediate coordinates
+		for (HexCoordinate coord : intermediatePath) {
+			if (!canPassThrough(coord, movementRules, from, destination)) {
 				return false;
 			}
 		}
-		return true;
+		
+		// Check destination
+		return isValidDestination(destination, from);
+	}
+
+	/**
+	 * Checks if a piece can pass through an intermediate coordinate
+	 */
+	private boolean canPassThrough(HexCoordinate coord, MovementRules movementRules,
+								HexCoordinate from, HexCoordinate destination) {
+		if (getPieceAt(coord) == null) {
+			// Empty coordinate - check if blocked
+			return !board.isBlocked(coord) || movementRules.isCanTravelThroughBlocked();
+		} else {
+			// Occupied coordinate - check if can jump
+			return movementRules.isCanJump() && 
+				canMakeValidLinearJump(coord, destination, getPieceAt(from));
+		}
+	}
+
+	/**
+	 * Checks if destination coordinate is valid for landing
+	 */
+	private boolean isValidDestination(HexCoordinate destination, HexCoordinate from) {
+		if (doesPieceExistAt(destination)) {
+			return !isSameTeam(getPieceAt(from), getPieceAt(destination));
+		} else {
+			return !board.isBlocked(destination);
+		}
 	}
 
 	/**
