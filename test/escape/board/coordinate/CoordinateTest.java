@@ -19,22 +19,20 @@ import org.junit.jupiter.params.provider.*;
 
 /**
  * Tests for various coordinates
+ * 
  * @version Mar 28, 2020
  */
-class CoordinateTest
-{
-    
+class CoordinateTest {
+
 	@ParameterizedTest
 	@MethodSource("squareDistanceProvider")
-	void squareDistanceTests(int expected, int x1, int y1, int x2, int y2) 
-	{
+	void squareDistanceTests(int expected, int x1, int y1, int x2, int y2) {
 		Coordinate c1 = SquareCoordinate.makeCoordinate(x1, y1);
 		Coordinate c2 = SquareCoordinate.makeCoordinate(x2, y2);
 		assertEquals(expected, c1.distanceTo(c2));
 	}
-	
-	static Stream<Arguments> squareDistanceProvider()
-	{
+
+	static Stream<Arguments> squareDistanceProvider() {
 		return Stream.of(
 				Arguments.of(2, 3, 4, 3, 6),
 				Arguments.of(1, 3, 6, 3, 5),
@@ -53,19 +51,16 @@ class CoordinateTest
 				Arguments.of(2, 2, 5, 4, 4),
 				Arguments.of(3, 4, 7, 2, 4));
 	}
-	
-	 
+
 	@ParameterizedTest
 	@MethodSource("orthogonalDistanceProvider")
-	void orthogonalDistanceTests(int expected, int x1, int y1, int x2, int y2) 
-	{
+	void orthogonalDistanceTests(int expected, int x1, int y1, int x2, int y2) {
 		Coordinate c1 = OrthoSquareCoordinate.makeCoordinate(x1, y1);
 		Coordinate c2 = OrthoSquareCoordinate.makeCoordinate(x2, y2);
 		assertEquals(expected, c1.distanceTo(c2));
 	}
-	
-	static Stream<Arguments> orthogonalDistanceProvider()
-	{
+
+	static Stream<Arguments> orthogonalDistanceProvider() {
 		return Stream.of(
 				Arguments.of(2, 3, 4, 3, 6),
 				Arguments.of(1, 3, 6, 3, 5),
@@ -79,21 +74,18 @@ class CoordinateTest
 				Arguments.of(4, 4, 4, 1, 5),
 				Arguments.of(6, 4, 6, 6, 2),
 				Arguments.of(6, 6, 2, 4, 6),
-				Arguments.of(4, 5, 6, 4, 3)
-				);
+				Arguments.of(4, 5, 6, 4, 3));
 	}
-	
+
 	@ParameterizedTest
 	@MethodSource("hexDistanceProvider")
-	void hexDistanceTests(int expected, int x1, int y1, int x2, int y2) 
-	{
+	void hexDistanceTests(int expected, int x1, int y1, int x2, int y2) {
 		Coordinate c1 = HexCoordinate.makeCoordinate(x1, y1);
 		Coordinate c2 = HexCoordinate.makeCoordinate(x2, y2);
 		assertEquals(expected, c1.distanceTo(c2));
 	}
-	
-	static Stream<Arguments> hexDistanceProvider()
-	{
+
+	static Stream<Arguments> hexDistanceProvider() {
 		return Stream.of(
 				Arguments.of(1, 0, 0, -1, 1),
 				Arguments.of(1, 0, 0, -1, 0),
@@ -117,7 +109,6 @@ class CoordinateTest
 				Arguments.of(3, 0, -3, 0, 0),
 				Arguments.of(3, 0, 0, 0, -3),
 				Arguments.of(4, -2, -2, 0, 0),
-				Arguments.of(5, -1, -1, 0, 3)
-				);
+				Arguments.of(5, -1, -1, 0, 3));
 	}
 }

@@ -56,8 +56,7 @@ public class SquareCoordinate extends TwoDimensionalCoordinate {
 
 	/**
 	 * This is a helper method that simply calculates the distance between two
-	 * points
-	 * that are on the same axis
+	 * points that are on the same axis
 	 * 
 	 * @param from the single x or y component
 	 * @return the absolute value between the two ints
