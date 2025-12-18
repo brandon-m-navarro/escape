@@ -16,34 +16,31 @@ import java.util.Objects;
 
 /**
  * The TwoDimensionalCoordinate class is an abstract class
- * that holds all the common functionality of each Coordinate 
+ * that holds all the common functionality of each Coordinate
  * type ( @see escape.board.coordinate.CoordinateId )
+ * 
  * @version Apr 18, 2020
  */
-public abstract class TwoDimensionalCoordinate implements Coordinate
-{
-    protected final int x;
-    protected final int y;
- 
-	public TwoDimensionalCoordinate(int x, int y) 
-	{
+public abstract class TwoDimensionalCoordinate implements Coordinate {
+	protected final int x;
+	protected final int y;
+
+	public TwoDimensionalCoordinate(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	/**
 	 * @return the x
 	 */
-	public int getX()
-	{
+	public int getX() {
 		return x;
 	}
 
 	/**
 	 * @return the y
 	 */
-	public int getY()
-	{
+	public int getY() {
 		return y;
 	}
 
@@ -51,8 +48,7 @@ public abstract class TwoDimensionalCoordinate implements Coordinate
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		return Objects.hash(x, y);
 	}
 }

@@ -12,20 +12,26 @@
 package escape.board.coordinate;
 
 /**
- * Description
+ * SQUARE, HEX, ORTHOSQUARE
  * @version Mar 30, 2020
  */
-public enum CoordinateID
-{
-	// Standard squares where distance is measure as shortest combination of
-	// orthogonal and diagonal. Examples: (1,1)->(2,2) is distance 1,
-	// (1,2)->(3,5) is distance 3
-	SQUARE, 
-	// Standard hex coordinates
-	// The distance from (0,0) -> (-1, 2) is 2, (-1, 2) -> (2, -2) is 4.
-	HEX, 
-	// Squares where distance is calculates by the shortest combination of
-	// orthogonal paths. Examples: (1,1)->(2,2) is distance 2,
-	// (1,2)->(3,5) is distance 5
+public enum CoordinateID {
+	/**
+	 * SQUARE - Standard squares where distance is measure as shortest combination of
+	 * orthogonal and diagonal. Examples: (1,1)->(2,2) is distance 1,
+	 * (1,2)->(3,5) is distance 3
+	 */
+	SQUARE,
+
+	/**
+	 * HEX - Standard hex coordinates. The distance from (0,0) -> (-1, 2) is 2,
+	 * (-1, 2) -> (2, -2) is 4.
+	 */
+	HEX,
+
+	/**
+	 * ORTHOSQUARE - Squares where distance is calculates by the shortest combination of
+	 * orthogonal paths. Examples: (1,1)->(2,2) == distance 2, (1,2)->(3,5) == distance 5
+	 */
 	ORTHOSQUARE;
 }

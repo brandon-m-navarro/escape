@@ -41,12 +41,39 @@ public abstract class TwoDimensionalEscapeGameManager implements EscapeGameManag
 	 */
 	@Override
 	public EscapePiece getPieceAt(Coordinate coord) {
+		validateCoordinate(coord);
 		TwoDimensionalCoordinate c = (TwoDimensionalCoordinate) coord;
-		if (coord != null
-				&& board.isValidCoordinate(CoordinateFactory.makeCoordinate(c.getX(), c.getY(), board.getCoordType())))
+		boolean isValidCoord = board.isValidCoordinate(
+			CoordinateFactory.makeCoordinate(
+				c.getX(),
+				c.getY(),
+				board.getCoordType()
+			)
+		);
+
+		if (isValidCoord) {
 			return board.getPieceAt(c);
-		else
+		} else {
 			throw new EscapeException("ERROR: invalid coordinate!");
+		}
+	}
+
+	/**
+	 * Ensure the specified coordinate is not NULL and is a TwoDimensionalCoordinate
+	 * @param coordinate
+	 * @throws EscapeException - If NULL or not instance of TwoDimensionalCoordinate
+	 */
+	private void validateCoordinate(Coordinate coordinate) {
+		if (coordinate == null) {
+			// throw new EscapeException("ERROR: Coordinate cannot be null!");
+			throw new EscapeException("ERROR: invalid coordinate!"); // A Coordinate is null if it cannot be created, need to improve error handling to be more specific (eg: Coordinate does not exist on board, etc)
+		}
+		if (!(coordinate instanceof TwoDimensionalCoordinate)) {
+			throw new EscapeException(
+				"ERROR: Getting a piece from a TwoDimensionalBoard requires " +
+				"the use of a TwoDimensionalCoordinate!"
+			);
+		}
 	}
 
 	/**
@@ -58,10 +85,12 @@ public abstract class TwoDimensionalEscapeGameManager implements EscapeGameManag
 	 * @return the coordinate or null if the coordinate cannot be
 	 */
 	public Coordinate makeCoordinate(int x, int y) {
-		if (board.isValidCoordinate(CoordinateFactory.makeCoordinate(x, y, board.getCoordType())))
+		if (board.isValidCoordinate(CoordinateFactory.makeCoordinate(x, y, board.getCoordType()))) {
 			return CoordinateFactory.makeCoordinate(x, y, board.getCoordType());
-		else
+		}
+		else {
 			return null;
+		}
 	}
 
 	/**

@@ -18,95 +18,96 @@ import escape.exception.EscapeException;
 import escape.piece.EscapePiece;
 
 /**
- * This class is to hold the commonattributes and functionality of any 
- * board implementation. Each possible board will have a map of spots, 
+ * This class is to hold the common attributes and functionality of any
+ * board implementation. Each possible board will have a map of spots,
  * and pieces. Spots represent the location type for each valid coordinate
  * on the board, while pieces represent all the pieces on the board.
  * Each class also shares a xMax and a yMax that represents the boundries
  * of the board. A board that is infinite will have an xMax and yMax of 0.
+ * 
  * @version Apr 19, 2020
  */
-public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordinate>
-{
+public abstract class TwoDimensionalBoard implements Board<TwoDimensionalCoordinate> {
 	Map<TwoDimensionalCoordinate, LocationType> spots;
 	Map<TwoDimensionalCoordinate, EscapePiece> pieces;
 	protected final int xMax, yMax;
-	
-	public TwoDimensionalBoard(int xMax, int yMax)
-	{
+
+	public TwoDimensionalBoard(int xMax, int yMax) {
 		this.xMax = xMax;
 		this.yMax = yMax;
 		pieces = new HashMap<TwoDimensionalCoordinate, EscapePiece>();
 		spots = new HashMap<TwoDimensionalCoordinate, LocationType>();
 	}
-	
-	public void setLocationType(TwoDimensionalCoordinate c, LocationType lt)
-	{
+
+	public void setLocationType(TwoDimensionalCoordinate c, LocationType lt) {
 		spots.put(c, lt);
 	}
-	
-	
+
 	/*
 	 * @see escape.board.Board#getPieceAt(escape.board.coordinate.Coordinate)
 	 */
 	@Override
-	public EscapePiece getPieceAt(TwoDimensionalCoordinate from)
-	{
-		if (pieces.containsKey(from))
+	public EscapePiece getPieceAt(TwoDimensionalCoordinate from) {
+		if (pieces.containsKey(from)) {
 			return pieces.get(from);
-		else
+		}
+		else {
 			return null;
-	}
-	
-	/**
-	 * This method checks whether the given coordinate was initialized
-	 * with a LocationType of BLOCKED
-	 * @param coord the Coordinate that is being checked
-	 * @return true if the LocationType of the Coordinate is BLOCKED
-	 */
-	public boolean isBlocked(TwoDimensionalCoordinate coord)
-	{
-		return spots.get(coord) == LocationType.BLOCK;
-	}
-	
-	/**
-	 * This method checks whether the given coordinate was initialized
-	 * with a LocationType of EXIT
-	 * @param coord the Coordinate that is being checked
-	 * @return true if the LocationType of the Coordinate is EXIT
-	 */
-	public boolean isExit(TwoDimensionalCoordinate coord)
-	{
-		return spots.get(coord) == LocationType.EXIT;
-	}
-	
-	/**
-	 * Check that the given coordinate is on the board
-	 * @param coord the coordinate being checked
-	 * @return true if the coordinate lies on the board
-	 */
-	public boolean isValidCoordinate(TwoDimensionalCoordinate coord)
-	{
-		return ((coord.getX() <= xMax && coord.getY() <= yMax) && (coord.getX() > 0 && coord.getY() > 0));
+		}
 	}
 
 	/**
-	 * This method moves a piece, replacing any piece at that coordinate with the moving
+	 * This method checks whether the given coordinate was initialized
+	 * with a LocationType of BLOCKED
+	 * 
+	 * @param coord the Coordinate that is being checked
+	 * @return true if the LocationType of the Coordinate is BLOCKED
+	 */
+	public boolean isBlocked(TwoDimensionalCoordinate coord) {
+		return spots.get(coord) == LocationType.BLOCK;
+	}
+
+	/**
+	 * This method checks whether the given coordinate was initialized
+	 * with a LocationType of EXIT
+	 * 
+	 * @param coord the Coordinate that is being checked
+	 * @return true if the LocationType of the Coordinate is EXIT
+	 */
+	public boolean isExit(TwoDimensionalCoordinate coord) {
+		return spots.get(coord) == LocationType.EXIT;
+	}
+
+	/**
+	 * Check that the given coordinate is on the board
+	 * 
+	 * @param coord the coordinate being checked
+	 * @return true if the coordinate lies on the board
+	 */
+	public boolean isValidCoordinate(TwoDimensionalCoordinate coord) {
+		return (
+			(coord != null) &&
+			(coord.getX() <= xMax && coord.getY() <= yMax) &&
+			(coord.getX() > 0 && coord.getY() > 0)
+		);
+	}
+
+	/**
+	 * This method moves a piece, replacing any piece at that coordinate with the
+	 * moving
 	 * piece. This method DOES NOT check whether or not the move itself is valid!
+	 * 
 	 * @throws EscapeException if the from coordinate doesn't contain an EscapePiece
 	 * @param from the coordinate the EscapePiece is moving from
-	 * @param to the coordinate that the EscapePiece will move to
+	 * @param to   the coordinate that the EscapePiece will move to
 	 */
-	public void movePiece(TwoDimensionalCoordinate from, TwoDimensionalCoordinate to)
-	{
+	public void movePiece(TwoDimensionalCoordinate from, TwoDimensionalCoordinate to) {
 		EscapePiece piece = getPieceAt(from);
-		if (piece != null)
-		{
+		if (piece != null) {
 			piece = getPieceAt(from);
 			pieces.put(from, null);
 			pieces.put(to, piece);
-		}
-		else
+		} else
 			throw new EscapeException("Error: could not move piece!");
 	}
 }

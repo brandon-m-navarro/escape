@@ -11,29 +11,33 @@
  *******************************************************************************/
 
 package escape.board.coordinate;
+import escape.exception.EscapeException;
 
 /**
- * Description
- * @version May 13, 2020
+ * Enum factory for Coordinates.
+ * @version Dec 2025
  */
-public class CoordinateFactory
-{
+public class CoordinateFactory {
 
-	public CoordinateFactory()
-	{}
-	
-	public static TwoDimensionalCoordinate makeCoordinate(int x, int y, CoordinateID id)
-	{
-		switch (id)
-		{
+	public CoordinateFactory() {}
+
+	/**
+	 * TwoDimensionalCoordinates have an x & y value, and must have a valid
+	 * CoordinateID.
+	 * @param x - horizontal axis, with the left column being 0
+	 * @param y - vertical axis, with the bottom row being 0
+	 * @param id - SQUARE, HEX, or ORTHOSQUARE
+	 * @return
+	 */
+	public static TwoDimensionalCoordinate makeCoordinate(int x, int y, CoordinateID id) {
+		switch (id) {
 			case SQUARE:
 				return new SquareCoordinate(x, y);
 			case ORTHOSQUARE:
 				return new OrthoSquareCoordinate(x, y);
 			case HEX:
-				return new HexCoordinate(x, y);	
+				return new HexCoordinate(x, y);
 		}
-		return null;
+		throw new EscapeException("ERROR: Invalid CoordinateID - " + id);
 	}
-
 }
