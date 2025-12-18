@@ -49,7 +49,7 @@ public class BoardBuilder {
 	 * XML configuration file.
 	 * @return a Board with the type specified in the XML config file
 	 */
-	public Board makeBoard() {
+	public Board<? extends Coordinate> makeBoard() {
 		TwoDimensionalBoard board;
 		switch (bi.getCoordinateId()) {
 			case SQUARE:
