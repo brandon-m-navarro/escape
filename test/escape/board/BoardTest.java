@@ -28,11 +28,13 @@ class BoardTest {
 
 	@Test
 	void equalsTwoDimensionalBoard() throws Exception {
-		BoardBuilder bb1 = new BoardBuilder(new File("config/board/BoardConfig1.xml"));
-		BoardBuilder bb2 = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
-
+		BoardBuilder bb1 = new BoardBuilder(new File(
+			"config/board/BoardConfig1.xml")
+		);
+		BoardBuilder bb2 = new BoardBuilder(new File(
+			"config/board/BoardConfig2.xml")
+		);
 		SquareBoard b1 = (SquareBoard) bb1.makeBoard();
-
 		OrthoSquareBoard b2 = (OrthoSquareBoard) bb2.makeBoard();
 
 		assertFalse(b1.equals("Should Fail"));
@@ -51,14 +53,16 @@ class BoardTest {
 
 	@Test
 	void getInitializedPieceSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig1.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig1.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
-		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
-
+		SquareCoordinate sc =
+			(SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
 		SquareBoard b = (SquareBoard) bb.makeBoard();
-
 		assertNotNull(b.getPieceAt(sc));
+
 		EscapePiece ep = b.getPieceAt(sc);
 		assertEquals(ep.getName(), PieceName.HORSE);
 	}
@@ -70,8 +74,11 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
-		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
+
+		SquareCoordinate sc =
+			(SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
 
 		SquareBoard b = (SquareBoard) bb.makeBoard();
 
@@ -81,11 +88,16 @@ class BoardTest {
 
 	@Test
 	void putPieceAtOutOfBoundsSquareBoard1() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig1.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig1.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
-		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(10, 10);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
+
+		SquareCoordinate sc =
+			(SquareCoordinate) SquareCoordinate.makeCoordinate(10, 10);
 
 		SquareBoard b = (SquareBoard) bb.makeBoard();
 
@@ -96,38 +108,49 @@ class BoardTest {
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
-		// assertions on the state of a domain object after the exception has been
-		// thrown
+
+		// assertions on the state of a domain object after the exception has
+		// been thrown
 		assertNull(b.getPieceAt(sc));
 	}
 
 	@Test
 	void putPieceAtOutOfBoundsSquareBoard2() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig4.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig4.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
-		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(10, 10);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
+
+		SquareCoordinate sc =
+			(SquareCoordinate) SquareCoordinate.makeCoordinate(10, 10);
 
 		SquareBoard b = (SquareBoard) bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
-				EscapeException.class,
-				() -> b.putPieceAt(ep, sc));
+			EscapeException.class,
+			() -> b.putPieceAt(ep, sc)
+		);
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
-		// assertions on the state of a domain object after the exception has been
-		// thrown
+
+		// assertions on the state of a domain object after the exception has
+		// been thrown
 		assertNull(b.getPieceAt(sc));
 	}
 
 	@Test
 	void getPieceAtOnLocationTypeSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig1.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig1.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
-		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(3, 5);
+		SquareCoordinate sc =
+			(SquareCoordinate) SquareCoordinate.makeCoordinate(3, 5);
 
 		SquareBoard b = (SquareBoard) bb.makeBoard();
 		assertNull(b.getPieceAt(sc));
@@ -140,8 +163,11 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
-		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(3, 5);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
+
+		SquareCoordinate sc =
+			(SquareCoordinate) SquareCoordinate.makeCoordinate(3, 5);
 
 		SquareBoard b = (SquareBoard) bb.makeBoard();
 
@@ -152,20 +178,27 @@ class BoardTest {
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
-		// assertions on the state of a domain object after the exception has been
-		// thrown
+
+		// assertions on the state of a domain object after the exception has
+		// been thrown
 		assertNull(b.getPieceAt(sc));
 	}
 
 	@Test
 	void putPieceOnAnotherPieceSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig1.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig1.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
-		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
+
+		SquareCoordinate sc =
+			(SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
 
 		SquareBoard b = (SquareBoard) bb.makeBoard();
+
 		b.putPieceAt(ep, sc);
 		assertEquals(ep.getPlayer(), b.getPieceAt(sc).getPlayer());
 	}
@@ -177,9 +210,11 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
+		SquareCoordinate sc =
+			(SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
 
 		SquareBoard b = (SquareBoard) bb.makeBoard();
+
 		b.putPieceAt(null, sc);
 		assertNull(b.getPieceAt(sc));
 	}
@@ -191,10 +226,14 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
-		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(4, 5);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
+
+		SquareCoordinate sc =
+			(SquareCoordinate) SquareCoordinate.makeCoordinate(4, 5);
 
 		SquareBoard b = (SquareBoard) bb.makeBoard();
+
 		b.putPieceAt(ep, sc);
 		assertNull(b.getPieceAt(sc));
 	}
@@ -215,7 +254,9 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
+		OrthoSquareCoordinate sc =
+			(OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
+
 		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
 		assertNotNull(b.getPieceAt(sc));
@@ -230,9 +271,14 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
-		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
-		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
+
+		OrthoSquareCoordinate sc =
+			(OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
+
+		OrthoSquareBoard b =
+			(OrthoSquareBoard) bb.makeBoard();
 
 		b.putPieceAt(ep, sc);
 		assertEquals(ep, b.getPieceAt(sc));
@@ -240,11 +286,17 @@ class BoardTest {
 
 	@Test
 	void putPieceAtOutOfBoundsOrthoSquareBoard1() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig2.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
-		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(10, 10);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
+
+		OrthoSquareCoordinate sc =
+			(OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(10, 10);
+
 		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
@@ -254,18 +306,25 @@ class BoardTest {
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
-		// assertions on the state of a domain object after the exception has been
-		// thrown
+
+		// assertions on the state of a domain object after the exception has
+		// been thrown
 		assertNull(b.getPieceAt(sc));
 	}
 
 	@Test
 	void putPieceAtOutOfBoundsOrthoSquareBoard2() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig2.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
-		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(10, 10);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
+
+		OrthoSquareCoordinate sc =
+			(OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(10, 10);
+
 		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
@@ -275,19 +334,24 @@ class BoardTest {
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
-		// assertions on the state of a domain object after the exception has been
-		// thrown
+
+		// assertions on the state of a domain object after the exception has
+		// been thrown
 		assertNull(b.getPieceAt(sc));
 	}
 
 	@Test
 	void getPieceAtOnLocationTypeOrthoSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig2.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
-		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(3, 5);
+		OrthoSquareCoordinate sc =
+			(OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(3, 5);
 
 		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
+
 		assertNull(b.getPieceAt(sc));
 	}
 
@@ -298,8 +362,11 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
-		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(3, 5);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
+
+		OrthoSquareCoordinate sc =
+			(OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(3, 5);
 
 		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
@@ -310,18 +377,24 @@ class BoardTest {
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
-		// assertions on the state of a domain object after the exception has been
-		// thrown
+
+		// assertions on the state of a domain object after the exception has
+		// been thrown
 		assertNull(b.getPieceAt(sc));
 	}
 
 	@Test
 	void putPieceOnAnotherPieceOrthoSquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/BoardConfig2.xml")
+		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
-		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
+
+		OrthoSquareCoordinate sc =
+			(OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
 
 		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
@@ -336,7 +409,9 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
+		OrthoSquareCoordinate sc =
+			(OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
+
 		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
 		b.putPieceAt(null, sc);
@@ -350,8 +425,11 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
-		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(3, 6);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
+
+		OrthoSquareCoordinate sc =
+			(OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(3, 6);
 
 		OrthoSquareBoard b = (OrthoSquareBoard) bb.makeBoard();
 
@@ -390,8 +468,11 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
-		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
+
+		HexCoordinate sc =
+			(HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
 
 		HexBoard b = (HexBoard) bb.makeBoard();
 
@@ -406,7 +487,8 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(3, 5);
+		HexCoordinate sc =
+			(HexCoordinate) HexCoordinate.makeCoordinate(3, 5);
 
 		HexBoard b = (HexBoard) bb.makeBoard();
 		assertNull(b.getPieceAt(sc));
@@ -419,8 +501,11 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
-		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(3, 5);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
+
+		HexCoordinate sc =
+			(HexCoordinate) HexCoordinate.makeCoordinate(3, 5);
 
 		HexBoard b = (HexBoard) bb.makeBoard();
 
@@ -431,8 +516,9 @@ class BoardTest {
 
 		// assertions on the thrown exception
 		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
-		// assertions on the state of a domain object after the exception has been
-		// thrown
+
+		// assertions on the state of a domain object after the exception has
+		// been thrown
 		assertNull(b.getPieceAt(sc));
 	}
 
@@ -443,8 +529,11 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
-		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
+
+		HexCoordinate sc =
+			(HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
 
 		HexBoard b = (HexBoard) bb.makeBoard();
 
@@ -459,7 +548,8 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
+		HexCoordinate sc =
+			(HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
 
 		HexBoard b = (HexBoard) bb.makeBoard();
 
@@ -474,8 +564,11 @@ class BoardTest {
 		);
 		assertNotNull(bb.makeBoard());
 
-		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
-		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(3, 6);
+		EscapePiece ep =
+			EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
+
+		HexCoordinate sc =
+			(HexCoordinate) HexCoordinate.makeCoordinate(3, 6);
 
 		HexBoard b = (HexBoard) bb.makeBoard();
 		

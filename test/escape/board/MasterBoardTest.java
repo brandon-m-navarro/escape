@@ -36,7 +36,9 @@ class MasterBoardTest {
 	 */
 	@Test
 	void emptySquareBoard() throws Exception {
-		BoardBuilder bb = new BoardBuilder(new File("config/board/EmptySquareBoard.xml"));
+		BoardBuilder bb = new BoardBuilder(new File(
+			"config/board/EmptySquareBoard.xml")
+		);
 		SquareBoard board = (SquareBoard) bb.makeBoard();
 
 		assertNotNull(board);
