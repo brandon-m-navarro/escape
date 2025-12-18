@@ -21,9 +21,9 @@ import escape.exception.EscapeException;
 import escape.piece.*;
 
 /**
- * Description
- * 
- * @version Apr 2, 2020
+ * Testing Board creation and initialization methods. @SuppressWarnings("unchecked") is
+ * used for all makeBoard() calls as the BoardConfig xml files specify the type.
+ * @version Dec 2025
  */
 class BoardTest {
 
@@ -31,7 +31,11 @@ class BoardTest {
 	void equalsTwoDimensionalBoard() throws Exception {
 		BoardBuilder bb1 = new BoardBuilder(new File("config/board/BoardConfig1.xml"));
 		BoardBuilder bb2 = new BoardBuilder(new File("config/board/BoardConfig2.xml"));
+
+		@SuppressWarnings("unchecked")
 		Board<SquareCoordinate> b1 = bb1.makeBoard();
+
+		@SuppressWarnings("unchecked")
 		Board<OrthoSquareCoordinate> b2 = bb2.makeBoard();
 
 		assertFalse(b1.equals("Should Fail"));
@@ -52,7 +56,10 @@ class BoardTest {
 		assertNotNull(bb.makeBoard());
 
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
+
+		@SuppressWarnings("unchecked")
 		Board<SquareCoordinate> b = bb.makeBoard();
+
 		assertNotNull(b.getPieceAt(sc));
 		EscapePiece ep = b.getPieceAt(sc);
 		assertEquals(ep.getName(), PieceName.HORSE);
@@ -65,7 +72,10 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
+
+		@SuppressWarnings("unchecked")
 		Board<SquareCoordinate> b = bb.makeBoard();
+
 		b.putPieceAt(ep, sc);
 		assertEquals(ep, b.getPieceAt(sc));
 	}
@@ -77,6 +87,8 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(10, 10);
+
+		@SuppressWarnings("unchecked")
 		Board<SquareCoordinate> b = bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
@@ -97,6 +109,8 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(10, 10);
+
+		@SuppressWarnings("unchecked")
 		Board<SquareCoordinate> b = bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
@@ -116,6 +130,8 @@ class BoardTest {
 		assertNotNull(bb.makeBoard());
 
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(3, 5);
+
+		@SuppressWarnings("unchecked")
 		Board<SquareCoordinate> b = bb.makeBoard();
 		assertNull(b.getPieceAt(sc));
 	}
@@ -127,6 +143,8 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(3, 5);
+
+		@SuppressWarnings("unchecked")
 		Board<SquareCoordinate> b = bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
@@ -147,6 +165,8 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
+
+		@SuppressWarnings("unchecked")
 		Board<SquareCoordinate> b = bb.makeBoard();
 		b.putPieceAt(ep, sc);
 		assertEquals(ep.getPlayer(), b.getPieceAt(sc).getPlayer());
@@ -158,6 +178,8 @@ class BoardTest {
 		assertNotNull(bb.makeBoard());
 
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(2, 2);
+
+		@SuppressWarnings("unchecked")
 		Board<SquareCoordinate> b = bb.makeBoard();
 		b.putPieceAt(null, sc);
 		assertNull(b.getPieceAt(sc));
@@ -170,6 +192,8 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
 		SquareCoordinate sc = (SquareCoordinate) SquareCoordinate.makeCoordinate(4, 5);
+
+		@SuppressWarnings("unchecked")
 		Board<SquareCoordinate> b = bb.makeBoard();
 		b.putPieceAt(ep, sc);
 		assertNull(b.getPieceAt(sc));
@@ -188,7 +212,10 @@ class BoardTest {
 		assertNotNull(bb.makeBoard());
 
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
+
+		@SuppressWarnings("unchecked")
 		Board<OrthoSquareCoordinate> b = bb.makeBoard();
+
 		assertNotNull(b.getPieceAt(sc));
 		EscapePiece ep = b.getPieceAt(sc);
 		assertEquals(ep.getName(), PieceName.HORSE);
@@ -201,7 +228,10 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
+
+		@SuppressWarnings("unchecked")
 		Board<OrthoSquareCoordinate> b = bb.makeBoard();
+
 		b.putPieceAt(ep, sc);
 		assertEquals(ep, b.getPieceAt(sc));
 	}
@@ -213,6 +243,8 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(10, 10);
+
+		@SuppressWarnings("unchecked")
 		Board<OrthoSquareCoordinate> b = bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
@@ -233,6 +265,8 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(10, 10);
+
+		@SuppressWarnings("unchecked")
 		Board<OrthoSquareCoordinate> b = bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
@@ -252,6 +286,8 @@ class BoardTest {
 		assertNotNull(bb.makeBoard());
 
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(3, 5);
+
+		@SuppressWarnings("unchecked")
 		Board<OrthoSquareCoordinate> b = bb.makeBoard();
 		assertNull(b.getPieceAt(sc));
 	}
@@ -263,6 +299,8 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(3, 5);
+
+		@SuppressWarnings("unchecked")
 		Board<OrthoSquareCoordinate> b = bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
@@ -283,7 +321,10 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
+
+		@SuppressWarnings("unchecked")
 		Board<OrthoSquareCoordinate> b = bb.makeBoard();
+
 		b.putPieceAt(ep, sc);
 		assertEquals(ep.getPlayer(), b.getPieceAt(sc).getPlayer());
 	}
@@ -294,7 +335,10 @@ class BoardTest {
 		assertNotNull(bb.makeBoard());
 
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(2, 2);
+
+		@SuppressWarnings("unchecked")
 		Board<OrthoSquareCoordinate> b = bb.makeBoard();
+
 		b.putPieceAt(null, sc);
 		assertNull(b.getPieceAt(sc));
 	}
@@ -306,7 +350,10 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
 		OrthoSquareCoordinate sc = (OrthoSquareCoordinate) OrthoSquareCoordinate.makeCoordinate(3, 6);
+
+		@SuppressWarnings("unchecked")
 		Board<OrthoSquareCoordinate> b = bb.makeBoard();
+
 		b.putPieceAt(ep, sc);
 		assertNull(b.getPieceAt(sc));
 	}
@@ -324,7 +371,10 @@ class BoardTest {
 		assertNotNull(bb.makeBoard());
 
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
+
+		@SuppressWarnings("unchecked")
 		Board<HexCoordinate> b = bb.makeBoard();
+
 		assertNotNull(b.getPieceAt(sc));
 		EscapePiece ep = b.getPieceAt(sc);
 		assertEquals(ep.getName(), PieceName.HORSE);
@@ -337,7 +387,10 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
+
+		@SuppressWarnings("unchecked")
 		Board<HexCoordinate> b = bb.makeBoard();
+
 		b.putPieceAt(ep, sc);
 		assertEquals(ep, b.getPieceAt(sc));
 	}
@@ -348,6 +401,8 @@ class BoardTest {
 		assertNotNull(bb.makeBoard());
 
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(3, 5);
+
+		@SuppressWarnings("unchecked")
 		Board<HexCoordinate> b = bb.makeBoard();
 		assertNull(b.getPieceAt(sc));
 	}
@@ -359,6 +414,8 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER1, PieceName.HORSE);
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(3, 5);
+
+		@SuppressWarnings("unchecked")
 		Board<HexCoordinate> b = bb.makeBoard();
 
 		EscapeException thrown = assertThrows(
@@ -379,7 +436,10 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
+
+		@SuppressWarnings("unchecked")
 		Board<HexCoordinate> b = bb.makeBoard();
+
 		b.putPieceAt(ep, sc);
 		assertEquals(ep.getPlayer(), b.getPieceAt(sc).getPlayer());
 	}
@@ -390,7 +450,10 @@ class BoardTest {
 		assertNotNull(bb.makeBoard());
 
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(2, 2);
+
+		@SuppressWarnings("unchecked")
 		Board<HexCoordinate> b = bb.makeBoard();
+
 		b.putPieceAt(null, sc);
 		assertNull(b.getPieceAt(sc));
 	}
@@ -402,7 +465,10 @@ class BoardTest {
 
 		EscapePiece ep = EscapePiece.makePiece(Player.PLAYER2, PieceName.HORSE);
 		HexCoordinate sc = (HexCoordinate) HexCoordinate.makeCoordinate(3, 6);
+
+		@SuppressWarnings("unchecked")
 		Board<HexCoordinate> b = bb.makeBoard();
+		
 		b.putPieceAt(ep, sc);
 		assertNull(b.getPieceAt(sc));
 	}
