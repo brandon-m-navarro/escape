@@ -108,7 +108,7 @@ class BoardTest {
 		);
 
 		// assertions on the thrown exception
-		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
+		assertEquals("ERROR: Could not place piece - " + ep + " at the specified coodinates - "  + sc, thrown.getMessage());
 
 		// assertions on the state of a domain object after the exception has
 		// been thrown
@@ -136,7 +136,7 @@ class BoardTest {
 		);
 
 		// assertions on the thrown exception
-		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
+		assertEquals("ERROR: Could not place piece - " + ep + " at the specified coodinates - "  + sc, thrown.getMessage());
 
 		// assertions on the state of a domain object after the exception has
 		// been thrown
@@ -178,7 +178,7 @@ class BoardTest {
 		);
 
 		// assertions on the thrown exception
-		assertEquals("ERROR: invalid coordinate!", thrown.getMessage());
+		assertEquals("ERROR: Could not place piece - " + ep + " at the specified coodinates - "  + sc, thrown.getMessage());
 
 		// assertions on the state of a domain object after the exception has
 		// been thrown

@@ -2,7 +2,8 @@
 // import { xmlString } from './SampleEscapeOrtho.js';
 // import { xmlString } from "./SampleEscapeHex.js";
 // import { xmlString } from './SquareEscapeDiagonalMovement2.js';
-import { xmlString } from './SquareEscapeOrthogonalMovement.js';
+// import { xmlString } from './SquareEscapeOrthogonalMovement.js';
+import { xmlString } from './BoardConfig1.js';
 
 import Honeycomb from "./honeycomb.js";
 const { Grid, defineHex, rectangle } = Honeycomb;

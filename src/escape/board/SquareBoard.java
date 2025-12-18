@@ -49,8 +49,7 @@ public class SquareBoard extends TwoDimensionalBoard
 		else if (isWithinBoundries(coord) && !isBlocked(coord))
 			pieces.put(coord, p);
 		else
-			throw new EscapeException("ERROR: Could not place piece - " + p + 
-									  " at the specified coodinates - "  + coord);
+			throw new EscapeException("ERROR: Could not place piece - " + p + " at the specified coodinates - "  + coord);
 	}
 
 	/**
