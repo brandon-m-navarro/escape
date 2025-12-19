@@ -1,10 +1,10 @@
-// import { xmlString } from './SampleEscapeSquare.js';
-// import { xmlString } from './SampleEscapeOrtho.js';
-// import { xmlString } from "./SampleEscapeHex.js";
-// import { xmlString } from './SquareEscapeDiagonalMovement2.js';
-// import { xmlString } from './SquareEscapeOrthogonalMovement.js';
-// import { xmlString } from './BoardConfig1.js';
-import { xmlString } from './MasterHexGame.js';
+// import { xmlString } from './boards/SampleEscapeSquare.js';
+// import { xmlString } from './boards/SampleEscapeOrtho.js';
+// import { xmlString } from "./boards/SampleEscapeHex.js";
+// import { xmlString } from './boards/SquareEscapeDiagonalMovement2.js';
+// import { xmlString } from './boards/SquareEscapeOrthogonalMovement.js';
+// import { xmlString } from './boards/BoardConfig1.js';
+import { xmlString } from './boards/MasterHexGame.js';
 
 import Honeycomb from "./honeycomb.js";
 const { Grid, defineHex, rectangle } = Honeycomb;
@@ -106,7 +106,7 @@ function createBoard(data) {
         cell.textContent = abbrev;
         cell.title = `${cellData.pieceName} (${cellData.player})`;
       } else if (cellData.locationType === "BLOCK") {
-        cell.textContent = "█";
+        cell.textContent = "";
       }
 
       // Add coordinates as tooltip
@@ -127,8 +127,8 @@ function createHexBoard(data) {
   const bounds = {
     minX: 0,
     minY: 0,
-    maxX: 30,
-    maxY: 20,
+    maxX: 21,
+    maxY: 15,
   };
 
   // Create hex factory to pass to Grid instance
@@ -212,7 +212,7 @@ function createHexCell(hex, cellData, container) {
     cell.textContent = abbrev;
     cell.title = `${cellData.pieceName} (${cellData.player})`;
   } else if (cellData.locationType === "BLOCK") {
-    cell.textContent = "█";
+    cell.textContent = "";
   }
 
   // Add coordinates as tooltip
@@ -242,6 +242,7 @@ function createLegend() {
     { label: "F = Frog", symbol: "F" },
     { label: "B = Hummingbird", symbol: "B" },
     { label: "X = Fox", symbol: "X" },
+    { color: "#77dd77", label: "Exit"}
   ];
 
   items.forEach((item) => {

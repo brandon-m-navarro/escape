@@ -68,6 +68,10 @@
   cursor: pointer;
 }
 
+.exit {
+    background-color: #77dd77;
+}
+
 /* Player colors */
 .hex-cell.player1 {
   background-color: #aaccff;
