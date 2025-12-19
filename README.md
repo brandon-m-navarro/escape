@@ -25,6 +25,8 @@ Essentially, I replaced "hope it works at runtime" with "know it works at compil
 ### Create a visualization tool for the boards
 I remember during testing this project in college having headaches trying to visualize what the provided XML boards looked like. Instead of sketching on a whiteboard, I implemented a basic HTML/JS/CSS solution to quickly generate visuals of how both SQUARE & HEX boards were initialized. For HEX boards, I used a library called [honeycomb.js](https://abbekeultjes.nl/honeycomb/) to avoid having to implement the math needed to render hexagons.
 
+<img width="866" height="669" alt="vis" src="https://github.com/user-attachments/assets/2ea38891-6f30-4f80-88cc-66d9f0ac409a" />
+
 ### Resolved failing tests
 This project was graded based on how many tests your code passed from both a set of master tests and tests that I had to implement. After enforcing type safety throughout the project, this was largely trivial, and would have improved my grade by a few points.
 
