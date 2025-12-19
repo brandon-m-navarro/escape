@@ -1,5 +1,5 @@
 # What is Escape?
-Escape is a family of board game designed for the term project in CS4233: Object-Oriented Analysis & Design. Variations are usually played by two players. Each player starts with a set of pieces on the board, with each piece having a point value and specific movement rules. The player who exits the most points off the board by the end of the game wins. Variations modify the rules in several ways such as the number and type of pieces, valid exit squares, different movement and battle rules, and so on.
+Escape is a family of board games designed for the term project in CS4233: Object-Oriented Analysis & Design. Variations are usually played by two players. Each player starts with a set of pieces on the board, with each piece having a point value and specific movement rules. The player who exits the most points off the board by the end of the game wins. Variations modify the rules in several ways such as the number and type of pieces, valid exit squares, different movement and battle rules, and so on.
 
 Escape has the following:
 - variable board dimensions
